@@ -7,7 +7,6 @@ public class Usuario {
 	private String email;
 	private String senha;
 	private boolean isAdmi;
-
 	
 	public long getID() {
 		return ID;
