@@ -1,14 +1,34 @@
 package com.bookstore.com.bookstore.model;
 
-public class Usuario {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private long ID;
+@Entity
+@Table(name = "TB_USUARIO")
+public class Usuario {
+	
+	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Long ID;
+	
+	@Column(name = "NOME")
 	private String nome;
+	
+	@Column(name = "EMAIL")
 	private String email;
+	
+	@Column(name = "SENHA")
 	private String senha;
+	
+	
 	private boolean isAdmi;
 	
-	public long getID() {
+	public Long getID() {
 		return ID;
 	}
 
