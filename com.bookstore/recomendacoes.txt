@@ -9,3 +9,4 @@
 - FormaPagamento vira um strategy: o professor disse q tem q ser mais flexível;
 - As relações entre as tabelas de pessoas diferentes ficam pra depois que as pessoas tiverem encerrado com suas classes;
 - Se vc vai mexer no projeto ao msm tempo que outra pessoa, crie uma branch pra vc e dps faça o merge;
+- Não dêem "new" nas classes de service.

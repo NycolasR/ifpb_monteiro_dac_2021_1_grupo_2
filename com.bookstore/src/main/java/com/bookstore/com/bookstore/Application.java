@@ -9,6 +9,12 @@ import com.bookstore.com.bookstore.service.EstoqueService;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
+	
+	private EstoqueService estoqueService;
+	
+	public Application(EstoqueService estoqueService) {
+		this.estoqueService = estoqueService;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -19,7 +25,6 @@ public class Application implements CommandLineRunner {
 		Estoque estoque = new Estoque();
 		estoque.setNome("Estoque_nome");
 		
-		EstoqueService estoqueService = new EstoqueService();
 		estoqueService.salvar(estoque);
 		
 		System.out.println("Deu certo");
