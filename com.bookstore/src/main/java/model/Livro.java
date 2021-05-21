@@ -1,68 +1,75 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
 public class Livro {
 
-	private long ISBN;
+	private Long ISBN;
 	private String titulo;
 	private String descricao;
-	private float itensAdicionados;
+	private Float itensAdicionados;
 	private ImageIcon imagemCapa;
-	private int edicao;
+	private Integer edicao;
 	private LocalDate anoPublicacao;
-	private ArrayList<Categoria> categorias;
+	private List<Categoria> categorias;
 	
 	
-	public long getISBN() {
+	public Long getISBN() {
 		return ISBN;
 	}
-	public void setISBN(long iSBN) {
+	public void setISBN(Long iSBN) {
 		ISBN = iSBN;
 	}
+	
 	public String getTitulo() {
 		return titulo;
 	}
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
+	
 	public String getDescricao() {
 		return descricao;
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public float getItensAdicionados() {
+	
+	public Float getItensAdicionados() {
 		return itensAdicionados;
 	}
-	public void setItensAdicionados(float itensAdicionados) {
+	public void setItensAdicionados(Float itensAdicionados) {
 		this.itensAdicionados = itensAdicionados;
 	}
+	
 	public ImageIcon getImagemCapa() {
 		return imagemCapa;
 	}
 	public void setImagemCapa(ImageIcon imagemCapa) {
 		this.imagemCapa = imagemCapa;
 	}
-	public int getEdicao() {
+	
+	public Integer getEdicao() {
 		return edicao;
 	}
-	public void setEdicao(int edicao) {
+	public void setEdicao(Integer edicao) {
 		this.edicao = edicao;
 	}
+	
 	public LocalDate getAnoPublicacao() {
 		return anoPublicacao;
 	}
 	public void setAnoPublicacao(LocalDate anoPublicacao) {
 		this.anoPublicacao = anoPublicacao;
 	}
-	public ArrayList<Categoria> getCategorias() {
+	
+	public List<Categoria> getCategorias() {
 		return categorias;
 	}
-	public void setCategorias(ArrayList<Categoria> categorias) {
+	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
 	

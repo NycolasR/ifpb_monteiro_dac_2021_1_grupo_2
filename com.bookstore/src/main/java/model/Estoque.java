@@ -1,26 +1,29 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Estoque {
 
-	private ArrayList<Livro> itensAdicionados;
-	private ArrayList<Livro> itensExcluidos;
+	private List<Livro> itensAdicionados;
+	private List<Livro> itensExcluidos;
 
 	
-	public ArrayList<Livro> getItensAdicionados() {
+	public List<Livro> getItensAdicionados() {
 		return itensAdicionados;
 	}
 
-	public void setItensAdicionados(ArrayList<Livro> itensAdicionados) {
+	public void setItensAdicionados(List<Livro> itensAdicionados) {
 		this.itensAdicionados = itensAdicionados;
 	}
 
-	public ArrayList<Livro> getItensExcluidos() {
+	public List<Livro> getItensExcluidos() {
 		return itensExcluidos;
 	}
 
-	public void setItensExcluidos(ArrayList<Livro> itensExcluidos) {
+	public void setItensExcluidos(List<Livro> itensExcluidos) {
 		this.itensExcluidos = itensExcluidos;
 	}
 	

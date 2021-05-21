@@ -1,17 +1,17 @@
-package model;;
+package model;
 
 public class Editora {
 
-	private long ID;
+	private Long ID;
 	private String nome;
 	private String cidade;
 
 	
-	public long getID() {
+	public Long getID() {
 		return ID;
 	}
 
-	public void setID(long iD) {
+	public void setID(Long iD) {
 		ID = iD;
 	}
 
