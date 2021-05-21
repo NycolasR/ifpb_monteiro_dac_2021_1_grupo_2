@@ -1,17 +1,45 @@
 package com.bookstore.com.bookstore.model;
 
-public class Endereço {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "TB_ENDERECO")
+public class Endereco {
+
+	@Column(name = "ID")
+	private Long id;
+	
+	@Column(name = "RUA")
 	private String rua;
+	
+	@Column(name = "NUMERO")
 	private String numero;
+	
+	@Column(name = "BAIRRO")
 	private String bairro;
+	
+	@Column(name = "UF")
 	private String UF;
+	
+	@Column(name = "CIDADE")
 	private String cidade;
+	
+	@Column(name = "COMPLEMENTO")
 	private String complemento;
+	
+	@Column(name = "CEP")
 	private int CEP;
-	private Usuario usuario;
 	
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getRua() {
 		return rua;
 	}
@@ -53,12 +81,6 @@ public class Endereço {
 	}
 	public void setCEP(int cEP) {
 		CEP = cEP;
-	}
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 	
 }
