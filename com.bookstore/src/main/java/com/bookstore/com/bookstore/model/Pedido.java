@@ -1,4 +1,4 @@
-package model;
+package com.bookstore.com.bookstore.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

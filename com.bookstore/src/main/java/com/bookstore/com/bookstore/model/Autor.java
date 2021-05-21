@@ -1,4 +1,4 @@
-package model;
+package com.bookstore.com.bookstore.model;
 
 public class Autor {
 
