@@ -2,11 +2,15 @@ package com.bookstore.com.bookstore.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -31,13 +35,15 @@ public class Usuario {
 	@Column(name = "ADMINISTRADOR")
 	private boolean isAdmin;
 	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "USUARIO_FK", nullable = false)
 	private List<Endereco> enderecos;
 	
-	public Long getID() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setID(Long iD) {
+	public void setId(Long iD) {
 		id = iD;
 	}
 
@@ -65,12 +71,20 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public boolean isAdmi() {
+	public boolean isAdmin() {
 		return isAdmin;
 	}
 
-	public void setAdmi(boolean isAdmin) {
+	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 
 	@Override
