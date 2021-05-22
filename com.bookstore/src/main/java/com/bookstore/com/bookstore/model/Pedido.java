@@ -5,20 +5,20 @@ import java.util.ArrayList;
 
 public class Pedido {
 
-	private long ID;
+	private Long ID;
 	private LocalDate dataCriacao;
 	private LocalDate dataFechamento;
-	private int qntdItens;
-	private float total;
+	private Integer qntdItens;
+	private Float total;
 	private String status_pedido;
 	private FormaPagamento formaPagamento;
 	private ArrayList<Livro> livros;
 	
 	
-	public long getID() {
+	public Long getID() {
 		return ID;
 	}
-	public void setID(long iD) {
+	public void setID(Long iD) {
 		ID = iD;
 	}
 	public LocalDate getDataCriacao() {
@@ -33,16 +33,16 @@ public class Pedido {
 	public void setDataFechamento(LocalDate dataFechamento) {
 		this.dataFechamento = dataFechamento;
 	}
-	public int getQntdItens() {
+	public Integer getQntdItens() {
 		return qntdItens;
 	}
-	public void setQntdItens(int qntdItens) {
+	public void setQntdItens(Integer qntdItens) {
 		this.qntdItens = qntdItens;
 	}
-	public float getTotal() {
+	public Float getTotal() {
 		return total;
 	}
-	public void setTotal(float total) {
+	public void setTotal(Float total) {
 		this.total = total;
 	}
 	public String getStatus_pedido() {

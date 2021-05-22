@@ -1,19 +1,17 @@
 package com.bookstore.com.bookstore.model;
 
-public enum FormaPagamento {
+public class FormaPagamento {
 	
-	BOLETO, CARTAO, PIX , TED;
+	private Long ID;
 
-	private long ID;
+	private String nome;
 
-	private String Nome;
-
-	public long getID() {
-		return 0;
+	public Long getID() {
+		return ID;
 	}
 
 	public String getNome() {
-		return null;
+		return nome;
 	}
 
 }
