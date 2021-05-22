@@ -16,4 +16,9 @@ public class EstoqueService {
 	public void salvar(Estoque estoque) {
 		estoqueRepository.save(estoque);
 	}
+	
+	public Estoque recuperarPeloId(Long id) {
+		return estoqueRepository.findById(id).get();
+	}
+	
 }
