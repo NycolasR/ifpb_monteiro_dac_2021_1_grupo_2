@@ -22,5 +22,14 @@ public class Autor {
 		ID = iD;
 	}
 	
+	@Override
+	public String toString() {
+		return nome;
+	}
+	
+	public boolean equals(Autor autor) {
+		return autor.getID() == ID;
+	}
+	
 
 }

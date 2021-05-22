@@ -38,7 +38,7 @@ public class FormaPagamento {
 	}
 	
 	public boolean equals(FormaPagamento formaPagamento) {
-		return formaPagamento.ID == ID;
+		return formaPagamento.getID() == ID;
 	}
 
 }

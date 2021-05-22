@@ -1,5 +1,6 @@
 package com.bookstore.com.bookstore.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Livro {
 	private String descricao;
 
 	@Column(name = "PRECO")
-	private Float preco;
+	private BigDecimal preco;
 
 	//	private ImageIcon imagemCapa;
 
@@ -39,7 +40,7 @@ public class Livro {
 	//	@Enumerated(EnumType.STRING)
 	//	private List<Categoria> categorias;
 
-	public Livro(Long isbn, String titulo, String descricao, Float preco, Integer edicao, LocalDate anoPublicacao) {
+	public Livro(Long isbn, String titulo, String descricao, BigDecimal preco, Integer edicao, LocalDate anoPublicacao) {
 		this.isbn = isbn;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -99,6 +100,13 @@ public class Livro {
 	}
 	public void setAnoPublicacao(LocalDate anoPublicacao) {
 		this.anoPublicacao = anoPublicacao;
+	}
+	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
 	}
 
 	//	public List<Categoria> getCategorias() {
