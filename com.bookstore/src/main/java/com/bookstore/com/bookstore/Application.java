@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.bookstore.com.bookstore.model.Categoria;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Estoque;
 import com.bookstore.com.bookstore.model.Livro;
@@ -56,6 +57,14 @@ public class Application implements CommandLineRunner {
 		livro4 = new Livro(444l, "Titulo 4", "Descrição 4", 40f, 4, LocalDate.of(2015, 12, 4));
 		livro5 = new Livro(555l, "Titulo 5", "Descrição 5", 50f, 5, LocalDate.of(2015, 12, 5));
 		livro6 = new Livro(666l, "Titulo 6", "Descrição 6", 60f, 6, LocalDate.of(2015, 12, 6));
+		
+		livro1.addCategoria(Categoria.AVENTURA);
+		livro1.addCategoria(Categoria.AVENTURA);
+		livro1.addCategoria(Categoria.FICCAO_CIENTIFICA);
+		
+		livro2.addCategoria(Categoria.BIOGRAFIA);
+		livro2.addCategoria(Categoria.CLASSICO);
+		livro2.addCategoria(Categoria.ENGENHARIA);
 		
 		Editora editora1 = new Editora("Editora 1", "Cidade 1");
 		editora1.addLivro(livro1);
