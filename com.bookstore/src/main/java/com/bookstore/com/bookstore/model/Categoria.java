@@ -14,4 +14,5 @@ public enum Categoria {
 	DISTOPIA,
 	DRAMA,
 	BIOGRAFIA;
+
 }
