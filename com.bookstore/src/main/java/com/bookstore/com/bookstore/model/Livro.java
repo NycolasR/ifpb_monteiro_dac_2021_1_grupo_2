@@ -1,11 +1,10 @@
 package com.bookstore.com.bookstore.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,9 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
@@ -34,7 +31,7 @@ public class Livro {
 	private String descricao;
 
 	@Column(name = "PRECO")
-	private Float preco;
+	private BigDecimal preco;
 
 	//	private ImageIcon imagemCapa;
 
@@ -50,7 +47,7 @@ public class Livro {
 	@JoinTable(name = "TB_CATEGORIA")
 	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
 
-	public Livro(Long isbn, String titulo, String descricao, Float preco, Integer edicao, LocalDate anoPublicacao) {
+	public Livro(Long isbn, String titulo, String descricao, BigDecimal preco, Integer edicao, LocalDate anoPublicacao) {
 		this.isbn = isbn;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -105,6 +102,13 @@ public class Livro {
 		this.anoPublicacao = anoPublicacao;
 	}
 
+	public BigDecimal getPreco() {
+		return preco;
+	}
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+	
 	public Set<Categoria> getCategorias() {
 		return categorias;
 	}
