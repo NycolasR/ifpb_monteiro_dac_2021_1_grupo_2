@@ -2,9 +2,27 @@ package com.bookstore.com.bookstore.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 
@@ -13,19 +31,44 @@ import java.util.Set;
  * a classe Contexto.
  *
  */
+@Entity
+@Table(name = "TB_PEDIDO")
 public class Pedido {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long ID;
+	
+	@ManyToOne
 	private Usuario usuario;
-	private LocalDate dataCriacao;
-	private LocalDate dataFechamento;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DATA_CRIACAO")
+	private Date dataCriacao;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DATA_FECHAMENTO")
+	private Date dataFechamento;
+	
+	@Column(name = "QUANTIDADE_ITENS")
 	private Integer qntdItens;
+	
+	@Column(name = "VALOR_ITENS_TOTAL")
 	private BigDecimal valorItensTotal;
+	
+	@Column(name = "STATUS_PEDIDO")
 	private String statusPedido;
+	
+	@Column(name = "LOCAL_ENTREGA")
 	private String localDeEntrega;
 
-	private FormaPagamento formaPagamento;
-	private Set<Livro> livros = new LinkedHashSet<Livro>();
+	@OneToOne(cascade = CascadeType.ALL)
+	private FormaPagamento formaPagamento; 
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "LIVRO_FK", nullable = false)
+	private Set<Livro> livros = new LinkedHashSet<Livro>(); 
 	
 	/**
 	 * Método responsável por adicionar um livro de cada vez ao pedido.
@@ -114,16 +157,16 @@ public class Pedido {
 	public void setID(Long iD) {
 		ID = iD;
 	}
-	public LocalDate getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}
-	public void setDataCriacao(LocalDate dataCriacao) {
+	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	public LocalDate getDataFechamento() {
+	public Date getDataFechamento() {
 		return dataFechamento;
 	}
-	public void setDataFechamento(LocalDate dataFechamento) {
+	public void setDataFechamento(Date dataFechamento) {
 		this.dataFechamento = dataFechamento;
 	}
 	public Integer getQntdItens() {
@@ -168,6 +211,6 @@ public class Pedido {
 	}
 	
 	public boolean equals(Pedido pedido) {
-		return pedido.getID() == ID;
+		return pedido.getID().equals(ID);
 	}
 }

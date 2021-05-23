@@ -1,11 +1,48 @@
 package com.bookstore.com.bookstore.model;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Essa classe tem relação N:N com a classe livro
+ *
+ */
+@Entity
+@Table(name = "TB_AUTOR")
 public class Autor {
 
-	private String nome;
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long ID;
+	
+	@Column(name = "NOME")
+	private String nome;
+	
+	@ManyToMany
+	@JoinTable(name = "TB_LIVRO_AUTOR", joinColumns = @JoinColumn(name = "ID_AUTOR"),inverseJoinColumns = @JoinColumn(name = "ISBN_LIVRO"))
+	private Set<Livro> livros = new LinkedHashSet<Livro>();
 
 	
+	public Set<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(Set<Livro> livros) {
+		this.livros = livros;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -28,7 +65,7 @@ public class Autor {
 	}
 	
 	public boolean equals(Autor autor) {
-		return autor.getID() == ID;
+		return autor.getID().equals(ID);
 	}
 	
 
