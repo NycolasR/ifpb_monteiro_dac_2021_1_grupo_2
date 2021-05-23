@@ -1,6 +1,8 @@
 package com.bookstore.com.bookstore.model;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,6 +41,9 @@ public class Usuario {
 	@JoinColumn(name = "USUARIO_FK", nullable = false)
 	private List<Endereco> enderecos;
 	
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "usuario")
+	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
+
 	public Long getId() {
 		return id;
 	}
@@ -85,6 +90,14 @@ public class Usuario {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+	
+	public Set<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override

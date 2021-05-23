@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
@@ -42,7 +43,7 @@ public class Livro {
 	
 	@ManyToMany(mappedBy = "livros")
 	private Set<Autor> autores = new LinkedHashSet<Autor>();
-
+	
 	//	@Enumerated(EnumType.STRING)
 	//	private List<Categoria> categorias;
 
