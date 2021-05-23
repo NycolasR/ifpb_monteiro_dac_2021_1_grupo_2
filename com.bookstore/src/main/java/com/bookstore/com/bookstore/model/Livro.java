@@ -110,7 +110,7 @@ public class Livro {
 
 
 	public boolean equals(Livro livro) {
-		return this.isbn == livro.getISBN();
+		return this.isbn.equals(livro.getISBN());
 	}
 
 	@Override

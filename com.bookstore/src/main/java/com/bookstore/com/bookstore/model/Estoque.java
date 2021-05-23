@@ -59,7 +59,7 @@ public class Estoque {
 			if(livrosArr[i].equals(livro))
 				return livrosArr[i];
 		
-		throw new Exception("[ERRO] Livro não encontrado na coleção");
+		throw new Exception("[ERRO] Livro "+ livro.getTitulo() + " não encontrado na coleção.");
 	}
 
 	public Set<Livro> getItensAdicionados() {
