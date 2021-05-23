@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 

@@ -2,6 +2,8 @@ package com.bookstore.com.bookstore.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.DiscriminatorValue;
+
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
@@ -9,6 +11,7 @@ import java.math.BigDecimal;
  * uma classe concreta Strategy, ou seja, que herda da super classe FormaPagamento (Interface Strategy)
  *
  */
+@DiscriminatorValue("Boleto")
 public class Boleto extends FormaPagamento{
 
 	public Boleto() {
