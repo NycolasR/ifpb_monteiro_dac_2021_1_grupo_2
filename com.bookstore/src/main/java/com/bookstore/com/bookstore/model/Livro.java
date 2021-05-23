@@ -12,6 +12,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
@@ -104,13 +106,6 @@ public class Livro {
 		this.anoPublicacao = anoPublicacao;
 	}
 	
-	public BigDecimal getPreco() {
-		return preco;
-	}
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
-	}
-
 	public BigDecimal getPreco() {
 		return preco;
 	}
