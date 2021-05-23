@@ -12,7 +12,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
@@ -46,6 +45,9 @@ public class Livro {
 	@Column(name = "CATEGORIA", length = 30)
 	@JoinTable(name = "TB_CATEGORIA")
 	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
+
+	@ManyToMany(mappedBy = "livros")
+	private Set<Autor> autores = new LinkedHashSet<Autor>();
 
 	public Livro(Long isbn, String titulo, String descricao, BigDecimal preco, Integer edicao, LocalDate anoPublicacao) {
 		this.isbn = isbn;
@@ -101,6 +103,13 @@ public class Livro {
 	public void setAnoPublicacao(LocalDate anoPublicacao) {
 		this.anoPublicacao = anoPublicacao;
 	}
+	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
 
 	public BigDecimal getPreco() {
 		return preco;
@@ -118,6 +127,14 @@ public class Livro {
 
 	public void addCategoria(Categoria categoria) {
 		this.categorias.add(categoria);
+	}
+
+	public Set<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(Set<Autor> autores) {
+		this.autores = autores;
 	}
 
 	public boolean equals(Livro livro) {

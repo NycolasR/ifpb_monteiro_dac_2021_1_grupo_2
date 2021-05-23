@@ -3,7 +3,7 @@ package com.bookstore.com.bookstore.model;
 public class Autor {
 
 	private String nome;
-	private long ID;
+	private Long ID;
 
 	
 	public String getNome() {
@@ -14,12 +14,21 @@ public class Autor {
 		this.nome = nome;
 	}
 
-	public long getID() {
+	public Long getID() {
 		return ID;
 	}
 
-	public void setID(long iD) {
+	public void setID(Long iD) {
 		ID = iD;
+	}
+	
+	@Override
+	public String toString() {
+		return nome;
+	}
+	
+	public boolean equals(Autor autor) {
+		return autor.getID() == ID;
 	}
 	
 
