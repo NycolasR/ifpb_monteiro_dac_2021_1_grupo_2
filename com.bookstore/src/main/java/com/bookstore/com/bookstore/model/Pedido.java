@@ -22,6 +22,8 @@ public class Pedido {
 	private Integer qntdItens;
 	private BigDecimal valorItensTotal;
 	private String statusPedido;
+	private String localDeEntrega;
+
 	private FormaPagamento formaPagamento;
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
 	
@@ -31,6 +33,7 @@ public class Pedido {
 	 */
 	public void adicionarLivro(Livro livro) {
 		livros.add(livro);
+		qntdItens += 1;
 		this.valorItensTotal = livro.getPreco().add(valorItensTotal);
 	}
 	
@@ -46,6 +49,8 @@ public class Pedido {
 			Livro livro = livrosIterator.next();
 			if(livro.getISBN()== ISBN) {
 				livros.remove(livro);
+				qntdItens -= 1;
+				//tem que diminuir do total aqui ainda
 			}
 		}
 	}
@@ -91,6 +96,12 @@ public class Pedido {
 	 * Os métodos a baixo são de get e set em relação aos atributos da classe.
 	 * 
 	 */
+	public String getLocalDeEntrega() {
+		return localDeEntrega;
+	}
+	public void setLocalDeEntrega(String localDeEntrega) {
+		this.localDeEntrega = localDeEntrega;
+	}
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -121,11 +132,11 @@ public class Pedido {
 	public void setQntdItens(Integer qntdItens) {
 		this.qntdItens = qntdItens;
 	}
-	public BigDecimal getTotal() {
+	public BigDecimal getvalorItensTotal() {
 		return valorItensTotal;
 	}
-	public void setTotal(BigDecimal total) {
-		this.valorItensTotal = total;
+	public void setvalorItensTotal(BigDecimal valorItensTotal) {
+		this.valorItensTotal = valorItensTotal;
 	}
 	public String getStatusPedido() {
 		return statusPedido;
@@ -153,7 +164,7 @@ public class Pedido {
 				+ "\n	Quantidade de Itens: " + qntdItens
 				+ "\n	Preço Total: R$" + valorItensTotal
 				+ "\n	Forma de Pagamento: " + formaPagamento
-				+ "\n	Endereço de entrega: " + usuario.getEnderecos().get(0);
+				+ "\n	Endereço de entrega: " + localDeEntrega;
 	}
 	
 	public boolean equals(Pedido pedido) {

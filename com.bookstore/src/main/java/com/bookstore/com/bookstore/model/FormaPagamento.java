@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * a classe Interface Strategy. 
  *
  */
-public class FormaPagamento {
+public abstract class FormaPagamento {
 	
 	private Long ID;
 	private String nomeTipo; // nomeTipo representa o tipo que cada subtipificação de FormaPagamento pode ser.
@@ -30,7 +30,7 @@ public class FormaPagamento {
 	 * Esse método será sobreescrito em todas as subtipificações da classe FormaPagamento (Interface Strategy).
 	 * @param valor será o valor a ser pago ao se realizar o pagamento.
 	 */
-	public void realizarPagamento(BigDecimal valor) {}
+	public abstract void realizarPagamento(BigDecimal valor);
 	
 	@Override
 	public String toString() {
