@@ -2,13 +2,16 @@ package com.bookstore.com.bookstore.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
@@ -36,6 +39,9 @@ public class Livro {
 
 	@Column(name = "ANO_PUBLICACAO")
 	private LocalDate anoPublicacao;
+	
+	@ManyToMany(mappedBy = "livros")
+	private Set<Autor> autores = new LinkedHashSet<Autor>();
 
 	//	@Enumerated(EnumType.STRING)
 	//	private List<Categoria> categorias;
@@ -116,6 +122,14 @@ public class Livro {
 	//		this.categorias = categorias;
 	//	}
 
+
+	public Set<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(Set<Autor> autores) {
+		this.autores = autores;
+	}
 
 	public boolean equals(Livro livro) {
 		return this.isbn == livro.getISBN();
