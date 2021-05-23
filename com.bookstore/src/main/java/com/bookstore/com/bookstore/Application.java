@@ -64,7 +64,7 @@ public class Application implements CommandLineRunner {
 //		editoraService.salvar(editora1);
 //		editoraService.salvar(editora2);
 		
-		testarEstoque();
+//		testarEstoque();
 		
 		System.out.println("Deu certo");
 	}
