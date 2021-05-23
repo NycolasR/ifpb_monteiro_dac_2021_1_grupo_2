@@ -3,14 +3,16 @@ package com.bookstore.com.bookstore.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -41,11 +43,14 @@ public class Livro {
 	@Column(name = "ANO_PUBLICACAO")
 	private LocalDate anoPublicacao;
 	
+	@ElementCollection(fetch = FetchType.LAZY, targetClass = Categoria.class)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "CATEGORIA", length = 30)
+	@JoinTable(name = "TB_CATEGORIA")
+	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
+
 	@ManyToMany(mappedBy = "livros")
 	private Set<Autor> autores = new LinkedHashSet<Autor>();
-	
-	//	@Enumerated(EnumType.STRING)
-	//	private List<Categoria> categorias;
 
 	public Livro(Long isbn, String titulo, String descricao, BigDecimal preco, Integer edicao, LocalDate anoPublicacao) {
 		this.isbn = isbn;
@@ -81,13 +86,6 @@ public class Livro {
 		this.descricao = descricao;
 	}
 
-	//	public Float getItensAdicionados() {
-	//		return itensAdicionados;
-	//	}
-	//	public void setItensAdicionados(Float itensAdicionados) {
-	//		this.itensAdicionados = itensAdicionados;
-	//	}
-	//	
 	//	public ImageIcon getImagemCapa() {
 	//		return imagemCapa;
 	//	}
@@ -115,14 +113,17 @@ public class Livro {
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
+	
+	public Set<Categoria> getCategorias() {
+		return categorias;
+	}
+	public void setCategorias(Set<Categoria> categorias) {
+		this.categorias = categorias;
+	}
 
-	//	public List<Categoria> getCategorias() {
-	//		return categorias;
-	//	}
-	//	public void setCategorias(List<Categoria> categorias) {
-	//		this.categorias = categorias;
-	//	}
-
+	public void addCategoria(Categoria categoria) {
+		this.categorias.add(categoria);
+	}
 
 	public Set<Autor> getAutores() {
 		return autores;
@@ -133,7 +134,7 @@ public class Livro {
 	}
 
 	public boolean equals(Livro livro) {
-		return this.isbn == livro.getISBN();
+		return this.isbn.equals(livro.getISBN());
 	}
 
 	@Override

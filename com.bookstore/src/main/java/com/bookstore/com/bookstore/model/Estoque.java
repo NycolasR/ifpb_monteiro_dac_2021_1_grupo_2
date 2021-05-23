@@ -21,11 +21,11 @@ public class Estoque {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "ADICIONADO_ESTOQUE_FK")
 	private Set<Livro> livrosAdicionados = new LinkedHashSet<Livro>();
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "EXCLUIDO_ESTOQUE_FK")
 	private Set<Livro> livrosExcluidos = new LinkedHashSet<Livro>();
 	
@@ -59,7 +59,7 @@ public class Estoque {
 			if(livrosArr[i].equals(livro))
 				return livrosArr[i];
 		
-		throw new Exception("[ERRO] Livro não encontrado na coleção");
+		throw new Exception("[ERRO] Livro "+ livro.getTitulo() + " não encontrado na coleção.");
 	}
 
 	public Set<Livro> getItensAdicionados() {
