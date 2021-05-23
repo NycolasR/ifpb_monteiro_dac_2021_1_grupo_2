@@ -21,11 +21,11 @@ public class Estoque {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "ADICIONADO_ESTOQUE_FK")
 	private Set<Livro> livrosAdicionados = new LinkedHashSet<Livro>();
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "EXCLUIDO_ESTOQUE_FK")
 	private Set<Livro> livrosExcluidos = new LinkedHashSet<Livro>();
 	

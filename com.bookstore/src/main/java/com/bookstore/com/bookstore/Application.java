@@ -44,7 +44,14 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-//		livro1 = new Livro(111l, "Titulo 1", "Descrição 1", 10f, 1, LocalDate.of(2015, 12, 1));
+		main_nycolas();
+		
+	}
+
+	private void main_nycolas() {
+		
+		
+		livro1 = new Livro(111l, "Titulo 1", "Descrição 1", 10f, 1, LocalDate.of(2015, 12, 1));
 //		livro2 = new Livro(222l, "Titulo 2", "Descrição 2", 20f, 2, LocalDate.of(2015, 12, 2));
 //		livro3 = new Livro(333l, "Titulo 3", "Descrição 3", 30f, 3, LocalDate.of(2015, 12, 3));
 //		livro4 = new Livro(444l, "Titulo 4", "Descrição 4", 40f, 4, LocalDate.of(2015, 12, 4));
@@ -67,6 +74,7 @@ public class Application implements CommandLineRunner {
 		testarEstoque();
 		
 		System.out.println("Deu certo");
+		
 	}
 
 	private void testarEstoque() {
