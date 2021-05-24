@@ -34,6 +34,10 @@ public class Autor {
 	@JoinTable(name = "TB_LIVRO_AUTOR", joinColumns = @JoinColumn(name = "ID_AUTOR"),inverseJoinColumns = @JoinColumn(name = "ISBN_LIVRO"))
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
 
+	public Autor(String nome) {
+		
+		this.nome = nome;
+	}
 	
 	public Set<Livro> getLivros() {
 		return livros;

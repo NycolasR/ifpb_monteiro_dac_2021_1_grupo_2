@@ -1,7 +1,7 @@
 package com.bookstore.com.bookstore.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -15,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -70,11 +68,20 @@ public class Pedido {
 	@JoinColumn(name = "LIVRO_FK", nullable = false)
 	private Set<Livro> livros = new LinkedHashSet<Livro>(); 
 	
+	public Pedido() {
+		
+		dataCriacao = Date.from(Instant.now());
+		statusPedido = "Em Espera";
+		qntdItens = 0;
+	}
+	
+	
 	/**
 	 * Método responsável por adicionar um livro de cada vez ao pedido.
 	 * @param livro que o usuário deseja comprar.
 	 */
 	public void adicionarLivro(Livro livro) {
+		
 		livros.add(livro);
 		qntdItens += 1;
 		this.valorItensTotal = livro.getPreco().add(valorItensTotal);
@@ -91,9 +98,10 @@ public class Pedido {
 			
 			Livro livro = livrosIterator.next();
 			if(livro.getISBN()== ISBN) {
+				
+				valorItensTotal = valorItensTotal.subtract(livro.getPreco()); //diminuir o valor do livro removido, do valor total
 				livros.remove(livro);
 				qntdItens -= 1;
-				//tem que diminuir do total aqui ainda
 			}
 		}
 	}
