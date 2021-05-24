@@ -64,8 +64,8 @@ public class Pedido {
 	@OneToOne(cascade = CascadeType.ALL)
 	private FormaPagamento formaPagamento; 
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "LIVRO_FK", nullable = false)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "PEDIDO_FK")
 	private Set<Livro> livros = new LinkedHashSet<Livro>(); 
 	
 	public Pedido() {

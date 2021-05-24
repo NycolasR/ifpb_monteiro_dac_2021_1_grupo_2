@@ -1,5 +1,6 @@
 package com.bookstore.com.bookstore;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -67,6 +68,8 @@ public class Application implements CommandLineRunner {
 		livro2.addCategoria(Categoria.CLASSICO);
 		livro2.addCategoria(Categoria.ENGENHARIA);
 		
+		livro1.setImageFile(new File("C:\\Users\\Nyk\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
+		
 		Editora editora1 = new Editora("Editora 1", "Cidade 1");
 		editora1.addLivro(livro1);
 		editora1.addLivro(livro2);
@@ -80,7 +83,7 @@ public class Application implements CommandLineRunner {
 		editoraService.salvar(editora1);
 		editoraService.salvar(editora2);
 		
-//		testarEstoque();
+		testarEstoque();
 		
 		System.out.println("Deu certo");
 		

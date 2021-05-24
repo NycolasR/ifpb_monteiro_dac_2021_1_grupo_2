@@ -1,5 +1,7 @@
 package com.bookstore.com.bookstore.model;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -13,10 +15,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.swing.ImageIcon;
 
 @Entity
 @Table(name = "TB_LIVRO")
@@ -35,7 +36,9 @@ public class Livro {
 	@Column(name = "PRECO")
 	private BigDecimal preco;
 
-	//	private ImageIcon imagemCapa;
+	@Lob
+	@Column(name="IMAGEM_CAPA", columnDefinition="mediumblob")
+	private byte[] imagemCapa;
 
 	@Column(name = "EDICAO")
 	private Integer edicao;
@@ -86,12 +89,26 @@ public class Livro {
 		this.descricao = descricao;
 	}
 
-	//	public ImageIcon getImagemCapa() {
-	//		return imagemCapa;
-	//	}
-	//	public void setImagemCapa(ImageIcon imagemCapa) {
-	//		this.imagemCapa = imagemCapa;
-	//	}
+	public byte[] getImagemCapa() {
+		return imagemCapa;
+	}
+	public void setImagemCapa(byte[] imagemCapa) {
+		this.imagemCapa = imagemCapa;
+	}
+	
+	public void setImageFile(File imgFile) {
+		byte[] img = new byte[(int) imgFile.length()];
+
+		try {
+			FileInputStream fileInputStream = new FileInputStream(imgFile);
+			fileInputStream.read(img);
+			fileInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		setImagemCapa(img);
+	}
 
 	public Integer getEdicao() {
 		return edicao;
