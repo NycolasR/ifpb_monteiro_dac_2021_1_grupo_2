@@ -71,7 +71,7 @@ public class Pedido {
 	public Pedido() {
 		
 		dataCriacao = Date.from(Instant.now());
-		statusPedido = "Em Espera";
+		statusPedido = "Não Finalizado";
 		qntdItens = 0;
 	}
 	

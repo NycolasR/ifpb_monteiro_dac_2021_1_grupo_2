@@ -15,7 +15,7 @@ import javax.persistence.Table;
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
- * Essa classe tem relação N:N com a classe livro
+ * Essa classe tem relação N:1 com a classe livro
  *
  */
 @Entity

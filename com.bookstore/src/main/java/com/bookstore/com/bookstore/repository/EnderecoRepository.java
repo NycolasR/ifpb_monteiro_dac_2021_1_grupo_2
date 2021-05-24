@@ -8,5 +8,5 @@ import com.bookstore.com.bookstore.model.Endereco;
 
 public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
 
-//	public List<com.bookstore.com.bookstore.model.Endereco> findByNome(String nome); 
+//	public List<com.bookstore.com.bookstore.model.Endereco> findByNome(String nome); Scooby, ajeita aqui depois, estava dando erro eu não sei o pq
 }
