@@ -80,7 +80,20 @@ public class Editora {
 	}
 
 	public boolean equals(Editora editora) {
-		return id == editora.getId();
+		if (this == editora)
+			return true;
+
+		if (editora == null)
+			return false;
+
+		if (getClass() != editora.getClass())
+			return false;
+
+		Editora novaEditora = (Editora) editora;
+		if ((id == null && novaEditora.getId() != null) || !id.equals(novaEditora.getId()))
+			return false;
+
+		return true;
 	}
 	
 	@Override
