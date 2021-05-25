@@ -61,7 +61,7 @@ public class Pedido {
 	@Column(name = "LOCAL_ENTREGA")
 	private String localDeEntrega;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private FormaPagamento formaPagamento; 
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
