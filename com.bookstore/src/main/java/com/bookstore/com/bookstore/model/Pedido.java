@@ -61,12 +61,13 @@ public class Pedido {
 	@Column(name = "LOCAL_ENTREGA")
 	private String localDeEntrega;
 
-	@OneToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
+	@JoinColumn(name = "FORMA_PAGAMENTO_FK")
 	private FormaPagamento formaPagamento; 
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "PEDIDO_FK")
-	private Set<Livro> livros = new LinkedHashSet<Livro>(); 
+	private Set<ItemPedido> itensPedidos = new LinkedHashSet<ItemPedido>(); 
 	
 	public Pedido() {
 		
@@ -77,31 +78,32 @@ public class Pedido {
 	
 	
 	/**
-	 * Método responsável por adicionar um livro de cada vez ao pedido.
-	 * @param livro que o usuário deseja comprar.
+	 * Método responsável por adicionar um itemPedido de cada vez ao pedido.
+	 * @param itemPedido que o usuário deseja adicionar.
 	 */
-	public void adicionarLivro(Livro livro) {
+	public void adicionarItemPedido(ItemPedido itemPedido) {
 		
-		livros.add(livro);
-		qntdItens += 1;
-		this.valorItensTotal = livro.getPreco().add(valorItensTotal);
+		itensPedidos.add(itemPedido);
+		qntdItens += itemPedido.getQuantidade();
+		this.valorItensTotal = valorItensTotal.add(itemPedido.getValorTotalItemPedido());
 	}
 	
 	/**
-	 * Esse método remove um livro que já foi adicionado ao pedido.
-	 * @param ISBN é o "código" do livro a ser removido.
+	 * Esse método remove um itemPedido que já foi adicionado ao pedido.
+	 * @param ID é o "código" do itemPedido a ser removido.
 	 */
-	public void removerLivro(Long ISBN) {
+	public void removerItemPedido(Long ID) {
 		
-		Iterator<Livro> livrosIterator = livros.iterator();
-		while(livrosIterator.hasNext()) {
+		Iterator<ItemPedido> itensPedidosIterator = itensPedidos.iterator();
+		while(itensPedidosIterator.hasNext()) {
 			
-			Livro livro = livrosIterator.next();
-			if(livro.getISBN()== ISBN) {
+			ItemPedido itemPedido = itensPedidosIterator.next();
+			if(itemPedido.getID()== ID) {
 				
-				valorItensTotal = valorItensTotal.subtract(livro.getPreco()); //diminuir o valor do livro removido, do valor total
-				livros.remove(livro);
-				qntdItens -= 1;
+				valorItensTotal = valorItensTotal.subtract(itemPedido.getValorTotalItemPedido()); //diminuir o valor do livro removido, do valor total
+				qntdItens -= itemPedido.getQuantidade();
+				itensPedidos.remove(itemPedido);
+				
 			}
 		}
 	}
@@ -115,9 +117,9 @@ public class Pedido {
 		
 		StringBuffer valoresIndividuais = new StringBuffer();
 		
-		for(Livro livro: livros) {
+		for(ItemPedido itemPedido: itensPedidos) {
 			
-			valoresIndividuais.append(livro.getTitulo() +" :"+ livro.getPreco());
+			valoresIndividuais.append(itemPedido.getLivro().getTitulo() +" :"+ itemPedido.getValorIndividual());
 		}
 		
 		return valoresIndividuais;
@@ -133,10 +135,10 @@ public class Pedido {
 		
 		String valorIndividual = new String();
 		
-		for(Livro livro: livros) {
+		for(ItemPedido itemPedido: itensPedidos) {
 			
-			if(livro.getISBN() == ISBN) {
-				valorIndividual = livro.getTitulo() +" :"+ livro.getPreco();
+			if(itemPedido.getLivro().getISBN() == ISBN) {
+				valorIndividual = itemPedido.getLivro().getTitulo() +" :"+ itemPedido.getValorIndividual();
 				break;
 			}
 		}
@@ -201,11 +203,11 @@ public class Pedido {
 	public void setFormaPagamento(FormaPagamento formaPagamento) {
 		this.formaPagamento = formaPagamento;
 	}
-	public Set<Livro> getLivros() {
-		return livros;
+	public Set<ItemPedido> getItemPedidos() {
+		return itensPedidos;
 	}
-	public void setLivros(Set<Livro> livros) {
-		this.livros = livros;
+	public void setLivros(Set<ItemPedido> itensPedidos) {
+		this.itensPedidos = itensPedidos;
 	}
 	
 	@Override

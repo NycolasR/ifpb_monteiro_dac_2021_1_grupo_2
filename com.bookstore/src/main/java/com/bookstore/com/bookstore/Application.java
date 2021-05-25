@@ -76,7 +76,7 @@ public class Application implements CommandLineRunner {
 		livro2.addCategoria(Categoria.CLASSICO);
 		livro2.addCategoria(Categoria.ENGENHARIA);
 		
-		livro1.setImageFile(new File("C:\\Users\\Nyk\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
+		livro1.setImageFile(new File("C:\\Users\\Gabriel\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
 		
 		Editora editora1 = new Editora("Editora 1", "Cidade 1");
 		editora1.addLivro(livro1);

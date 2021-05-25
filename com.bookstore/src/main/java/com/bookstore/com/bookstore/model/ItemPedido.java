@@ -5,11 +5,22 @@ import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Essa classe visa facilitar a relação entre as classes Pedido e Livro
+ *
+ */
 
 @Entity
 @Table(name = "TB_ITEM_PEDIDO")
@@ -26,8 +37,8 @@ public class ItemPedido {
 	@Column(name = "VALOR_TOTAL")
 	private BigDecimal valorTotalItemPedido;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
-	@Column(name = "LIVRO_FK")
+	@ManyToOne
+	@JoinColumn(name = "LIVRO_FK")
 	private Livro livro;
 	
 	public ItemPedido(Integer quantidade, Livro livro) {
@@ -62,6 +73,10 @@ public class ItemPedido {
 		
 	public BigDecimal getValorTotalItemPedido() {
 		return valorTotalItemPedido;
+	}
+	
+	public BigDecimal getValorIndividual() {
+		return livro.getPreco();
 	}
 	
 	private void atualizarValorTotal() {
