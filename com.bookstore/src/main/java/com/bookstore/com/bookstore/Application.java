@@ -10,18 +10,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.bookstore.com.bookstore.model.Categoria;
 import com.bookstore.com.bookstore.model.Editora;
-import com.bookstore.com.bookstore.model.Estoque;
 import com.bookstore.com.bookstore.model.Livro;
+import com.bookstore.com.bookstore.model.RegistroVendas;
+import com.bookstore.com.bookstore.model.Usuario;
+
 import com.bookstore.com.bookstore.service.EditoraService;
-import com.bookstore.com.bookstore.service.EstoqueService;
-import com.bookstore.com.bookstore.service.LivroService;
+import com.bookstore.com.bookstore.service.RegistroVendasService;
+import com.bookstore.com.bookstore.service.UsuarioService;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 	
-	private EstoqueService estoqueService;
-	private LivroService livroService;
 	private EditoraService editoraService;
+	private UsuarioService usuarioService;
+	private RegistroVendasService registroVendasService;
 	
 	private Livro livro1;
 	private Livro livro2;
@@ -30,14 +32,20 @@ public class Application implements CommandLineRunner {
 	private Livro livro5;
 	private Livro livro6;
 	
+	private Usuario cliente1;
+	private Usuario cliente2;
+	private Usuario cliente3;
+	
 	public Application(
-			EstoqueService estoqueService,
-			LivroService livroService,
-			EditoraService editoraService) {
+			EditoraService editoraService,
+			UsuarioService usuarioService,
+			RegistroVendasService registroVendasService) {
 		
-		this.estoqueService = estoqueService;
-		this.livroService = livroService;
+//		this.registroVendas = registroVendas;
+//		this.livroService = livroService;
 		this.editoraService = editoraService;
+		this.usuarioService = usuarioService;
+		this.registroVendasService = registroVendasService;
 	}
 
 	public static void main(String[] args) {
@@ -53,12 +61,12 @@ public class Application implements CommandLineRunner {
 
 	private void main_nycolas() {
 		
-		livro1 = new Livro(111l, "Titulo 1", "Descrição 1", new BigDecimal("10"), 1, LocalDate.of(2015, 12, 1));
-		livro2 = new Livro(222l, "Titulo 2", "Descrição 2", new BigDecimal("20"), 2, LocalDate.of(2015, 12, 2));
-		livro3 = new Livro(333l, "Titulo 3", "Descrição 3", new BigDecimal("30"), 3, LocalDate.of(2015, 12, 3));
-		livro4 = new Livro(444l, "Titulo 4", "Descrição 4", new BigDecimal("40"), 4, LocalDate.of(2015, 12, 4));
-		livro5 = new Livro(555l, "Titulo 5", "Descrição 5", new BigDecimal("50"), 5, LocalDate.of(2015, 12, 5));
-		livro6 = new Livro(666l, "Titulo 6", "Descrição 6", new BigDecimal("60"), 6, LocalDate.of(2015, 12, 6));
+		livro1 = new Livro(111l, "Titulo 1", "Descrição 1", new BigDecimal("10"), 1, LocalDate.of(2015, 12, 1), 10);
+		livro2 = new Livro(222l, "Titulo 2", "Descrição 2", new BigDecimal("20"), 2, LocalDate.of(2015, 12, 2), 20);
+		livro3 = new Livro(333l, "Titulo 3", "Descrição 3", new BigDecimal("30"), 3, LocalDate.of(2015, 12, 3), 30);
+		livro4 = new Livro(444l, "Titulo 4", "Descrição 4", new BigDecimal("40"), 4, LocalDate.of(2015, 12, 4), 40);
+		livro5 = new Livro(555l, "Titulo 5", "Descrição 5", new BigDecimal("50"), 5, LocalDate.of(2015, 12, 5), 50);
+		livro6 = new Livro(666l, "Titulo 6", "Descrição 6", new BigDecimal("60"), 6, LocalDate.of(2015, 12, 6), 60);
 		
 		livro1.addCategoria(Categoria.AVENTURA);
 		livro1.addCategoria(Categoria.AVENTURA);
@@ -83,28 +91,59 @@ public class Application implements CommandLineRunner {
 		editoraService.salvar(editora1);
 		editoraService.salvar(editora2);
 		
-		testarEstoque();
+		criarClientes();
+		
+		testarRegistroVendas();
 		
 		System.out.println("Deu certo");
 		
 	}
 
-	private void testarEstoque() {
-		Estoque estoque = new Estoque();
-		estoque.adicionarLivro(livroService.recuperarPeloISBN(111l));
-		estoque.adicionarLivro(livroService.recuperarPeloISBN(222l));
-		estoque.adicionarLivro(livroService.recuperarPeloISBN(333l));
-		estoque.adicionarLivro(livroService.recuperarPeloISBN(444l));
-
-		try {
-			estoque.excluirLivro(livroService.recuperarPeloISBN(111l));
-			estoque.excluirLivro(livroService.recuperarPeloISBN(222l));
-			estoque.excluirLivro(livroService.recuperarPeloISBN(333l));
-			estoque.excluirLivro(livroService.recuperarPeloISBN(444l));
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
+	private void criarClientes() {
+		cliente1 = new Usuario();
+		cliente1.setNome("Cliente 1");
+		cliente1.setEmail("cliente1@email.com");
+		cliente1.setSenha("senha1");
+		cliente1.setAdmin(false);
 		
-		estoqueService.salvar(estoque);
+		cliente2 = new Usuario();
+		cliente2.setNome("Cliente 2");
+		cliente2.setEmail("cliente2@email.com");
+		cliente2.setSenha("senha2");
+		cliente2.setAdmin(false);
+		
+		cliente3 = new Usuario();
+		cliente3.setNome("Cliente 3");
+		cliente3.setEmail("cliente3@email.com");
+		cliente3.setSenha("senha3");
+		cliente3.setAdmin(false);
+		
+		usuarioService.salvar(cliente1);
+		usuarioService.salvar(cliente2);
+		usuarioService.salvar(cliente3);
+	}
+
+	private void testarRegistroVendas() {
+		RegistroVendas registro1 = new RegistroVendas(LocalDate.now(), livro1, cliente1, 15, new BigDecimal("15.5"));
+		RegistroVendas registro2 = new RegistroVendas(LocalDate.now(), livro2, cliente2, 15, new BigDecimal("30.5"));
+		RegistroVendas registro3 = new RegistroVendas(LocalDate.now(), livro3, cliente3, 15, new BigDecimal("45.5"));
+		
+		registroVendasService.salvar(registro1);
+		registroVendasService.salvar(registro2);
+		registroVendasService.salvar(registro3);
+		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
@@ -24,6 +26,12 @@ import javax.persistence.Table;
 public class Livro {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
+	
+	@Column(name = "QNTD_ESTOQUE")
+	private Integer quantidadeEmEstoque;
+	
 	@Column(name = "ISBN")
 	private Long isbn;
 
@@ -55,17 +63,33 @@ public class Livro {
 	@ManyToMany(mappedBy = "livros")
 	private Set<Autor> autores = new LinkedHashSet<Autor>();
 
-	public Livro(Long isbn, String titulo, String descricao, BigDecimal preco, Integer edicao, LocalDate anoPublicacao) {
+	public Livro(
+			Long isbn,
+			String titulo,
+			String descricao,
+			BigDecimal preco,
+			Integer edicao,
+			LocalDate anoPublicacao,
+			Integer quantidadeEmEstoque) {
 		this.isbn = isbn;
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.edicao = edicao;
 		this.anoPublicacao = anoPublicacao;
+		this.quantidadeEmEstoque = quantidadeEmEstoque;
 	}
 	
 	public Livro() {
 		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getISBN() {
@@ -151,7 +175,20 @@ public class Livro {
 	}
 
 	public boolean equals(Livro livro) {
-		return this.isbn.equals(livro.getISBN());
+		if (this == livro)
+			return true;
+
+		if (livro == null)
+			return false;
+
+		if (getClass() != livro.getClass())
+			return false;
+
+		Livro novoLivro = (Livro) livro;
+		if ((id == null && novoLivro.getId() != null) || !id.equals(novoLivro.getId()))
+			return false;
+
+		return true;
 	}
 
 	@Override
@@ -161,6 +198,7 @@ public class Livro {
 				+ "\n	Descrição: " + descricao
 				+ "\n	Preço: R$" + preco
 				+ "\n	Edição: " + edicao
-				+ "\n	Ano de Publicação: " + anoPublicacao;
+				+ "\n	Ano de Publicação: " + anoPublicacao
+				+ "\n	Quantidade disponível no estoque: " + quantidadeEmEstoque;
 	}
 }
