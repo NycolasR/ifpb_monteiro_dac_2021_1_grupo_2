@@ -1,5 +1,7 @@
 package com.bookstore.com.bookstore.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +23,9 @@ public class ItemPedido {
 	@Column(name = "QUANTIDADE")
 	private Integer quantidade;
 	
+	@Column(name = "VALOR_TOTAL")
+	private BigDecimal valorTotalItemPedido;
+	
 	@OneToOne(cascade = CascadeType.MERGE)
 	@Column(name = "LIVRO_FK")
 	private Livro livro;
@@ -28,6 +33,7 @@ public class ItemPedido {
 	public ItemPedido(Integer quantidade, Livro livro) {
 		this.quantidade = quantidade;
 		this.livro = livro;
+		atualizarValorTotal();
 	}
 	
 	public ItemPedido() {}
@@ -42,6 +48,7 @@ public class ItemPedido {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+		atualizarValorTotal();
 	}
 
 	public Livro getLivro() {
@@ -49,9 +56,18 @@ public class ItemPedido {
 	}
 
 	public void setLivro(Livro livro) {
-		this.livro = livro;
+		this.livro = livro;		
+		atualizarValorTotal();
+	}
+		
+	public BigDecimal getValorTotalItemPedido() {
+		return valorTotalItemPedido;
 	}
 	
+	private void atualizarValorTotal() {
+		this.valorTotalItemPedido = valorTotalItemPedido.multiply(new BigDecimal(quantidade));
+	}
+
 	@Override
 	public String toString() {
 		
