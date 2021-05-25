@@ -1,5 +1,6 @@
 package com.bookstore.com.bookstore.model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,16 +40,16 @@ public class Usuario {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "USUARIO_FK", nullable = false)
-	private List<Endereco> enderecos;
+	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "usuario")
 	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
 
-	public Long getId() {
+	private Long getId() {
 		return id;
 	}
 
-	public void setId(Long iD) {
+	private void setId(Long iD) {
 		id = iD;
 	}
 
@@ -90,6 +91,10 @@ public class Usuario {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+	
+	public void addEndereco(Endereco endereco) {
+		enderecos.add(endereco);
 	}
 	
 	public Set<Pedido> getPedidos() {
