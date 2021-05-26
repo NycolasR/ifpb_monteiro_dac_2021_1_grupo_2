@@ -3,7 +3,10 @@ package com.bookstore.com.bookstore;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 import java.util.Scanner;
+
+import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,12 +14,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.bookstore.com.bookstore.model.Categoria;
 import com.bookstore.com.bookstore.model.Editora;
+import com.bookstore.com.bookstore.model.Endereco;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.model.RegistroVendas;
 import com.bookstore.com.bookstore.model.Usuario;
 
 import com.bookstore.com.bookstore.service.EditoraService;
 import com.bookstore.com.bookstore.service.LivroService;
+import com.bookstore.com.bookstore.service.EnderecoService;
 import com.bookstore.com.bookstore.service.RegistroVendasService;
 import com.bookstore.com.bookstore.service.UsuarioService;
 
@@ -30,6 +35,16 @@ public class Application implements CommandLineRunner {
 	
 	private Livro livro1, livro2, livro3, livro4, livro5, livro6;
 	private Usuario cliente1, cliente2, cliente3;
+
+	private Usuario cliente4;
+	private Usuario cliente5;
+	private Usuario cliente6;
+	
+	private Usuario clienteTeste;
+	
+	private Endereco endereco1;
+	private Endereco endereco2;
+	private Endereco endereco3;
 	
 	public Application(
 			EditoraService editoraService,
@@ -41,6 +56,7 @@ public class Application implements CommandLineRunner {
 		this.editoraService = editoraService;
 		this.usuarioService = usuarioService;
 		this.registroVendasService = registroVendasService;
+		
 	}
 
 	public static void main(String[] args) {
@@ -50,8 +66,9 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+
 //		main_nycolas();
-		
+		//main_Pedro();
 		main_app();
 	}
 
@@ -59,8 +76,8 @@ public class Application implements CommandLineRunner {
 		boolean flag = true;
 
 		Scanner input = new Scanner(System.in);
-		
-		//Menu
+
+			//Menu
 		while(flag) {
 			
 			System.out.print(
@@ -115,6 +132,25 @@ public class Application implements CommandLineRunner {
 
 		input.close();
 	}
+	
+	private void main_Pedro() {
+		
+		usuarioService.excluirTudo();
+		
+		criarClientes();
+		criarClientesComEndereco();
+		excluirClientes();
+		
+		List<Usuario> userResult = usuarioService.usuarioPorEmail("cliente5@email.com");
+		for(Usuario u : userResult) {
+			List<Endereco> enderecos = u.getEnderecos();
+			System.out.println(u.getNome());
+			System.out.println(enderecos.get(0).toString());
+		}
+
+		
+		
+	}
 
 	private void main_nycolas() {
 		
@@ -133,7 +169,7 @@ public class Application implements CommandLineRunner {
 		livro2.addCategoria(Categoria.CLASSICO);
 		livro2.addCategoria(Categoria.ENGENHARIA);
 		
-		livro1.setImageFile(new File("C:\\Users\\Nyk\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
+//		livro1.setImageFile(new File("C:\\Users\\Nyk\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
 		
 		Editora editora1 = new Editora("Editora 1", "Cidade 1");
 		editora1.addLivro(livro1);
@@ -175,11 +211,99 @@ public class Application implements CommandLineRunner {
 		cliente3.setSenha("senha3");
 		cliente3.setAdmin(false);
 		
-		usuarioService.salvar(cliente1);
-		usuarioService.salvar(cliente2);
-		usuarioService.salvar(cliente3);
+		try {
+			usuarioService.salvar(cliente1);
+			usuarioService.salvar(cliente2);
+			usuarioService.salvar(cliente3);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());;
+		}
+		
+//		Teste da verificação de email duplicados
+		
+//		clienteTeste = new Usuario();
+//		clienteTeste.setNome("Cliente Teste");
+//		clienteTeste.setEmail("clienteTeste@email.com");
+//		clienteTeste.setSenha("senhaTeste");
+//		clienteTeste.setAdmin(false);
+//		
+//		try {
+//			usuarioService.salvar(clienteTeste);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());;
+//		}
+		
 	}
 
+	private void criarClientesComEndereco() {
+		
+		endereco1 = new Endereco();
+		endereco1.setBairro("bairro 1");
+		endereco1.setCEP(11111111);
+		endereco1.setCidade("cidade 1");
+		endereco1.setComplemento("comp 1");
+		endereco1.setNumero(001);
+		endereco1.setRua("Rua 1");
+		endereco1.setUF("PB");;
+		
+		endereco2 = new Endereco();
+		endereco2.setBairro("bairro 2");
+		endereco2.setCEP(22222222);
+		endereco2.setCidade("cidade 2");
+		endereco2.setComplemento("comp 2");
+		endereco2.setNumero(002);
+		endereco2.setRua("Rua 2");
+		endereco2.setUF("PB");;
+		
+		endereco3 = new Endereco();
+		endereco3.setBairro("bairro 3");
+		endereco3.setCEP(33333333);
+		endereco3.setCidade("cidade 3");
+		endereco3.setComplemento("comp 3");
+		endereco3.setNumero(003);
+		endereco3.setRua("Rua 3");
+		endereco3.setUF("PB");;
+		
+		
+		cliente4 = new Usuario();
+		cliente4.setNome("Cliente 4");
+		cliente4.setEmail("cliente4@email.com");
+		cliente4.addEndereco(endereco1);
+		cliente4.setSenha("senha4");
+		cliente4.setAdmin(false);
+		
+		cliente5 = new Usuario();
+		cliente5.setNome("Cliente 5");
+		cliente5.setEmail("cliente5@email.com");
+		cliente5.addEndereco(endereco2);
+		cliente5.setSenha("senha5");
+		cliente5.setAdmin(false);
+		
+		cliente6 = new Usuario();
+		cliente6.setNome("Cliente 6");
+		cliente6.setEmail("cliente6@email.com");
+		cliente6.addEndereco(endereco3);
+		cliente6.setSenha("senha6");
+		cliente6.setAdmin(false);
+		
+		try {
+		usuarioService.salvar(cliente4);
+		usuarioService.salvar(cliente5);
+		usuarioService.salvar(cliente6);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());;
+		}
+		
+	}
+	
+	private void excluirClientes() {
+		
+		Usuario clienteExc = usuarioService.usuarioPorEmail("cliente4@email.com").get(0);
+		
+		usuarioService.excluir(clienteExc);
+		
+	}
+	
 	private void testarRegistroVendas() {
 		RegistroVendas registro1 = new RegistroVendas(LocalDate.now(), livro1, cliente1, 15, new BigDecimal("15.5"));
 		RegistroVendas registro2 = new RegistroVendas(LocalDate.now(), livro2, cliente2, 15, new BigDecimal("30.5"));
