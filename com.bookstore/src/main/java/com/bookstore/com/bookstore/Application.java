@@ -3,6 +3,7 @@ package com.bookstore.com.bookstore;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,7 @@ import com.bookstore.com.bookstore.model.RegistroVendas;
 import com.bookstore.com.bookstore.model.Usuario;
 
 import com.bookstore.com.bookstore.service.EditoraService;
+import com.bookstore.com.bookstore.service.LivroService;
 import com.bookstore.com.bookstore.service.RegistroVendasService;
 import com.bookstore.com.bookstore.service.UsuarioService;
 
@@ -24,25 +26,18 @@ public class Application implements CommandLineRunner {
 	private EditoraService editoraService;
 	private UsuarioService usuarioService;
 	private RegistroVendasService registroVendasService;
+	private LivroService livroService;
 	
-	private Livro livro1;
-	private Livro livro2;
-	private Livro livro3;
-	private Livro livro4;
-	private Livro livro5;
-	private Livro livro6;
-	
-	private Usuario cliente1;
-	private Usuario cliente2;
-	private Usuario cliente3;
+	private Livro livro1, livro2, livro3, livro4, livro5, livro6;
+	private Usuario cliente1, cliente2, cliente3;
 	
 	public Application(
 			EditoraService editoraService,
 			UsuarioService usuarioService,
-			RegistroVendasService registroVendasService) {
+			RegistroVendasService registroVendasService,
+			LivroService livroService) {
 		
-//		this.registroVendas = registroVendas;
-//		this.livroService = livroService;
+		this.livroService = livroService;
 		this.editoraService = editoraService;
 		this.usuarioService = usuarioService;
 		this.registroVendasService = registroVendasService;
@@ -55,8 +50,70 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		main_nycolas();
+//		main_nycolas();
 		
+		main_app();
+	}
+
+	private void main_app() {
+		boolean flag = true;
+
+		Scanner input = new Scanner(System.in);
+		
+		//Menu
+		while(flag) {
+			
+			System.out.print(
+					"\n0 - Sair"
+					+"\n1 - Registrar novo usuário"
+					+"\n2 - Consultar usuário pelo e-mail"
+					+"\n3 - Cadastrar e alterar autor"
+					+"\n4 - Cadastrar, alterar e excluir livro"
+					+"\n5 - Cadastrar um livro do catálogo ao estoque"
+					+"\n6 - Consultar os 5 livros mais baratos disponíveis no estoque"
+					+"\n7 - Consultar todos os livros ordenados de forma ascendente pelo título de forma paginada"
+					+"\n8 - Adicionar um livro a um pedido (carrinho de compras)"
+					+ "\nOpção: ");
+			
+			int opcao = Integer.parseInt(input.nextLine());
+			
+			switch(opcao) {
+
+			case 1: 
+				
+				break;
+
+			case 2:
+
+				break;
+
+			case 3:
+
+				break;
+
+			case 4:
+
+				break;
+			case 5:
+
+				break;
+			case 6:
+
+				break;
+			case 7:
+
+				break;
+			case 8:
+
+				break;
+
+			default:
+				System.out.println("\n\n << EXECUÇÃO DO PROGRAMA FINALIZADA >>");
+				flag = false;
+			}
+		}
+
+		input.close();
 	}
 
 	private void main_nycolas() {

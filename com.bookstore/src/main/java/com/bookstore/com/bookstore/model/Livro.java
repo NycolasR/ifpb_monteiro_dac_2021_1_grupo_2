@@ -26,7 +26,7 @@ import javax.persistence.Table;
 public class Livro {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "QNTD_ESTOQUE")
