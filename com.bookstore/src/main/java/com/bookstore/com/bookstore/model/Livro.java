@@ -3,7 +3,6 @@ package com.bookstore.com.bookstore.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -26,7 +25,7 @@ import javax.persistence.Table;
 public class Livro {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "QNTD_ESTOQUE")
@@ -52,7 +51,7 @@ public class Livro {
 	private Integer edicao;
 
 	@Column(name = "ANO_PUBLICACAO")
-	private LocalDate anoPublicacao;
+	private Integer anoPublicacao;
 	
 	@ElementCollection(fetch = FetchType.LAZY, targetClass = Categoria.class)
 	@Enumerated(EnumType.STRING)
@@ -69,7 +68,7 @@ public class Livro {
 			String descricao,
 			BigDecimal preco,
 			Integer edicao,
-			LocalDate anoPublicacao,
+			Integer anoPublicacao,
 			Integer quantidadeEmEstoque) {
 		this.isbn = isbn;
 		this.titulo = titulo;
@@ -141,10 +140,10 @@ public class Livro {
 		this.edicao = edicao;
 	}
 
-	public LocalDate getAnoPublicacao() {
+	public Integer getAnoPublicacao() {
 		return anoPublicacao;
 	}
-	public void setAnoPublicacao(LocalDate anoPublicacao) {
+	public void setAnoPublicacao(Integer anoPublicacao) {
 		this.anoPublicacao = anoPublicacao;
 	}
 	
@@ -193,12 +192,12 @@ public class Livro {
 
 	@Override
 	public String toString() {
-		return "Dados do Livro " + titulo + ": "
-				+ "\n	ISBN: " + isbn
-				+ "\n	Descrição: " + descricao
-				+ "\n	Preço: R$" + preco
-				+ "\n	Edição: " + edicao
-				+ "\n	Ano de Publicação: " + anoPublicacao
-				+ "\n	Quantidade disponível no estoque: " + quantidadeEmEstoque;
+		return "\n\nDados do Livro " + titulo + ": "
+				+ "\nISBN: " + isbn
+				+ "\nDescrição: " + descricao
+				+ "\nPreço: R$" + preco
+				+ "\nEdição: " + edicao
+				+ "\nAno de Publicação: " + anoPublicacao
+				+ "\nQuantidade disponível no estoque: " + quantidadeEmEstoque;
 	}
 }

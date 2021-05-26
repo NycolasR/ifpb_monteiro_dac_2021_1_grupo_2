@@ -28,7 +28,7 @@ public class Editora {
 	@Column(name = "CIDADE")
 	private String cidade;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "EDITORA_FK", nullable = false)
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
 	
@@ -98,10 +98,10 @@ public class Editora {
 	
 	@Override
 	public String toString() {
-		String dadosEditora = "Dados da Editora " + nome + ": "
-				+ "\n	ID: " + id
-				+ "\n	Cidade: " + cidade
-				+ "\n	Livros: ";
+		String dadosEditora = "\n\nDados da Editora " + nome + ": "
+				+ "\nID: " + id
+				+ "\nCidade: " + cidade
+				+ "\nLivros: ";
 		
 		for (Livro livro : livros) {
 			dadosEditora += livro.toString();

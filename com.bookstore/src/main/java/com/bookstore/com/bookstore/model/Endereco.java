@@ -22,7 +22,7 @@ public class Endereco {
 	private String rua;
 	
 	@Column(name = "NUMERO")
-	private String numero;
+	private Integer numero;
 	
 	@Column(name = "BAIRRO")
 	private String bairro;
@@ -52,10 +52,10 @@ public class Endereco {
 	public void setRua(String rua) {
 		this.rua = rua;
 	}
-	public String getNumero() {
+	public Integer getNumero() {
 		return numero;
 	}
-	public void setNumero(String numero) {
+	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
 	public String getBairro() {
