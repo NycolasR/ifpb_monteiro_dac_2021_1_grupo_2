@@ -7,10 +7,13 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 import com.bookstore.com.bookstore.model.Categoria;
 import com.bookstore.com.bookstore.model.Editora;
@@ -34,17 +37,13 @@ public class Application implements CommandLineRunner {
 	private LivroService livroService;
 	
 	private Livro livro1, livro2, livro3, livro4, livro5, livro6;
-	private Usuario cliente1, cliente2, cliente3;
-
-	private Usuario cliente4;
-	private Usuario cliente5;
-	private Usuario cliente6;
+	private Livro livro7, livro8, livro9, livro10, livro11, livro12;
+	
+	private Usuario cliente1, cliente2, cliente3, cliente4, cliente5, cliente6;
 	
 	private Usuario clienteTeste;
 	
-	private Endereco endereco1;
-	private Endereco endereco2;
-	private Endereco endereco3;
+	private Endereco endereco1, endereco2, endereco3;
 	
 	public Application(
 			EditoraService editoraService,
@@ -65,11 +64,9 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
-
-//		main_nycolas();
-		//main_Pedro();
-		main_app();
+		main_nycolas();
+//		main_Pedro();
+//		main_app();
 	}
 
 	private void main_app() {
@@ -77,7 +74,6 @@ public class Application implements CommandLineRunner {
 
 		Scanner input = new Scanner(System.in);
 
-			//Menu
 		while(flag) {
 			
 			System.out.print(
@@ -154,41 +150,57 @@ public class Application implements CommandLineRunner {
 
 	private void main_nycolas() {
 		
-		livro1 = new Livro(111l, "Titulo 1", "Descrição 1", new BigDecimal("10"), 1, LocalDate.of(2015, 12, 1), 10);
-		livro2 = new Livro(222l, "Titulo 2", "Descrição 2", new BigDecimal("20"), 2, LocalDate.of(2015, 12, 2), 20);
-		livro3 = new Livro(333l, "Titulo 3", "Descrição 3", new BigDecimal("30"), 3, LocalDate.of(2015, 12, 3), 30);
-		livro4 = new Livro(444l, "Titulo 4", "Descrição 4", new BigDecimal("40"), 4, LocalDate.of(2015, 12, 4), 40);
-		livro5 = new Livro(555l, "Titulo 5", "Descrição 5", new BigDecimal("50"), 5, LocalDate.of(2015, 12, 5), 50);
-		livro6 = new Livro(666l, "Titulo 6", "Descrição 6", new BigDecimal("60"), 6, LocalDate.of(2015, 12, 6), 60);
+		livro1 = new Livro(111l, "Titulo 1", "Descrição 1", new BigDecimal("10"), 1, 2015, 10);
+		livro2 = new Livro(222l, "Titulo 2", "Descrição 2", new BigDecimal("20"), 2, 2015, 20);
+		livro3 = new Livro(333l, "Titulo 3", "Descrição 3", new BigDecimal("30"), 3, 2015, 30);
+		livro4 = new Livro(444l, "Titulo 4", "Descrição 4", new BigDecimal("40"), 4, 2015, 40);
+		livro5 = new Livro(555l, "Titulo 5", "Descrição 5", new BigDecimal("50"), 5, 2015, 50);
+		livro6 = new Livro(666l, "Titulo 6", "Descrição 6", new BigDecimal("60"), 6, 2015, 60);
 		
-		livro1.addCategoria(Categoria.AVENTURA);
-		livro1.addCategoria(Categoria.AVENTURA);
-		livro1.addCategoria(Categoria.FICCAO_CIENTIFICA);
+		livro7 = new Livro(777l, "Titulo 7", "Descrição 7", new BigDecimal("70"), 7, 2015, 70);
+		livro8 = new Livro(888l, "Titulo 8", "Descrição 8", new BigDecimal("80"), 8, 2015, 80);
+		livro9 = new Livro(999l, "Titulo 9", "Descrição 9", new BigDecimal("90"), 9, 2015, 90);
+		livro10 = new Livro(101l, "Titulo 10", "Descrição 10", new BigDecimal("100"), 10, 2015, 100);
+		livro11 = new Livro(111l, "Titulo 11", "Descrição 11", new BigDecimal("110"), 11, 2015, 110);
+		livro12 = new Livro(121l, "Titulo 12", "Descrição 12", new BigDecimal("120"), 12, 2015, 120);
 		
-		livro2.addCategoria(Categoria.BIOGRAFIA);
-		livro2.addCategoria(Categoria.CLASSICO);
-		livro2.addCategoria(Categoria.ENGENHARIA);
+//		livro1.addCategoria(Categoria.AVENTURA);
+//		livro1.addCategoria(Categoria.AVENTURA);
+//		livro1.addCategoria(Categoria.FICCAO_CIENTIFICA);
+//		
+//		livro2.addCategoria(Categoria.BIOGRAFIA);
+//		livro2.addCategoria(Categoria.CLASSICO);
+//		livro2.addCategoria(Categoria.ENGENHARIA);
 		
 //		livro1.setImageFile(new File("C:\\Users\\Nyk\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
 		
 		Editora editora1 = new Editora("Editora 1", "Cidade 1");
 		editora1.addLivro(livro1);
 		editora1.addLivro(livro2);
-		editora1.addLivro(livro3);
+		editora1.addLivro(livro3);		
+		editora1.addLivro(livro4);
+		editora1.addLivro(livro5);
+		editora1.addLivro(livro6);
 		
 		Editora editora2 = new Editora("Editora 2", "Cidade 2");
-		editora2.addLivro(livro4);
-		editora2.addLivro(livro5);
-		editora2.addLivro(livro6);
+		editora2.addLivro(livro7);
+		editora2.addLivro(livro8);
+		editora2.addLivro(livro9);		
+		editora2.addLivro(livro10);
+		editora2.addLivro(livro11);
+		editora2.addLivro(livro12);
 		
-		editoraService.salvar(editora1);
-		editoraService.salvar(editora2);
+//		editoraService.salvar(editora1);
+//		editoraService.salvar(editora2);
 		
-		criarClientes();
+		Page<Livro> livros = livroService.listarLivros("preco", Sort.Direction.DESC, 3);
+		System.out.println(livros.toList());
 		
-		testarRegistroVendas();
 		
-		System.out.println("Deu certo");
+//		criarClientes();
+//		testarRegistroVendas();
+		
+		System.err.println("\nDeu certo\n");
 		
 	}
 
