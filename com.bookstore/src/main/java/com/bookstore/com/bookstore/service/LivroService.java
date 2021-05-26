@@ -16,7 +16,11 @@ public class LivroService {
 		livroRepository.save(livro);
 	}
 	
-	public Livro recuperarPeloISBN(Long isbn) {
-		return livroRepository.findById(isbn).get();
+	public Livro recuperarPeloId(Long id) {
+		return livroRepository.findById(id).get();
+	}
+	
+	public void atualizar(Livro livro) {
+		
 	}
 }
