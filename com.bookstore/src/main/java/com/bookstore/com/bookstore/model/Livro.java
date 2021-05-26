@@ -198,6 +198,6 @@ public class Livro {
 				+ "\nPreço: R$" + preco
 				+ "\nEdição: " + edicao
 				+ "\nAno de Publicação: " + anoPublicacao
-				+ "\nQuantidade disponível no estoque: " + quantidadeEmEstoque;
+				+ "\nQuantidade disponível no estoque: " + quantidadeEmEstoque + " unidades";
 	}
 }

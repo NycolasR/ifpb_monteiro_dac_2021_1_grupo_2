@@ -1,6 +1,5 @@
 package com.bookstore.com.bookstore;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,7 +14,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
-import com.bookstore.com.bookstore.model.Categoria;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Endereco;
 import com.bookstore.com.bookstore.model.Livro;
@@ -165,15 +163,15 @@ public class Application implements CommandLineRunner {
 		livro12 = new Livro(121l, "Titulo 12", "Descrição 12", new BigDecimal("120"), 12, 2015, 120);
 		
 //		livro1.addCategoria(Categoria.AVENTURA);
-//		livro1.addCategoria(Categoria.AVENTURA);
 //		livro1.addCategoria(Categoria.FICCAO_CIENTIFICA);
-//		
 //		livro2.addCategoria(Categoria.BIOGRAFIA);
 //		livro2.addCategoria(Categoria.CLASSICO);
 //		livro2.addCategoria(Categoria.ENGENHARIA);
 		
 //		livro1.setImageFile(new File("C:\\Users\\Nyk\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
 
+		
+		
 		
 		Editora editora1 = new Editora("Editora 1", "Cidade 1");
 		editora1.addLivro(livro1);
@@ -191,12 +189,32 @@ public class Application implements CommandLineRunner {
 		editora2.addLivro(livro11);
 		editora2.addLivro(livro12);
 		
-//		editoraService.salvar(editora1);
-//		editoraService.salvar(editora2);
+//		livroService.salvarLivro(livro1);
+//		livroService.salvarLivro(livro2);
+//		livroService.salvarLivro(livro3);
+//		livroService.salvarLivro(livro4);
+//		livroService.salvarLivro(livro5);
+//		livroService.salvarLivro(livro6);
+//		livroService.salvarLivro(livro7);
+//		livroService.salvarLivro(livro8);
+//		livroService.salvarLivro(livro9);
+//		livroService.salvarLivro(livro10);
+//		livroService.salvarLivro(livro11);
+//		livroService.salvarLivro(livro12);
+//		editoraService.salvarEditora(editora1);
+//		editoraService.salvarEditora(editora2);
 		
-		Page<Livro> livros = livroService.listarLivros("preco", Sort.Direction.DESC, 3);
-		System.out.println(livros.toList());
-		
+		Optional<Editora> optional = editoraService.recuperarPeloId(4l);
+		if(optional.isPresent()) {
+			System.out.println(optional.get());
+			
+			optional.get().setCidade("Cidade Atualizada");
+			optional.get().setNome("Nome atualizado");
+			editoraService.atualizarEditora(optional.get());
+			
+			System.out.println();
+			System.out.println(optional.get());
+		}
 		
 //		criarClientes();
 //		testarRegistroVendas();
