@@ -29,7 +29,7 @@ public class Editora {
 	private String cidade;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "EDITORA_FK", nullable = false)
+	@JoinColumn(name = "EDITORA_FK")
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
 	
 	public Editora() {
