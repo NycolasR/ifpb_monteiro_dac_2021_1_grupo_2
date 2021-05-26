@@ -287,9 +287,9 @@ public class Application implements CommandLineRunner {
 		cliente6.setAdmin(false);
 		
 		try {
-		usuarioService.salvar(cliente4);
-		usuarioService.salvar(cliente5);
-		usuarioService.salvar(cliente6);
+			usuarioService.salvar(cliente4);
+			usuarioService.salvar(cliente5);
+			usuarioService.salvar(cliente6);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());;
 		}
