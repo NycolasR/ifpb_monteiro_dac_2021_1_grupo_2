@@ -91,7 +91,7 @@ public class LivroService {
 	
 	/**
 	 * Método usado para atualizar um registro de um livro no banco de dados.
-	 * Tem o comportamento igual ao metodo salvar(Livro livro), mas foi criado
+	 * Tem o comportamento igual ao metodo salvarLivro(Livro livro), mas foi criado
 	 * para maior coesão e acessibilidade nesta classe de CRUD. 
 	 * @param livro Livro que se deseja atualizar no banco de dados.
 	 */
