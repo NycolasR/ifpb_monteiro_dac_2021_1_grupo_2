@@ -169,9 +169,6 @@ public class Application implements CommandLineRunner {
 //		livro2.addCategoria(Categoria.ENGENHARIA);
 		
 //		livro1.setImageFile(new File("C:\\Users\\Nyk\\git\\ifpb_monteiro_dac_2021_1_grupo_2\\com.bookstore\\leao.jpg"));
-
-		
-		
 		
 		Editora editora1 = new Editora("Editora 1", "Cidade 1");
 		editora1.addLivro(livro1);
@@ -203,22 +200,13 @@ public class Application implements CommandLineRunner {
 //		livroService.salvarLivro(livro12);
 //		editoraService.salvarEditora(editora1);
 //		editoraService.salvarEditora(editora2);
-		
-		Optional<Editora> optional = editoraService.recuperarPeloId(4l);
-		if(optional.isPresent()) {
-			System.out.println(optional.get());
-			
-			optional.get().setCidade("Cidade Atualizada");
-			optional.get().setNome("Nome atualizado");
-			editoraService.atualizarEditora(optional.get());
-			
-			System.out.println();
-			System.out.println(optional.get());
-		}
-		
+//		
 //		criarClientes();
 //		testarRegistroVendas();
 		
+		System.out.println(registroVendasService.listarRegistrosDeVendas());
+		registroVendasService.deletarTodosRegistrosDeVendas();
+		System.err.println(registroVendasService.listarRegistrosDeVendas());
 		System.err.println("\nDeu certo\n");
 		
 	}
@@ -340,9 +328,9 @@ public class Application implements CommandLineRunner {
 		RegistroVendas registro2 = new RegistroVendas(LocalDate.now(), livro2, cliente2, 15, new BigDecimal("30.5"));
 		RegistroVendas registro3 = new RegistroVendas(LocalDate.now(), livro3, cliente3, 15, new BigDecimal("45.5"));
 		
-		registroVendasService.salvar(registro1);
-		registroVendasService.salvar(registro2);
-		registroVendasService.salvar(registro3);
+		registroVendasService.salvarRegistroVendas(registro1);
+		registroVendasService.salvarRegistroVendas(registro2);
+		registroVendasService.salvarRegistroVendas(registro3);
 		
 	}
 }

@@ -26,7 +26,7 @@ public class RegistroVendas {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "LIVRO_FK", nullable = false)
-	private Livro registroVendas;
+	private Livro livro;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CLIENTE_FK", nullable = false)
@@ -45,7 +45,7 @@ public class RegistroVendas {
 			Integer quantidadeItensVendidos,
 			BigDecimal valorPago) {
 		this.dataVenda = dataVenda;
-		this.registroVendas = livro;
+		this.livro = livro;
 		this.cliente = cliente;
 		this.quantidadeItensVendidos = quantidadeItensVendidos;
 		this.valorPago = valorPago;
@@ -72,11 +72,11 @@ public class RegistroVendas {
 	}
 
 	public Livro getLivro() {
-		return registroVendas;
+		return livro;
 	}
 
 	public void setLivro(Livro livro) {
-		this.registroVendas = livro;
+		this.livro = livro;
 	}
 
 	public Usuario getCliente() {
@@ -118,6 +118,17 @@ public class RegistroVendas {
 			return false;
 
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "\n\nDados da Venda: "
+				+ "\nID: " + id
+				+ "\nData da venda: " + dataVenda
+				+ "\nValor Pago: R$" + valorPago
+				+ "\nNome do Cliente: " + cliente.getNome()
+				+ "\nTítulo do Livro: " + livro.getTitulo()
+				+ "\nQuantidade de unidades vendidas: " + quantidadeItensVendidos + " unidades";
 	}
 }
 

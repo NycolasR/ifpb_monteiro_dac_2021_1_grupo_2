@@ -53,8 +53,9 @@ public class LivroService {
 	 * @return Uma página com os livros ordenados da forma especificada.
 	 */
 	public Page<Livro> listarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina) {
-		Sort sort = Sort.by(sortDirection, campoOrdenacao);
+		Sort sort = Sort.by(sortDirection, campoOrdenacao); // Ordenador que segue a direção e campos especificados
 		
+		// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
 		Page<Livro> pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 5, sort));
 		
 		return pagina;
