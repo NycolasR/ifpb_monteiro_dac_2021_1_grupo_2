@@ -42,6 +42,8 @@ public class Autor {
 		this.nome = nome;
 	}
 	
+	public Autor() {}
+	
 	public Set<Livro> getLivros() {
 		return livros;
 	}

@@ -14,15 +14,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
+import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Endereco;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.model.RegistroVendas;
 import com.bookstore.com.bookstore.model.Usuario;
-
+import com.bookstore.com.bookstore.service.AutorService;
 import com.bookstore.com.bookstore.service.EditoraService;
 import com.bookstore.com.bookstore.service.LivroService;
+import com.bookstore.com.bookstore.service.PedidoService;
 import com.bookstore.com.bookstore.service.EnderecoService;
+import com.bookstore.com.bookstore.service.FormaPagamentoService;
+import com.bookstore.com.bookstore.service.ItemPedidoService;
 import com.bookstore.com.bookstore.service.RegistroVendasService;
 import com.bookstore.com.bookstore.service.UsuarioService;
 
@@ -33,11 +37,17 @@ public class Application implements CommandLineRunner {
 	private UsuarioService usuarioService;
 	private RegistroVendasService registroVendasService;
 	private LivroService livroService;
+	private ItemPedidoService itemPedidoService;
+	private FormaPagamentoService formaPagamentoService;
+	private AutorService autorService;
+	private PedidoService pedidoService;
 	
 	private Livro livro1, livro2, livro3, livro4, livro5, livro6;
 	private Livro livro7, livro8, livro9, livro10, livro11, livro12;
 	
 	private Usuario cliente1, cliente2, cliente3, cliente4, cliente5, cliente6;
+	
+	private Autor autor1, autor2, autor3, autor4, autor5, autor6, autor7, autor8;
 	
 	private Usuario clienteTeste;
 	
@@ -47,12 +57,20 @@ public class Application implements CommandLineRunner {
 			EditoraService editoraService,
 			UsuarioService usuarioService,
 			RegistroVendasService registroVendasService,
-			LivroService livroService) {
+			LivroService livroService,
+			ItemPedidoService itemPedidoService,
+			FormaPagamentoService formaPagamentoService,
+			AutorService autorService,
+			PedidoService pedidoService) {
 		
 		this.livroService = livroService;
 		this.editoraService = editoraService;
 		this.usuarioService = usuarioService;
 		this.registroVendasService = registroVendasService;
+		this.itemPedidoService = itemPedidoService;
+		this.formaPagamentoService = formaPagamentoService;
+		this.autorService = autorService;
+		this.pedidoService = pedidoService;
 		
 	}
 
@@ -62,8 +80,9 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		main_nycolas();
+//		main_nycolas();
 //		main_Pedro();
+		main_Gabriel();
 //		main_app();
 	}
 
@@ -210,6 +229,15 @@ public class Application implements CommandLineRunner {
 		System.err.println("\nDeu certo\n");
 		
 	}
+	
+	private void main_Gabriel() {
+		
+		//CRUD AUTOR
+//		criarAutores();
+//		excluirAutor();
+		
+		
+	}
 
 	private void criarClientes() {
 		cliente1 = new Usuario();
@@ -332,6 +360,34 @@ public class Application implements CommandLineRunner {
 		registroVendasService.salvarRegistroVendas(registro2);
 		registroVendasService.salvarRegistroVendas(registro3);
 		
+	}
+	
+	private void criarAutores() {
+		
+		autor1 = new Autor("Autor 1");
+		autor2 = new Autor("Autor 2");
+		autor3 = new Autor("Autor 3");
+		autor4 = new Autor("Autor 4");
+		autor5 = new Autor("Autor 5");
+		autor6 = new Autor("Autor 6");
+		autor7 = new Autor("Autor 7");
+		autor8 = new Autor("Autor 8");
+		
+		autorService.salvarAutor(autor1);
+		autorService.salvarAutor(autor2);
+		autorService.salvarAutor(autor3);
+		autorService.salvarAutor(autor4);
+		autorService.salvarAutor(autor5);
+		autorService.salvarAutor(autor6);
+		autorService.salvarAutor(autor7);
+		autorService.salvarAutor(autor8);
+	}
+	
+	private void excluirAutor() {
+		
+		Autor autor = autorService.recuperarPeloNome("Autor 5").get(0);
+		
+		autorService.deletarPeloId(autor.getID());
 	}
 }
 

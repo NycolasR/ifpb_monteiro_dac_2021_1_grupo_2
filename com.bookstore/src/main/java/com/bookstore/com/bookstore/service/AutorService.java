@@ -40,6 +40,16 @@ public class AutorService {
 	}
 	
 	/**
+	 * Esse método recupera uma lista de Autor pelo seu nome
+	 * @param nome correspondente ao autor
+	 * @return retorna uma lista contendo os autores encontrados
+	 */
+	public List<Autor> recuperarPeloNome(String nome) {
+		
+		return autorRepository.findByNome(nome);
+	}
+	
+	/**
 	 * Método responsável por recuperar uma lista de todos os autores
 	 * @return lista de Autor
 	 */
