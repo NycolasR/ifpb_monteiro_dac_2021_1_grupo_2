@@ -99,4 +99,16 @@ public class LivroService {
 	public void atualizarLivro(Livro livro) {
 		salvarLivro(livro);
 	}
+	
+	/**
+	 * Método usado para saber se existem registros de Livro no banco de dados
+	 * @return True se existir pelo menos um registro.
+	 */
+	public boolean existemRegistros() {
+		return livroRepository.count() > 0;
+	}
 }
+
+
+
+

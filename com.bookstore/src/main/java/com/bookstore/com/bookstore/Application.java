@@ -11,8 +11,6 @@ import java.util.Optional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 
 import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Editora;
@@ -24,13 +22,12 @@ import com.bookstore.com.bookstore.service.AutorService;
 import com.bookstore.com.bookstore.service.EditoraService;
 import com.bookstore.com.bookstore.service.LivroService;
 import com.bookstore.com.bookstore.service.PedidoService;
-import com.bookstore.com.bookstore.service.EnderecoService;
 import com.bookstore.com.bookstore.service.FormaPagamentoService;
 import com.bookstore.com.bookstore.service.ItemPedidoService;
 import com.bookstore.com.bookstore.service.RegistroVendasService;
 import com.bookstore.com.bookstore.service.UsuarioService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class Application implements CommandLineRunner {
 	
 	private EditoraService editoraService;
@@ -46,10 +43,9 @@ public class Application implements CommandLineRunner {
 	private Livro livro7, livro8, livro9, livro10, livro11, livro12;
 	
 	private Usuario cliente1, cliente2, cliente3, cliente4, cliente5, cliente6;
+	private Usuario clienteTeste;
 	
 	private Autor autor1, autor2, autor3, autor4, autor5, autor6, autor7, autor8;
-	
-	private Usuario clienteTeste;
 	
 	private Endereco endereco1, endereco2, endereco3;
 	
@@ -81,145 +77,9 @@ public class Application implements CommandLineRunner {
 	@Override
 
 	public void run(String... args) throws Exception {
-//		main_nycolas();
+//		main_Nycolas();
 //		main_Pedro();
-		main_Gabriel();
-//		main_app();
-	}
-
-	private void main_app() {
-		boolean flag = true;
-
-		Scanner input = new Scanner(System.in);
-
-		while(flag) {
-			
-			System.out.print(
-					"\n0 - Sair"
-					+"\n1 - Registrar novo usuário"
-					+"\n2 - Consultar usuário pelo e-mail"
-					+"\n3 - Cadastrar Autor"
-					+"\n4 - Alterar Autor"
-					+"\n5 - Cadastrar Livro"
-					+"\n6 - Alterar Livro"
-					+"\n7 - Excluir Livro"
-					+"\n8 - Cadastrar um livro do catálogo ao estoque"
-					+"\n9 - Consultar os 5 livros mais baratos disponíveis no estoque"
-					+"\n10 - Consultar todos os livros ordenados de forma ascendente pelo título de forma paginada"
-					+"\n11 - Adicionar um livro a um pedido (carrinho de compras)"
-					+"\nOpção: ");
-			
-			int opcao = Integer.parseInt(input.nextLine());
-			
-			switch(opcao) {
-
-			case 1: // Pedro
-				
-				break;
-
-			case 2: // Pedro
-
-				break;
-
-			case 3: // Gabriel
-
-				break;
-
-			case 4: // Gabriel
-				
-				break;
-				
-			case 5: // Nycolas - Cadastrar Livro
-
-				break;
-				
-			case 6: // Nycolas - Alterar Livro
-//				Scanner inputCase6 = new Scanner(System.in);
-				
-				Long idEditado = selecionarLivro();
-				
-				try {
-					Livro livroEditado = recuperarLivro(idEditado);
-					
-					System.out.print("Novo título (pressione enter p/ ignorar): ");
-					String resposta = input.nextLine();
-					if(!resposta.isBlank())
-						System.out.println("Novo título: " + resposta);
-					
-					System.out.print("Novo título (pressione enter p/ ignorar): ");
-					resposta = input.nextLine();
-					if(!resposta.isBlank())
-						System.out.println("Novo título: " + resposta);
-					
-					
-					Integer anoPublicacao;
-					String descricao;
-					Integer edicao;
-					Long isbn;
-					BigDecimal preco;
-					Integer qntdEstoque;
-					
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-				
-				break;
-				
-			case 7: // Nycolas - Excluir Livro
-				
-				Long idExcluido = selecionarLivro();
-				livroService.deletarPeloId(idExcluido);
-				break;
-				
-			case 8: // Nycolas - Cadastrar um livro do catálogo ao estoque
-
-				break;
-
-			case 9: // Pedro
-
-				break;
-				
-			case 10: // Pedro
-
-				break;
-				
-			case 11: // Gabriel
-
-				break;
-				
-			
-			default:
-				System.err.println("\n\n<< EXECUÇÃO DO PROGRAMA FINALIZADA >>\n\n");
-				flag = false;
-			}
-		}
-
-		input.close();
-	}
-
-	private Livro recuperarLivro(Long idEditado) throws Exception {
-		Optional<Livro> optional = livroService.recuperarPeloId(idEditado);
-		
-		if(optional.isPresent())
-			return optional.get();
-		
-		throw new Exception("[ERRO] Livro não encontrado na base de dados.");
-	}
-
-	private Long selecionarLivro() {
-		Scanner input = new Scanner(System.in);
-		
-		List<Livro> livros = livroService.listarLivros();
-		
-		System.out.println("Livros Cadastrados:\n");
-		for (Livro livro : livros) {
-			System.out.println("ID: " + livro.getId() + " | Título: " + livro.getTitulo());
-		}
-		System.out.print("Informe o ID do livro selecionado: ");
-		Long id = Long.parseLong(input.nextLine());
-		
-		input.close();
-		return id;
+//		main_Gabriel();
 	}
 	
 	private void main_Pedro() {
@@ -256,7 +116,7 @@ public class Application implements CommandLineRunner {
 		
 	}
 
-	private void main_nycolas() {
+	private void main_Nycolas() {
 		
 		livro1 = new Livro(111l, "Titulo 1", "Descrição 1", new BigDecimal("10"), 1, 2015, 10);
 		livro2 = new Livro(222l, "Titulo 2", "Descrição 2", new BigDecimal("20"), 2, 2015, 20);
@@ -296,27 +156,24 @@ public class Application implements CommandLineRunner {
 		editora2.addLivro(livro11);
 		editora2.addLivro(livro12);
 		
-//		livroService.salvarLivro(livro1);
-//		livroService.salvarLivro(livro2);
-//		livroService.salvarLivro(livro3);
-//		livroService.salvarLivro(livro4);
-//		livroService.salvarLivro(livro5);
-//		livroService.salvarLivro(livro6);
-//		livroService.salvarLivro(livro7);
-//		livroService.salvarLivro(livro8);
-//		livroService.salvarLivro(livro9);
-//		livroService.salvarLivro(livro10);
-//		livroService.salvarLivro(livro11);
-//		livroService.salvarLivro(livro12);
-//		editoraService.salvarEditora(editora1);
-//		editoraService.salvarEditora(editora2);
-//		
-//		criarClientes();
-//		testarRegistroVendas();
+		livroService.salvarLivro(livro1);
+		livroService.salvarLivro(livro2);
+		livroService.salvarLivro(livro3);
+		livroService.salvarLivro(livro4);
+		livroService.salvarLivro(livro5);
+		livroService.salvarLivro(livro6);
+		livroService.salvarLivro(livro7);
+		livroService.salvarLivro(livro8);
+		livroService.salvarLivro(livro9);
+		livroService.salvarLivro(livro10);
+		livroService.salvarLivro(livro11);
+		livroService.salvarLivro(livro12);
+		editoraService.salvarEditora(editora1);
+		editoraService.salvarEditora(editora2);
+
+		criarClientes();
+		testarRegistroVendas();
 		
-		System.out.println(registroVendasService.listarRegistrosDeVendas());
-		registroVendasService.deletarTodosRegistrosDeVendas();
-		System.err.println(registroVendasService.listarRegistrosDeVendas());
 		System.err.println("\nDeu certo\n");
 		
 	}
@@ -460,8 +317,8 @@ public class Application implements CommandLineRunner {
 	
 	private void testarRegistroVendas() {
 		RegistroVendas registro1 = new RegistroVendas(LocalDate.now(), livro1, cliente1, 15, new BigDecimal("15.5"));
-		RegistroVendas registro2 = new RegistroVendas(LocalDate.now(), livro2, cliente2, 15, new BigDecimal("30.5"));
-		RegistroVendas registro3 = new RegistroVendas(LocalDate.now(), livro3, cliente3, 15, new BigDecimal("45.5"));
+		RegistroVendas registro2 = new RegistroVendas(LocalDate.now(), livro2, cliente2, 30, new BigDecimal("30.5"));
+		RegistroVendas registro3 = new RegistroVendas(LocalDate.now(), livro3, cliente3, 45, new BigDecimal("45.5"));
 		
 		registroVendasService.salvarRegistroVendas(registro1);
 		registroVendasService.salvarRegistroVendas(registro2);
