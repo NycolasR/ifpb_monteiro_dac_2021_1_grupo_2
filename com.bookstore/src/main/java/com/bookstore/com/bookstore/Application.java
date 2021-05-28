@@ -65,7 +65,7 @@ public class Application implements CommandLineRunner {
 //		main_nycolas();
 //		main_Pedro();
 		main_app();
-	}
+
 
 	private void main_app() {
 		boolean flag = true;
@@ -206,18 +206,33 @@ public class Application implements CommandLineRunner {
 		
 		usuarioService.excluirTudo();
 		
-		criarClientes();
-		criarClientesComEndereco();
-		excluirClientes();
+//		try {
+//			for(Usuario u : usuarioService.usuarioPorNome("Pedro")) {
+//				System.out.println(u.toString());
+//			}
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());; 
+//		}
 		
-		List<Usuario> userResult = usuarioService.usuarioPorEmail("cliente5@email.com");
-		for(Usuario u : userResult) {
-			List<Endereco> enderecos = u.getEnderecos();
-			System.out.println(u.getNome());
-			System.out.println(enderecos.get(0).toString());
-		}
-
 		
+//		atualizarUsuario("cliente0@email.com", "Pedro", "minhaSenha");
+//		criarClientes();
+//		criarClientesComEndereco();
+//		excluirCliente();
+//		
+		
+		
+//		Usuario userResult;
+//		try {
+//			
+//			userResult = usuarioService.usuarioPorEmail("cliente3@email.com");
+//			List<Endereco> enderecos = userResult.getEnderecos();
+//			System.out.println(userResult.getNome()+ 
+//					"\n" +  enderecos.get(0).toString());
+//			
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());; 
+//		}
 		
 	}
 
@@ -390,12 +405,28 @@ public class Application implements CommandLineRunner {
 		
 	}
 	
+	private boolean atualizarUsuario(String email, String nome, String senha ) {
+		Usuario userTemp;
+		try {
+			userTemp = usuarioService.usuarioPorEmail(email);
+			userTemp.setNome(nome);
+			userTemp.setSenha(senha);
+			usuarioService.atualizar(userTemp);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());;
+			return false;
+		}
+		
+		return true;
+	}
+	
 	private void excluirClientes() {
 		
-		Usuario clienteExc = usuarioService.usuarioPorEmail("cliente4@email.com").get(0);
-		
-		usuarioService.excluir(clienteExc);
-		
+		try {
+			usuarioService.excluir("cliente4@email.com");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());; 
+		}
 	}
 	
 	private void testarRegistroVendas() {
