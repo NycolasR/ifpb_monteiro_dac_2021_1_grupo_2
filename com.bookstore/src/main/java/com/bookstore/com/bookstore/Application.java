@@ -61,11 +61,11 @@ public class Application implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 //		main_nycolas();
-		main_Pedro();
-//		main_app();
-	}
+//		main_Pedro();
+		main_app();
+
 
 	private void main_app() {
 		boolean flag = true;
@@ -78,53 +78,128 @@ public class Application implements CommandLineRunner {
 					"\n0 - Sair"
 					+"\n1 - Registrar novo usuário"
 					+"\n2 - Consultar usuário pelo e-mail"
-					+"\n3 - Cadastrar e alterar autor"
-					+"\n4 - Cadastrar, alterar e excluir livro"
-					+"\n5 - Cadastrar um livro do catálogo ao estoque"
-					+"\n6 - Consultar os 5 livros mais baratos disponíveis no estoque"
-					+"\n7 - Consultar todos os livros ordenados de forma ascendente pelo título de forma paginada"
-					+"\n8 - Adicionar um livro a um pedido (carrinho de compras)"
-					+ "\nOpção: ");
+					+"\n3 - Cadastrar Autor"
+					+"\n4 - Alterar Autor"
+					+"\n5 - Cadastrar Livro"
+					+"\n6 - Alterar Livro"
+					+"\n7 - Excluir Livro"
+					+"\n8 - Cadastrar um livro do catálogo ao estoque"
+					+"\n9 - Consultar os 5 livros mais baratos disponíveis no estoque"
+					+"\n10 - Consultar todos os livros ordenados de forma ascendente pelo título de forma paginada"
+					+"\n11 - Adicionar um livro a um pedido (carrinho de compras)"
+					+"\nOpção: ");
 			
 			int opcao = Integer.parseInt(input.nextLine());
 			
 			switch(opcao) {
 
-			case 1: 
+			case 1: // Pedro
 				
 				break;
 
-			case 2:
+			case 2: // Pedro
 
 				break;
 
-			case 3:
+			case 3: // Gabriel
 
 				break;
 
-			case 4:
+			case 4: // Gabriel
+				
+				break;
+				
+			case 5: // Nycolas - Cadastrar Livro
 
 				break;
-			case 5:
+				
+			case 6: // Nycolas - Alterar Livro
+//				Scanner inputCase6 = new Scanner(System.in);
+				
+				Long idEditado = selecionarLivro();
+				
+				try {
+					Livro livroEditado = recuperarLivro(idEditado);
+					
+					System.out.print("Novo título (pressione enter p/ ignorar): ");
+					String resposta = input.nextLine();
+					if(!resposta.isBlank())
+						System.out.println("Novo título: " + resposta);
+					
+					System.out.print("Novo título (pressione enter p/ ignorar): ");
+					resposta = input.nextLine();
+					if(!resposta.isBlank())
+						System.out.println("Novo título: " + resposta);
+					
+					
+					Integer anoPublicacao;
+					String descricao;
+					Integer edicao;
+					Long isbn;
+					BigDecimal preco;
+					Integer qntdEstoque;
+					
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+				
+				break;
+				
+			case 7: // Nycolas - Excluir Livro
+				
+				Long idExcluido = selecionarLivro();
+				livroService.deletarPeloId(idExcluido);
+				break;
+				
+			case 8: // Nycolas - Cadastrar um livro do catálogo ao estoque
 
 				break;
-			case 6:
+
+			case 9: // Pedro
 
 				break;
-			case 7:
+				
+			case 10: // Pedro
 
 				break;
-			case 8:
+				
+			case 11: // Gabriel
 
 				break;
-
+				
+			
 			default:
-				System.out.println("\n\n << EXECUÇÃO DO PROGRAMA FINALIZADA >>");
+				System.err.println("\n\n<< EXECUÇÃO DO PROGRAMA FINALIZADA >>\n\n");
 				flag = false;
 			}
 		}
 
 		input.close();
+	}
+
+	private Livro recuperarLivro(Long idEditado) throws Exception {
+		Optional<Livro> optional = livroService.recuperarPeloId(idEditado);
+		
+		if(optional.isPresent())
+			return optional.get();
+		
+		throw new Exception("[ERRO] Livro não encontrado na base de dados.");
+	}
+
+	private Long selecionarLivro() {
+		Scanner input = new Scanner(System.in);
+		
+		List<Livro> livros = livroService.listarLivros();
+		
+		System.out.println("Livros Cadastrados:\n");
+		for (Livro livro : livros) {
+			System.out.println("ID: " + livro.getId() + " | Título: " + livro.getTitulo());
+		}
+		System.out.print("Informe o ID do livro selecionado: ");
+		Long id = Long.parseLong(input.nextLine());
+		
+		input.close();
+		return id;
 	}
 	
 	private void main_Pedro() {
