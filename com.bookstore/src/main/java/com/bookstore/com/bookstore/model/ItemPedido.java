@@ -68,7 +68,6 @@ public class ItemPedido {
 
 	public void setLivro(Livro livro) {
 		this.livro = livro;		
-		atualizarValorTotal();
 	}
 		
 	public BigDecimal getValorTotalItemPedido() {
@@ -79,8 +78,14 @@ public class ItemPedido {
 		return livro.getPreco();
 	}
 	
+	/**
+	 * Método responsável por atualizar o valorTotalItemPedido toda vez
+	 * que a quantidade de for alterada.
+	 */
 	private void atualizarValorTotal() {
-		this.valorTotalItemPedido = valorTotalItemPedido.multiply(new BigDecimal(quantidade));
+		
+		//essa operação multiplica o valor do livro pela quantidade adicionada ao itemPedido.
+		this.valorTotalItemPedido = valorTotalItemPedido.multiply(new BigDecimal(quantidade)); 
 	}
 
 	@Override
