@@ -29,6 +29,7 @@ public class Usuario {
 	@Column(name = "NOME")
 	private String nome;
 	
+//	@Email
 	@Column(name = "EMAIL")
 	private String email;
 	

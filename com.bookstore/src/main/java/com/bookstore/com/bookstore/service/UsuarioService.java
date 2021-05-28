@@ -15,33 +15,55 @@ public class UsuarioService {
 	public UsuarioRepository usuarioRepository;
 	
 	public void salvar(Usuario usuario) throws Exception {
-		if(!verificarExistencia(usuario)) {
+		if(verificarExistencia(usuario)) {
 			usuarioRepository.save(usuario);			
 		}else {
-			String mensagem = "Já existe um usuario cadastrado com o email " + usuario.getEmail();
+			String mensagem = "JÃ¡ existe um usuario cadastrado com o email " + usuario.getEmail();
 			throw new Exception(mensagem);			
 		}
 	}
 	
+	public void atualizar(Usuario usuario) throws Exception {
+		Usuario userTemp = usuarioPorEmail(usuario.getEmail());
+		if(userTemp.equals(usuario)) {
+			usuarioRepository.save(usuario);
+		}else {
+			throw new Exception("O Email nÃ£o pode ser altereado");
+		}
+	}
 	
-	public void excluir(Usuario usuario) {
-		usuarioRepository.delete(usuario);		
+	public void excluir(String email) throws Exception {
+		usuarioRepository.delete(usuarioPorEmail(email));		
 	}
 	
 	public void excluirTudo() {
 		usuarioRepository.deleteAll();
 	}
 	
-	public List<Usuario> usuarioPorEmail(String email){
-		return (List<Usuario>) usuarioRepository.findByEmailIs(email);
+	public Usuario usuarioPorEmail(String email)throws Exception{
+		if(usuarioRepository.findByEmailIs(email).size() >= 1) 
+			return (Usuario) usuarioRepository.findByEmailIs(email).get(0);
+		
+		throw new Exception("NÃ£o ha nenhum usuario com o email: " + email + " cadastrado.");
+		
+	}
+	
+	public List<Usuario> usuarioPorNome(String nome)throws Exception{
+		List<Usuario> usersTemp = usuarioRepository.findByNome(nome);
+		if(usersTemp.size()>=1)
+			return usersTemp;
+		
+		throw new Exception("Nenhum usuario com o nome " + nome + " encontrado");
 	}
 	
 	private boolean verificarExistencia(Usuario usuario) {
-		List<Usuario> userTeste = usuarioPorEmail(usuario.getEmail());
-		if(userTeste.isEmpty()) 
-			return false;
+		try {
+			usuarioPorEmail(usuario.getEmail());
+		}catch (Exception e){
+			return true;
+		}
 		
-		return true;
+		return false;
 	}
 	
 }
