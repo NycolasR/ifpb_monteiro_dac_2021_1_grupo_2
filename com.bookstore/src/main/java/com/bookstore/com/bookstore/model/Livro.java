@@ -172,6 +172,14 @@ public class Livro {
 	public void setAutores(Set<Autor> autores) {
 		this.autores = autores;
 	}
+	
+	public Integer getQuantidadeEmEstoque() {
+		return quantidadeEmEstoque;
+	}
+
+	public void setQuantidadeEmEstoque(Integer quantidadeEmEstoque) {
+		this.quantidadeEmEstoque = quantidadeEmEstoque;
+	}
 
 	public boolean equals(Livro livro) {
 		if (this == livro)

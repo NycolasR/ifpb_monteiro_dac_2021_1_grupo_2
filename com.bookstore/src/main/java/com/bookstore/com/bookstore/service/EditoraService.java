@@ -78,6 +78,14 @@ public class EditoraService {
 	public void atualizarEditora(Editora editora) {
 		salvarEditora(editora);
 	}
+	
+	/**
+	 * Método usado para saber se existem registros de Editora no banco de dados
+	 * @return True se existir pelo menos um registro.
+	 */
+	public boolean existemRegistros() {
+		return editoraRepository.count() > 0;
+	}
 }
 
 
