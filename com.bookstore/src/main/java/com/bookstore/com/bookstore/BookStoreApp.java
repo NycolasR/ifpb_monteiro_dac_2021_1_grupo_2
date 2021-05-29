@@ -1,19 +1,19 @@
 package com.bookstore.com.bookstore;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.bookstore.com.bookstore.facades.FacadeEditoras;
+import com.bookstore.com.bookstore.facades.FacadeLivros;
+import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.service.AutorService;
-import com.bookstore.com.bookstore.service.EditoraService;
 import com.bookstore.com.bookstore.service.FormaPagamentoService;
 import com.bookstore.com.bookstore.service.ItemPedidoService;
-import com.bookstore.com.bookstore.service.LivroService;
 import com.bookstore.com.bookstore.service.PedidoService;
 import com.bookstore.com.bookstore.service.RegistroVendasService;
 import com.bookstore.com.bookstore.service.UsuarioService;
@@ -21,31 +21,30 @@ import com.bookstore.com.bookstore.service.UsuarioService;
 @SpringBootApplication
 public class BookStoreApp implements CommandLineRunner {
 
-	private EditoraService editoraService;
 	private UsuarioService usuarioService;
 	private RegistroVendasService registroVendasService;
-	private LivroService livroService;
 	private ItemPedidoService itemPedidoService;
 	private FormaPagamentoService formaPagamentoService;
 	private AutorService autorService;
 	private PedidoService pedidoService;
+	
+	private FacadeLivros facadeLivros;
+	private FacadeEditoras facadeEditoras;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BookStoreApp.class, args);
 	}
 	
 	public BookStoreApp(
-			EditoraService editoraService,
 			UsuarioService usuarioService,
 			RegistroVendasService registroVendasService,
-			LivroService livroService,
 			ItemPedidoService itemPedidoService,
 			FormaPagamentoService formaPagamentoService,
 			AutorService autorService,
-			PedidoService pedidoService) {
+			PedidoService pedidoService,
+			FacadeLivros facadeLivros,
+			FacadeEditoras facadeEditoras) {
 		
-		this.livroService = livroService;
-		this.editoraService = editoraService;
 		this.usuarioService = usuarioService;
 		this.registroVendasService = registroVendasService;
 		this.itemPedidoService = itemPedidoService;
@@ -53,6 +52,8 @@ public class BookStoreApp implements CommandLineRunner {
 		this.autorService = autorService;
 		this.pedidoService = pedidoService;
 		
+		this.facadeLivros = facadeLivros;
+		this.facadeEditoras = facadeEditoras;
 	}
 	
 	@Override
@@ -76,6 +77,7 @@ public class BookStoreApp implements CommandLineRunner {
 					+"\n9 - Consultar os 5 livros mais baratos disponíveis no estoque"
 					+"\n10 - Consultar todos os livros ordenados de forma ascendente pelo título de forma paginada"
 					+"\n11 - Adicionar um livro a um pedido (carrinho de compras)"
+					+"\n12 - Ler dados de 1 livro"
 					+"\nOpção: ");
 
 			int opcao = Integer.parseInt(scanner.nextLine());
@@ -99,48 +101,125 @@ public class BookStoreApp implements CommandLineRunner {
 				break;
 
 			case 5: // Nycolas - Cadastrar Livro
+				
+				// Ler dados do livro
+				System.out.print("Informe o título do livro: ");
+				String titulo = scanner.nextLine();
+				
+				System.out.print("Informe o ISBN do livro: ");
+				Long isbn = Long.parseLong(scanner.nextLine());
+				
+				System.out.print("Informe a descrição do livro: ");
+				String descricao = scanner.nextLine();
+				
+				System.out.print("Informe o preço do livro: ");
+				BigDecimal preco = null;
+				while(true) {
+					try {
+						preco = new BigDecimal(scanner.nextLine());
+						break;
+					} catch(NumberFormatException e) {
+						System.err.print("[ERRO] Insira um formato de preço válido: ");
+					}
+				}
+				
+				System.out.print("Informe a edição do livro: ");
+				Integer edicao = Integer.parseInt(scanner.nextLine());
+				
+				System.out.print("Informe o ano de publicação do livro: ");
+				Integer anoPublicacao = Integer.parseInt(scanner.nextLine());
+				
+				System.out.print("Informe a quantidade de unidades do livro para estoque: ");
+				Integer qntdEstoque = Integer.parseInt(scanner.nextLine());
+				
+				// Adicionar categorias ao livro
+				
+				// Listar editoras
+				// [Se o user quiser cria-se uma nova]
+				Editora editoraSelecionada = null;
 
+				System.out.println("\nAgora, selecione a editora deste livro.");
+				try {
+					editoraSelecionada = facadeEditoras.selecionarEditora();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+					break;
+				}
+				
+				
+				// Listar Autores
+				// [Se o usuário quiser cria-se um novo]
+				
+				// Seta tudo um no outro e salva
+				Long idLivro = facadeLivros.salvarLivro(isbn, titulo, descricao, preco, edicao, anoPublicacao, qntdEstoque);
+				editoraSelecionada.addLivro(facadeLivros.recuperarLivro(idLivro));
+				facadeEditoras.atualizarEditora(editoraSelecionada);
+				
+				// Mostra os dados salvos pela console
+
+				System.err.println(editoraSelecionada);
+				System.err.println(facadeLivros.recuperarLivro(idLivro));
+				
 				break;
 
 			case 6: // Nycolas - Alterar Livro
 				Livro livroEditado = null;
 				
 				try {
-					Long idEditado = selecionarLivro();
-					livroEditado = recuperarLivro(idEditado);
+					livroEditado = facadeLivros.selecionarLivro();
+					System.err.println(livroEditado);
 				} catch (Exception e) {
 					System.err.println(e.getMessage());
 					break;
 				}
 				
-				System.out.print("Novo título (pressione enter p/ ignorar): ");
+				System.out.print("\nNovo título (pressione enter p/ ignorar): ");
+				facadeLivros.atualizarAtributoLivro(livroEditado, "titulo");
 				
-				String resposta = scanner.nextLine();
+				System.out.print("Novo ISBN (pressione enter p/ ignorar): ");
+				facadeLivros.atualizarAtributoLivro(livroEditado, "ISBN");
 				
-				if(!resposta.isEmpty())
-					System.out.println("Novo título: " + resposta);
+				System.out.print("Nova descrição (pressione enter p/ ignorar): ");
+				facadeLivros.atualizarAtributoLivro(livroEditado, "descricao");
 				
-//				Integer anoPublicacao;
-//				String descricao;
-//				Integer edicao;
-//				Long isbn;
-//				BigDecimal preco;
-//				Integer qntdEstoque;
+				System.out.print("Novo preço R$ (pressione enter p/ ignorar): ");
+				facadeLivros.atualizarAtributoLivro(livroEditado, "preco");
+				
+				System.out.print("Nova edição (pressione enter p/ ignorar): ");
+				facadeLivros.atualizarAtributoLivro(livroEditado, "edicao");
+				
+				System.out.print("Novo ano de publicação (pressione enter p/ ignorar): ");
+				facadeLivros.atualizarAtributoLivro(livroEditado, "anoPublicacao");
 
+				System.out.println("\nDados atualizados:");
+				System.err.println(livroEditado);
+				facadeLivros.atualizarLivro(livroEditado);
 				break;
 
 			case 7: // Nycolas - Excluir Livro
 
 				try {
-					Long idExcluido = selecionarLivro();
-					livroService.deletarPeloId(idExcluido);
+					facadeLivros.deletarLivro(facadeLivros.selecionarLivro());
 				} catch (Exception e) {
 					System.err.println(e.getMessage());
 				}
 				break;
 
 			case 8: // Nycolas - Cadastrar um livro do catálogo ao estoque
-
+				
+				Livro livoSelecionado = null;
+				
+				try {
+					livoSelecionado = facadeLivros.selecionarLivro();
+					System.err.println(livoSelecionado);
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+				
+				System.out.print("Informe a quantidade de unidades que deseja cadastrar: ");
+				facadeLivros.atualizarAtributoLivro(livoSelecionado, "quantidadeEmEstoque");
+				facadeLivros.atualizarLivro(livoSelecionado);
+				
 				break;
 
 			case 9: // Pedro
@@ -155,6 +234,15 @@ public class BookStoreApp implements CommandLineRunner {
 
 				break;
 
+			case 12: // Nycolas - Ler dados de 1 livro
+				
+				try {
+					System.err.println(facadeLivros.selecionarLivro());
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+				
+				break;
 
 			default:
 				System.err.println("\n\n<< EXECUÇÃO DO PROGRAMA FINALIZADA >>\n\n");
@@ -162,34 +250,4 @@ public class BookStoreApp implements CommandLineRunner {
 			}
 		}
 	}
-
-	private Livro recuperarLivro(Long idEditado) throws Exception {
-		Optional<Livro> optional = livroService.recuperarPeloId(idEditado);
-		
-		if(optional.isPresent())
-			return optional.get();
-		
-		throw new Exception("[ERRO] Livro não encontrado na base de dados.");
-	}
-
-	private Long selecionarLivro() throws Exception {
-		
-		if(livroService.existemRegistros()) {
-			Scanner input = new Scanner(System.in);
-			
-			List<Livro> livros = livroService.listarLivros();
-			
-			System.out.println("Livros Cadastrados:\n");
-			for (Livro livro : livros) {
-				System.out.println("ID: " + livro.getId() + " | Título: " + livro.getTitulo());
-			}
-			System.out.print("Informe o ID do livro selecionado: ");
-			Long id = Long.parseLong(input.nextLine());
-			
-			return id;
-		}
-		
-		throw new Exception("[ERRO] Não existem livros cadastrados no sistema.");
-	}
-
 }

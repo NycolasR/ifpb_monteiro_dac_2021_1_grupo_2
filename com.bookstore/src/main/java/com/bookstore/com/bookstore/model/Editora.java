@@ -98,15 +98,8 @@ public class Editora {
 	
 	@Override
 	public String toString() {
-		String dadosEditora = "\n\nDados da Editora " + nome + ": "
+		return "\n\nDados da Editora " + nome + ": "
 				+ "\nID: " + id
-				+ "\nCidade: " + cidade
-				+ "\nLivros: ";
-		
-		for (Livro livro : livros) {
-			dadosEditora += livro.toString();
-		}
-		
-		return dadosEditora;
+				+ "\nCidade: " + cidade;
 	}
 }
