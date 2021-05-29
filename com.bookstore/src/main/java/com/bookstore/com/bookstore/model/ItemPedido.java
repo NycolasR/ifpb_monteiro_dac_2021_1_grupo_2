@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
@@ -31,20 +33,21 @@ public class ItemPedido {
 	@Column(name = "ID")
 	private Long ID;
 	
+	@NotNull
 	@Column(name = "QUANTIDADE")
 	private Integer quantidade;
 	
 	@Column(name = "VALOR_TOTAL")
 	private BigDecimal valorTotalItemPedido;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "LIVRO_FK")
 	private Livro livro;
 	
-	public ItemPedido(Integer quantidade, Livro livro) {
-		this.quantidade = quantidade;
-		this.livro = livro;
-		atualizarValorTotal();
+	public ItemPedido(Livro livro, Integer quantidade) {
+		setLivro(livro);
+		setQuantidade(quantidade);
 	}
 	
 	public ItemPedido() {}
@@ -67,7 +70,8 @@ public class ItemPedido {
 	}
 
 	public void setLivro(Livro livro) {
-		this.livro = livro;		
+		this.livro = livro;	
+		valorTotalItemPedido = livro.getPreco();
 	}
 		
 	public BigDecimal getValorTotalItemPedido() {

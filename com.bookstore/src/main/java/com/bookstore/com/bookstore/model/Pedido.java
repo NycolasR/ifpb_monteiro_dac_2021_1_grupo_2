@@ -74,6 +74,7 @@ public class Pedido {
 		dataCriacao = Date.from(Instant.now());
 		statusPedido = "Não Finalizado";
 		qntdItens = 0;
+		valorItensTotal = new BigDecimal(0);
 	}
 	
 	

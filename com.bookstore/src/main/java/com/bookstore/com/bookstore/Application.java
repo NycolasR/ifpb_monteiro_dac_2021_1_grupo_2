@@ -15,7 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Endereco;
+import com.bookstore.com.bookstore.model.ItemPedido;
 import com.bookstore.com.bookstore.model.Livro;
+import com.bookstore.com.bookstore.model.Pedido;
 import com.bookstore.com.bookstore.model.RegistroVendas;
 import com.bookstore.com.bookstore.model.Usuario;
 import com.bookstore.com.bookstore.service.AutorService;
@@ -46,6 +48,8 @@ public class Application implements CommandLineRunner {
 	private Usuario clienteTeste;
 	
 	private Autor autor1, autor2, autor3, autor4, autor5, autor6, autor7, autor8;
+	private Pedido pedido1, pedido2, pedido3, pedido4, pedido5;
+	private ItemPedido itemPedido1, itemPedido2, itemPedido3, itemPedido4, itemPedido5;
 	
 	private Endereco endereco1, endereco2, endereco3;
 	
@@ -79,7 +83,7 @@ public class Application implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 //		main_Nycolas();
 //		main_Pedro();
-//		main_Gabriel();
+		main_Gabriel();
 	}
 	
 	private void main_Pedro() {
@@ -171,8 +175,8 @@ public class Application implements CommandLineRunner {
 		editoraService.salvarEditora(editora1);
 		editoraService.salvarEditora(editora2);
 
-		criarClientes();
-		testarRegistroVendas();
+//		criarClientes();
+//		testarRegistroVendas();
 		
 		System.err.println("\nDeu certo\n");
 		
@@ -183,6 +187,12 @@ public class Application implements CommandLineRunner {
 		//CRUD AUTOR
 //		criarAutores();
 //		excluirAutor();
+		
+		//CRUD PEDIDO
+		criarItensPedidos();
+		criarPedidos();
+		
+		
 		
 		
 	}
@@ -352,6 +362,29 @@ public class Application implements CommandLineRunner {
 		Autor autor = autorService.recuperarPeloNome("Autor 5").get(0);
 		
 		autorService.deletarPeloId(autor.getID());
+	}
+	
+	private void criarPedidos() {
+		
+		pedido1 = new Pedido();
+		
+		pedido1.adicionarItemPedido(itemPedidoService.recuperarItensPedidos().get(0));
+		
+		pedidoService.salvarPedido(pedido1);
+		
+		
+	}
+	
+	private void criarItensPedidos() {
+		
+		itemPedido1 = new ItemPedido();
+				
+		itemPedido1.setLivro(livroService.listarLivros().get(0)); //setando um livro ao itemPedido
+		itemPedido1.setQuantidade(3);
+		
+		itemPedidoService.salvarItemPedido(itemPedido1);
+
+		
 	}
 }
 
