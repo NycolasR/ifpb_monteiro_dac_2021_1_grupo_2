@@ -1,5 +1,8 @@
 package com.bookstore.com.bookstore.facades;
 
+import java.text.Normalizer.Form;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,34 +25,54 @@ public class FacadeFormaPagamento {
 				
 		if(formaPagamentoService.recuperarPeloTipo(tipoFormaPagamento.getTipo()) == null) {
 			
-			System.out.println("entrou");
 			FormaPagamento formaPagamento = instanciarFormaDePagamento(tipoFormaPagamento);
+			formaPagamentoService.salvarFormaPagamento(formaPagamento);
 			
 		}else {
-			 throw new Exception("Forma de Pagamento já cadastrada");
+			 throw new Exception("[ERRO] Forma de Pagamento já cadastrada");
 		}
-		
-		
 	}
 		
-	public void removerFormaPagamento(Long id) {
+	public void removerFormaPagamento(Long id) throws Exception{
+		
+		FormaPagamento formaPagamento = recuperarFormaPagamento(id);
+		formaPagamentoService.deletarPeloId(id);
 		
 	}
 	
 	public FormaPagamento recuperarFormaPagamento(Long id) throws Exception {
 		
-		return null;
+		Optional<FormaPagamento> formaPagamento = formaPagamentoService.recuperarPeloId(id);
+		
+		if(formaPagamento.isPresent()) {
+			return formaPagamento.get();
+		}
+		
+		throw new Exception("[ERRO] Forma de pagamento inexistente");
 	}
 	
-	public FormaPagamento recuperarFormaPagamentoPeloTipo(String tipo) {
+	public FormaPagamento recuperarFormaPagamentoPeloTipo(String tipo) throws Exception{
 		
-		return formaPagamentoService.recuperarPeloTipo(tipo);
+		FormaPagamento formaPagamento = formaPagamentoService.recuperarPeloTipo(tipo);
+		
+		if(formaPagamento != null) {
+			return formaPagamento;
+		}
+		throw new Exception("[ERRO] Forma de pagamento inexistente");
+		
 	}
 	
 	public void atualizarFormaPagamento(FormaPagamento formaPagamento) {
 		
+		formaPagamentoService.atualizarFormaPagamento(formaPagamento);
 	}
 	
+	/**
+	 * Método privado responsável por instanciar as respectivas subclasses de 
+	 * FormaPagamento dependendo do tipoFormaPagamento passado como parâmetro
+	 * @param tipoFormaPagamento é o tipo de FormaPagamento que se deseja instanciar
+	 * @return retorna a FormaPagamento instanciada, correspondente ao tipo passado por parâmetro
+	 */
 	private FormaPagamento instanciarFormaDePagamento(TipoFormaPagamento tipoFormaPagamento) {
 		
 		FormaPagamento formaPagamento;
