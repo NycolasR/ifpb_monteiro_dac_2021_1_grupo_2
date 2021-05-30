@@ -12,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.bookstore.com.bookstore.facades.FacadeEnderecos;
+import com.bookstore.com.bookstore.facades.FacadeUsuarios;
 import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Endereco;
@@ -39,6 +41,9 @@ public class Application implements CommandLineRunner {
 	private AutorService autorService;
 	private PedidoService pedidoService;
 	
+	private FacadeUsuarios facadeUsuarios;
+	private FacadeEnderecos facadeEnderecos;
+	
 	private Livro livro1, livro2, livro3, livro4, livro5, livro6;
 	private Livro livro7, livro8, livro9, livro10, livro11, livro12;
 	
@@ -57,7 +62,9 @@ public class Application implements CommandLineRunner {
 			ItemPedidoService itemPedidoService,
 			FormaPagamentoService formaPagamentoService,
 			AutorService autorService,
-			PedidoService pedidoService) {
+			PedidoService pedidoService,
+			FacadeUsuarios facadeUsuarios,
+			FacadeEnderecos facadeEnderecos) {
 		
 		this.livroService = livroService;
 		this.editoraService = editoraService;
@@ -67,6 +74,8 @@ public class Application implements CommandLineRunner {
 		this.formaPagamentoService = formaPagamentoService;
 		this.autorService = autorService;
 		this.pedidoService = pedidoService;
+		this.facadeUsuarios = facadeUsuarios;
+		this.facadeEnderecos = facadeEnderecos;
 		
 	}
 
@@ -78,7 +87,7 @@ public class Application implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 //		main_Nycolas();
-//		main_Pedro();
+		main_Pedro();
 //		main_Gabriel();
 	}
 	
@@ -188,30 +197,24 @@ public class Application implements CommandLineRunner {
 	}
 
 	private void criarClientes() {
-		cliente1 = new Usuario();
-		cliente1.setNome("Cliente 1");
-		cliente1.setEmail("cliente1@email.com");
-		cliente1.setSenha("senha1");
-		cliente1.setAdmin(false);
-		
-		cliente2 = new Usuario();
-		cliente2.setNome("Cliente 2");
-		cliente2.setEmail("cliente2@email.com");
-		cliente2.setSenha("senha2");
-		cliente2.setAdmin(false);
-		
-		cliente3 = new Usuario();
-		cliente3.setNome("Cliente 3");
-		cliente3.setEmail("cliente3@email.com");
-		cliente3.setSenha("senha3");
-		cliente3.setAdmin(false);
 		
 		try {
-			usuarioService.salvar(cliente1);
-			usuarioService.salvar(cliente2);
-			usuarioService.salvar(cliente3);
+			facadeUsuarios.cadastrarUsuario("Cliente 1", "cliente1@email.com", "senha1");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());;
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			facadeUsuarios.cadastrarUsuario("Cliente 2", "cliente2@email.com", "senha2");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+		try {
+			facadeUsuarios.cadastrarUsuario("Cliente 3", "cliente3@email.com", "senha3");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		
 //		Teste da verificação de email duplicados
@@ -232,61 +235,29 @@ public class Application implements CommandLineRunner {
 
 	private void criarClientesComEndereco() {
 		
-		endereco1 = new Endereco();
-		endereco1.setBairro("bairro 1");
-		endereco1.setCEP(11111111);
-		endereco1.setCidade("cidade 1");
-		endereco1.setComplemento("comp 1");
-		endereco1.setNumero(001);
-		endereco1.setRua("Rua 1");
-		endereco1.setUF("PB");;
+		Endereco endereco1 = facadeEnderecos.criarEndereco("Rua 1", 001, "bairro 1", "PB", "cidade 1", "comp 1", 11111111);
 		
-		endereco2 = new Endereco();
-		endereco2.setBairro("bairro 2");
-		endereco2.setCEP(22222222);
-		endereco2.setCidade("cidade 2");
-		endereco2.setComplemento("comp 2");
-		endereco2.setNumero(002);
-		endereco2.setRua("Rua 2");
-		endereco2.setUF("PB");;
+		Endereco endereco2 = facadeEnderecos.criarEndereco("Rua 2", 002, "bairro 2", "PB", "cidade 2", "comp 2", 22222222);
 		
-		endereco3 = new Endereco();
-		endereco3.setBairro("bairro 3");
-		endereco3.setCEP(33333333);
-		endereco3.setCidade("cidade 3");
-		endereco3.setComplemento("comp 3");
-		endereco3.setNumero(003);
-		endereco3.setRua("Rua 3");
-		endereco3.setUF("PB");;
-		
-		
-		cliente4 = new Usuario();
-		cliente4.setNome("Cliente 4");
-		cliente4.setEmail("cliente4@email.com");
-		cliente4.addEndereco(endereco1);
-		cliente4.setSenha("senha4");
-		cliente4.setAdmin(false);
-		
-		cliente5 = new Usuario();
-		cliente5.setNome("Cliente 5");
-		cliente5.setEmail("cliente5@email.com");
-		cliente5.addEndereco(endereco2);
-		cliente5.setSenha("senha5");
-		cliente5.setAdmin(false);
-		
-		cliente6 = new Usuario();
-		cliente6.setNome("Cliente 6");
-		cliente6.setEmail("cliente6@email.com");
-		cliente6.addEndereco(endereco3);
-		cliente6.setSenha("senha6");
-		cliente6.setAdmin(false);
+		Endereco endereco3 = facadeEnderecos.criarEndereco("Rua 3", 003, "bairro 3", "PB", "cidade 3", "comp 3", 33333333);
+
+
+		try {
+			facadeUsuarios.addEndereco("cliente1@email.com", endereco1);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 		try {
-			usuarioService.salvar(cliente4);
-			usuarioService.salvar(cliente5);
-			usuarioService.salvar(cliente6);
+			facadeUsuarios.addEndereco("cliente2@email.com", endereco2);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());;
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			facadeUsuarios.addEndereco("cliente3@email.com", endereco3);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}

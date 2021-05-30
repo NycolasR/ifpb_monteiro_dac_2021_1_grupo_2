@@ -8,7 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.bookstore.com.bookstore.facades.FacadeEditoras;
+import com.bookstore.com.bookstore.facades.FacadeEnderecos;
 import com.bookstore.com.bookstore.facades.FacadeLivros;
+import com.bookstore.com.bookstore.facades.FacadeUsuarios;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.service.AutorService;
@@ -30,6 +32,8 @@ public class BookStoreApp implements CommandLineRunner {
 	
 	private FacadeLivros facadeLivros;
 	private FacadeEditoras facadeEditoras;
+	private FacadeUsuarios facadeUsuarios;
+	private FacadeEnderecos facadeEnderecos;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BookStoreApp.class, args);
@@ -43,7 +47,9 @@ public class BookStoreApp implements CommandLineRunner {
 			AutorService autorService,
 			PedidoService pedidoService,
 			FacadeLivros facadeLivros,
-			FacadeEditoras facadeEditoras) {
+			FacadeEditoras facadeEditoras,
+			FacadeUsuarios facadeUsuarios,
+			FacadeEnderecos facadeEnderecos) {
 		
 		this.usuarioService = usuarioService;
 		this.registroVendasService = registroVendasService;
@@ -54,6 +60,8 @@ public class BookStoreApp implements CommandLineRunner {
 		
 		this.facadeLivros = facadeLivros;
 		this.facadeEditoras = facadeEditoras;
+		this.facadeUsuarios = facadeUsuarios;
+		this.facadeEnderecos = facadeEnderecos;
 	}
 	
 	@Override
@@ -85,7 +93,60 @@ public class BookStoreApp implements CommandLineRunner {
 			switch(opcao) {
 
 			case 1: // Pedro
+				
+				System.out.print("Informe o nome do Usuario: ");
+				String nome = scanner.nextLine();
+				
+				System.out.print("Informe o e-mail do Unsuario: ");
+				String email = null;
+				
+				while(true) {
+					email = scanner.nextLine();
+					if(facadeUsuarios.verificarExistencia(email)) {
+						break;
+					}
+					System.out.println("[ERROR] Endereço de e-mail indisponivel");
+					System.out.println("Por favor, insira um endereço de e-mail diferente:");
+				}
 
+				
+				System.out.print("Informe o senha do Unsuario: ");
+				String senha = scanner.nextLine();
+				
+				try {
+					facadeUsuarios.cadastrarUsuario(nome, email, senha);
+					System.out.println("Cadastro realizado com sucesso!");
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				
+				System.out.println("\n[ATENCAO] Usuarios devem ter ao menos 1 endereço cadastrado "
+						+ "\nPor favor, cadastre um endereço abaixo: "
+						+ "\n Rua:");
+				
+				String rua = scanner.nextLine();
+				
+				System.out.println("numero: ");
+				Integer numero = Integer.parseInt(scanner.nextLine());
+				
+				System.out.println("bairro: ");
+				String bairro = scanner.nextLine();
+				
+				System.out.println("UF: ");
+				String uf = scanner.nextLine();
+				
+				System.out.println("Cidade: ");
+				String cidade = scanner.nextLine();
+				
+				System.out.println("Complemento: ");
+				String complemento = scanner.nextLine();
+				
+				System.out.println("CEP (Sem \"-\" ou \".\"): ");
+				Integer cep = Integer.parseInt(scanner.nextLine());
+
+				facadeUsuarios.addEndereco(email, facadeEnderecos.criarEndereco(rua, numero, bairro, uf, cidade, complemento, cep));
+				System.out.println("Bem vindo a BookStore Sr(a) "+ nome + "!");
+				
 				break;
 
 			case 2: // Pedro
