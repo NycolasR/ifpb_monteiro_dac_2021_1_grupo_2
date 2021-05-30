@@ -12,13 +12,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.bookstore.com.bookstore.facades.FacadeFormaPagamento;
 import com.bookstore.com.bookstore.model.Autor;
+import com.bookstore.com.bookstore.model.Cartao;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Endereco;
+import com.bookstore.com.bookstore.model.FormaPagamento;
 import com.bookstore.com.bookstore.model.ItemPedido;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.model.Pedido;
 import com.bookstore.com.bookstore.model.RegistroVendas;
+import com.bookstore.com.bookstore.model.TipoFormaPagamento;
 import com.bookstore.com.bookstore.model.Usuario;
 import com.bookstore.com.bookstore.service.AutorService;
 import com.bookstore.com.bookstore.service.EditoraService;
@@ -50,6 +54,9 @@ public class Application implements CommandLineRunner {
 	private Autor autor1, autor2, autor3, autor4, autor5, autor6, autor7, autor8;
 	private Pedido pedido1, pedido2, pedido3, pedido4, pedido5;
 	private ItemPedido itemPedido1, itemPedido2, itemPedido3, itemPedido4, itemPedido5;
+	private FormaPagamento formaPagamento1, formaPagamento2, formaPagamento3, formaPagamento4;
+	
+	private FacadeFormaPagamento facadeFormaPagamento;
 	
 	private Endereco endereco1, endereco2, endereco3;
 	
@@ -61,7 +68,8 @@ public class Application implements CommandLineRunner {
 			ItemPedidoService itemPedidoService,
 			FormaPagamentoService formaPagamentoService,
 			AutorService autorService,
-			PedidoService pedidoService) {
+			PedidoService pedidoService,
+			FacadeFormaPagamento facadeFormaPagamento) {
 		
 		this.livroService = livroService;
 		this.editoraService = editoraService;
@@ -71,6 +79,7 @@ public class Application implements CommandLineRunner {
 		this.formaPagamentoService = formaPagamentoService;
 		this.autorService = autorService;
 		this.pedidoService = pedidoService;
+		this.facadeFormaPagamento = facadeFormaPagamento;
 		
 	}
 
@@ -189,8 +198,16 @@ public class Application implements CommandLineRunner {
 //		excluirAutor();
 		
 		//CRUD PEDIDO
-		criarItensPedidos();
-		criarPedidos();
+//		criarItensPedidos();
+//		criarPedidos();
+//		criarFormasDePagamento();
+//		escluirPedido();
+				
+		try {
+			facadeFormaPagamento.criarFormaPagamento(TipoFormaPagamento.CARTAO);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 		
 		
@@ -369,6 +386,7 @@ public class Application implements CommandLineRunner {
 		pedido1 = new Pedido();
 		
 		pedido1.adicionarItemPedido(itemPedidoService.recuperarItensPedidos().get(0));
+		pedido1.setFormaPagamento(formaPagamentoService.recuperarFormasPagamento().get(0));
 		
 		pedidoService.salvarPedido(pedido1);
 		
@@ -385,6 +403,20 @@ public class Application implements CommandLineRunner {
 		itemPedidoService.salvarItemPedido(itemPedido1);
 
 		
+	}
+	
+	private void criarFormasDePagamento() {
+		
+		formaPagamento1 = new Cartao();
+		
+		formaPagamentoService.salvarFormaPagamento(formaPagamento1);
+		
+	}
+	
+	private void escluirPedido(){
+		
+		
+		pedidoService.deletarPeloId(1L);
 	}
 }
 
