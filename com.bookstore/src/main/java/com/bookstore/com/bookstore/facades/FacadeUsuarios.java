@@ -27,6 +27,10 @@ public class FacadeUsuarios {
 		return usuarioService.usuarioPorEmail(email);
 	}
 	
+	public Usuario consultarPorEmail(String email) throws Exception {
+		return usuarioService.usuarioPorEmail(email);
+	}
+	
 	public void addEndereco(String emailUsuario , Endereco endereco) throws Exception {
 		Usuario userTemp = usuarioService.usuarioPorEmail(emailUsuario);
 		userTemp.addEndereco(endereco);

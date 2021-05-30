@@ -95,14 +95,14 @@ public class BookStoreApp implements CommandLineRunner {
 			case 1: // Pedro
 				
 				System.out.print("Informe o nome do Usuario: ");
-				String nome = scanner.nextLine();
+				String nomeCadastro = scanner.nextLine();
 				
 				System.out.print("Informe o e-mail do Unsuario: ");
-				String email = null;
+				String emailCadastro = null;
 				
 				while(true) {
-					email = scanner.nextLine();
-					if(facadeUsuarios.verificarExistencia(email)) {
+					emailCadastro = scanner.nextLine();
+					if(facadeUsuarios.verificarExistencia(emailCadastro)) {
 						break;
 					}
 					System.out.println("[ERROR] Endereço de e-mail indisponivel");
@@ -111,10 +111,10 @@ public class BookStoreApp implements CommandLineRunner {
 
 				
 				System.out.print("Informe o senha do Unsuario: ");
-				String senha = scanner.nextLine();
+				String senhaCadastro = scanner.nextLine();
 				
 				try {
-					facadeUsuarios.cadastrarUsuario(nome, email, senha);
+					facadeUsuarios.cadastrarUsuario(nomeCadastro, emailCadastro, senhaCadastro);
 					System.out.println("Cadastro realizado com sucesso!");
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -133,7 +133,7 @@ public class BookStoreApp implements CommandLineRunner {
 				String bairro = scanner.nextLine();
 				
 				System.out.println("UF: ");
-				String uf = scanner.nextLine();
+				String uf = scanner.nextLine().toUpperCase();
 				
 				System.out.println("Cidade: ");
 				String cidade = scanner.nextLine();
@@ -144,13 +144,28 @@ public class BookStoreApp implements CommandLineRunner {
 				System.out.println("CEP (Sem \"-\" ou \".\"): ");
 				Integer cep = Integer.parseInt(scanner.nextLine());
 
-				facadeUsuarios.addEndereco(email, facadeEnderecos.criarEndereco(rua, numero, bairro, uf, cidade, complemento, cep));
-				System.out.println("Bem vindo a BookStore Sr(a) "+ nome + "!");
+				try {
+					facadeUsuarios.addEndereco(emailCadastro, facadeEnderecos.criarEndereco(rua, numero, bairro, uf, cidade, complemento, cep));
+					System.out.println("Bem vindo a BookStore Sr(a) "+ nomeCadastro + "!");
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 				
 				break;
 
 			case 2: // Pedro
 
+				System.out.print("Informe o e-mail do Unsuario: ");
+				String emailConsulta = scanner.nextLine();
+				
+				try {
+					System.out.println(facadeUsuarios.consultarPorEmail(emailConsulta).toString());
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				System.out.println("\n Prossione Enter para continuar.");
+				scanner.nextLine();
+				
 				break;
 
 			case 3: // Gabriel
