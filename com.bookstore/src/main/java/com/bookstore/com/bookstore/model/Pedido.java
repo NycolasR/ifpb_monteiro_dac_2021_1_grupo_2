@@ -65,7 +65,7 @@ public class Pedido {
 	@JoinColumn(name = "FORMA_PAGAMENTO_FK")
 	private FormaPagamento formaPagamento; 
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "PEDIDO_FK")
 	private Set<ItemPedido> itensPedidos = new LinkedHashSet<ItemPedido>(); 
 	
