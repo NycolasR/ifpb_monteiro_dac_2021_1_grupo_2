@@ -9,10 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
+import com.bookstore.com.bookstore.facades.FacadeAutor;
 import com.bookstore.com.bookstore.facades.FacadeEditoras;
 import com.bookstore.com.bookstore.facades.FacadeEnderecos;
+import com.bookstore.com.bookstore.facades.FacadeFormaPagamento;
 import com.bookstore.com.bookstore.facades.FacadeLivros;
+import com.bookstore.com.bookstore.facades.FacadePedido;
 import com.bookstore.com.bookstore.facades.FacadeUsuarios;
+import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.service.AutorService;
@@ -36,6 +40,10 @@ public class BookStoreApp implements CommandLineRunner {
 	private FacadeEditoras facadeEditoras;
 	private FacadeUsuarios facadeUsuarios;
 	private FacadeEnderecos facadeEnderecos;
+	private FacadePedido facadePedido;
+	private FacadeAutor facadeAutor;
+	private FacadeFormaPagamento facadeFormaPagamento;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BookStoreApp.class, args);
@@ -51,7 +59,10 @@ public class BookStoreApp implements CommandLineRunner {
 			FacadeLivros facadeLivros,
 			FacadeEditoras facadeEditoras,
 			FacadeUsuarios facadeUsuarios,
-			FacadeEnderecos facadeEnderecos) {
+			FacadeEnderecos facadeEnderecos,
+			FacadePedido facadePedido,
+			FacadeAutor facadeAutor,
+			FacadeFormaPagamento facadeFormaPagamento) {
 		
 		this.usuarioService = usuarioService;
 		this.registroVendasService = registroVendasService;
@@ -64,6 +75,9 @@ public class BookStoreApp implements CommandLineRunner {
 		this.facadeEditoras = facadeEditoras;
 		this.facadeUsuarios = facadeUsuarios;
 		this.facadeEnderecos = facadeEnderecos;
+		this.facadePedido = facadePedido;
+		this.facadeAutor = facadeAutor;
+		this.facadeFormaPagamento = facadeFormaPagamento;
 	}
 	
 	@Override
@@ -120,6 +134,7 @@ public class BookStoreApp implements CommandLineRunner {
 					System.out.println("Cadastro realizado com sucesso!");
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
+					break;
 				}
 				
 				System.out.println("\n[ATENCAO] Usuarios devem ter ao menos 1 endereço cadastrado "
@@ -151,6 +166,7 @@ public class BookStoreApp implements CommandLineRunner {
 					System.out.println("Bem vindo a BookStore Sr(a) "+ nomeCadastro + "!");
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
+					break;
 				}
 				
 				break;
@@ -164,17 +180,49 @@ public class BookStoreApp implements CommandLineRunner {
 					System.out.println(facadeUsuarios.consultarPorEmail(emailConsulta).toString());
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
+					break;
 				}
-				System.out.println("\n Prossione Enter para continuar.");
+				System.out.println("\n Pressione Enter para continuar.");
 				scanner.nextLine();
 				
 				break;
 
-			case 3: // Gabriel
+			case 3: // Gabriel - Cadastrar Autor
 
+				//Ler dados a respeito do Autor
+				System.out.print("Informe o nome do Autor: ");
+				String nomeAutor = scanner.nextLine();
+				
+				try {
+					facadeAutor.criarAutor(nomeAutor);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+					break;
+				}
+				
 				break;
 
-			case 4: // Gabriel
+			case 4: // Gabriel - Alterar Autor
+				
+				Autor autorEditado = null;
+				
+				try {
+					 autorEditado = facadeAutor.selecionarAutor(false);
+					 System.err.println(autorEditado);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+					break;
+				}
+				
+				//Ler dados a respeito do Autor
+				System.out.print("Informe o novo nome do Autor: ");
+				String novoNomeAutor = scanner.nextLine();
+				
+				System.out.println("\nDados atualizados:");
+				System.err.println(autorEditado);
+				
+				autorEditado.setNome(novoNomeAutor);
+				facadeAutor.atualizarAutor(autorEditado);
 
 				break;
 
@@ -224,18 +272,32 @@ public class BookStoreApp implements CommandLineRunner {
 					break;
 				}
 				
-				
 				// Listar Autores
 				// [Se o usuário quiser cria-se um novo]
+				Autor autorSelecionado = null;
+				
+				System.out.println("\nAgora, selecione o autor deste livro.");
+				try {
+					autorSelecionado = facadeAutor.selecionarAutor(true);
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+					break;
+				}
 				
 				// Seta tudo um no outro e salva
 				Long idLivro = facadeLivros.salvarLivro(isbn, titulo, descricao, preco, edicao, anoPublicacao, qntdEstoque);
-				editoraSelecionada.addLivro(facadeLivros.recuperarLivro(idLivro));
+				Livro livro = facadeLivros.recuperarLivro(idLivro);
+				
+				editoraSelecionada.addLivro(livro);
 				facadeEditoras.atualizarEditora(editoraSelecionada);
+				
+				autorSelecionado.adicionarLivro(livro);
+				facadeAutor.atualizarAutor(autorSelecionado);
 				
 				// Mostra os dados salvos pela console
 
 				System.err.println(editoraSelecionada);
+				System.err.println(autorSelecionado);
 				System.err.println(facadeLivros.recuperarLivro(idLivro));
 				
 				break;
@@ -280,6 +342,7 @@ public class BookStoreApp implements CommandLineRunner {
 					facadeLivros.deletarLivro(facadeLivros.selecionarLivro());
 				} catch (Exception e) {
 					System.err.println(e.getMessage());
+					break;
 				}
 				break;
 
@@ -292,6 +355,7 @@ public class BookStoreApp implements CommandLineRunner {
 					System.err.println(livoSelecionado);
 				} catch (Exception e) {
 					System.err.println(e.getMessage());
+					break;
 				}
 				
 				System.out.print("Informe a quantidade de unidades que deseja cadastrar: ");
@@ -309,6 +373,7 @@ public class BookStoreApp implements CommandLineRunner {
 					}
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
+					break;
 				}
 				
 				System.out.println("\n Prossione Enter para continuar.");
@@ -350,15 +415,30 @@ public class BookStoreApp implements CommandLineRunner {
 						}
 						
 					}
-						
-					
-						
 					
 				}
 				break;
 
-			case 11: // Gabriel
-
+			case 11: // Gabriel - Adicionar um livro a um pedido (carrinho de compras)
+				
+				
+				//Ler dados a respeito do Pedido
+				try {
+					Long idLivroretornado = facadeLivros.selecionarLivro().getId();
+					
+					System.out.print("Informe a quantidade : ");
+					Integer quantidade = Integer.parseInt(scanner.nextLine());
+					
+//					System.out.print("Informe o e-mail do Unsuario: ");
+//					String emailCadastroRetornado = scanner.nextLine();
+					
+					facadePedido.criarPedido(idLivroretornado, quantidade);
+					
+				}catch (Exception e) {
+					System.err.println(e.getMessage());
+					break;
+				}
+				
 				break;
 
 			case 12: // Nycolas - Ler dados de 1 livro
@@ -367,6 +447,7 @@ public class BookStoreApp implements CommandLineRunner {
 					System.err.println(facadeLivros.selecionarLivro());
 				} catch (Exception e) {
 					System.err.println(e.getMessage());
+					break;
 				}
 				
 				break;

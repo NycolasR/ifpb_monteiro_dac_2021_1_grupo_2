@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -59,7 +60,7 @@ public class Livro {
 	@JoinTable(name = "TB_CATEGORIA")
 	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
 
-	@ManyToMany(mappedBy = "livros")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros", cascade = CascadeType.MERGE)
 	private Set<Autor> autores = new LinkedHashSet<Autor>();
 
 	public Livro(
