@@ -50,16 +50,25 @@ public class LivroService {
 	 * a página será ordenada.
 	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
 	 * @param numeroPagina Número da página que se deseja obter os registrs
+	 * @param inEstoque Boolean que especifica se a busca deve ser realizada apenas entre os livros em estoque ou em geral.
 	 * @return Uma página com os livros ordenados da forma especificada.
 	 */
-	public Page<Livro> listarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina) {
+	public Page<Livro> listarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, boolean inEstoque) {
 		Sort sort = Sort.by(sortDirection, campoOrdenacao); // Ordenador que segue a direção e campos especificados
 		
-		// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
-		Page<Livro> pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 5, sort));
+		Page<Livro> pagina = null;
+		if(inEstoque) {
+			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
+			// O metodo livrosEmEstoque retorna apenas os livros com estoque > 0.
+			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 5, sort));
+		}else {
+			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
+			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 5, sort));
+		}
 		
 		return pagina;
 	}
+	
 	
 	/**
 	 * Método usado para retornar todos os registros na tabela de livros
@@ -107,6 +116,7 @@ public class LivroService {
 	public boolean existemRegistros() {
 		return livroRepository.count() > 0;
 	}
+	
 }
 
 

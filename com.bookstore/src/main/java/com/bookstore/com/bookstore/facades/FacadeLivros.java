@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.bookstore.com.bookstore.model.Livro;
@@ -130,7 +132,15 @@ public class FacadeLivros {
 		
 		throw new Exception("[ERRO] Não existem livros cadastrados no sistema.");
 	}
-
+	
+	public Page<Livro> paginarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, boolean inEstoque) throws Exception{
+		Page<Livro> pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);
+		if(!pagTemp.isEmpty()) {
+			return pagTemp;			
+		}
+		throw new Exception("Nenhum Livro cadastrado");
+	}
+	
 	public void deletarLivro(Livro livro) {
 		livroService.deletarPeloId(livro.getId());
 	}
