@@ -1,6 +1,5 @@
 package com.bookstore.com.bookstore.facades;
 
-import java.text.Normalizer.Form;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class FacadeFormaPagamento {
 		
 	public void removerFormaPagamento(Long id) throws Exception{
 		
-		FormaPagamento formaPagamento = recuperarFormaPagamento(id);
+		recuperarFormaPagamento(id);
 		formaPagamentoService.deletarPeloId(id);
 		
 	}
