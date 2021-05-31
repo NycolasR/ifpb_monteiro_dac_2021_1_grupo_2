@@ -88,4 +88,13 @@ public class AutorService {
 	public void atualizarAutor(Autor autor) {
 		salvarAutor(autor);
 	}
+	
+	/**
+	 * Método usado para saber se existem registros de Autor no banco de dados
+	 * @return True se existir pelo menos um registro.
+	 */
+	public boolean existemRegistros() {
+		
+		return autorRepository.count() > 0;
+	}
 }
