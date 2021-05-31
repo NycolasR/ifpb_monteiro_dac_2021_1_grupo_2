@@ -132,13 +132,13 @@ public class Pedido {
 	 * @param ISBN "Códio" do livro a ser buscado dentro do pedido
 	 * @return retorna as informações do livro encontrado dentro do pedido.
 	 */
-	public String mostrarValoresDeUmItemIndividual(Long ISBN) {
+	public String mostrarValoresDeUmItemIndividual(Long isbn) {
 		
 		String valorIndividual = new String();
 		
 		for(ItemPedido itemPedido: itensPedidos) {
 			
-			if(itemPedido.getLivro().getISBN() == ISBN) {
+			if(itemPedido.getLivro().getISBN() == isbn) {
 				valorIndividual = itemPedido.getLivro().getTitulo() +" :"+ itemPedido.getValorIndividual();
 				break;
 			}
@@ -146,6 +146,45 @@ public class Pedido {
 		return valorIndividual;
 	}
 	
+	/**
+	 * Método responsável por recuperar um ItemPedido específico 
+	 * @param isbn "código" do livro
+	 * @return retorna um itemPedido contendo o livro correspondente
+	 * @throws Exception lança uma exceção caso não encontre um itemPedido contendo o livro correspondente
+	 */
+	public ItemPedido recuperarItemPedido(Long isbn) throws Exception{
+		
+		for(ItemPedido itemPedido: itensPedidos) {
+			
+			if(itemPedido.getLivro().getISBN() == isbn) {
+				return itemPedido;
+			}
+		}
+		throw new Exception("[ERRO] Livro Inexistente");
+		
+	}
+	
+	/**
+	 * Esse método verifica se a quantidade do estoque atende a quantidade
+	 * solicitada no pedido
+	 * @throws Exception lança exceção caso a quantidade pedida seja 
+	 * maior que a quantidade em estoque.
+	 */
+	public void verificarEstoque() throws Exception{
+		
+		Iterator<ItemPedido> itensPedidosIterator = itensPedidos.iterator();
+		while(itensPedidosIterator.hasNext()) {
+			
+			ItemPedido itemPedido = itensPedidosIterator.next();
+			
+			
+			if(itemPedido.getLivro().getQuantidadeEmEstoque() < itemPedido.getQuantidade()) {
+				
+				throw new Exception("[ERRO] Estoque não suficiente");	
+			}
+		}
+	}
+		
 	/*
 	 * Os métodos a baixo são de get e set em relação aos atributos da classe.
 	 * 
@@ -204,17 +243,17 @@ public class Pedido {
 	public void setFormaPagamento(FormaPagamento formaPagamento) {
 		this.formaPagamento = formaPagamento;
 	}
-	public Set<ItemPedido> getItemPedidos() {
+	public Set<ItemPedido> getItensPedidos() {
 		return itensPedidos;
 	}
-	public void setLivros(Set<ItemPedido> itensPedidos) {
+	public void setItensPedidos(Set<ItemPedido> itensPedidos) {
 		this.itensPedidos = itensPedidos;
 	}
 	
 	@Override
 	public String toString() {
 		return "Dados do Pedido " + ID + ": "
-				+ "\n	Nome Cliente: " + usuario.getNome()
+				+ "\n	Nome Cliente: " + "aqui vai o nome do usuario"
 				+ "\n	Quantidade de Itens: " + qntdItens
 				+ "\n	Preço Total: R$" + valorItensTotal
 				+ "\n	Forma de Pagamento: " + formaPagamento

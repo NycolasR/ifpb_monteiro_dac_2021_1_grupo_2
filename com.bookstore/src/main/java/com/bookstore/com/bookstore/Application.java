@@ -12,7 +12,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.bookstore.com.bookstore.facades.FacadeAutor;
 import com.bookstore.com.bookstore.facades.FacadeFormaPagamento;
+import com.bookstore.com.bookstore.facades.FacadePedido;
 import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Cartao;
 import com.bookstore.com.bookstore.model.Editora;
@@ -57,6 +59,8 @@ public class Application implements CommandLineRunner {
 	private FormaPagamento formaPagamento1, formaPagamento2, formaPagamento3, formaPagamento4;
 	
 	private FacadeFormaPagamento facadeFormaPagamento;
+	private FacadeAutor facadeAutor;
+	private FacadePedido facadePedido;
 	
 	private Endereco endereco1, endereco2, endereco3;
 	
@@ -69,7 +73,9 @@ public class Application implements CommandLineRunner {
 			FormaPagamentoService formaPagamentoService,
 			AutorService autorService,
 			PedidoService pedidoService,
-			FacadeFormaPagamento facadeFormaPagamento) {
+			FacadeFormaPagamento facadeFormaPagamento,
+			FacadeAutor facadeAutor,
+			FacadePedido facadePedido) {
 		
 		this.livroService = livroService;
 		this.editoraService = editoraService;
@@ -80,6 +86,8 @@ public class Application implements CommandLineRunner {
 		this.autorService = autorService;
 		this.pedidoService = pedidoService;
 		this.facadeFormaPagamento = facadeFormaPagamento;
+		this.facadeAutor = facadeAutor;
+		this.facadePedido = facadePedido;
 		
 	}
 
@@ -204,7 +212,21 @@ public class Application implements CommandLineRunner {
 //		escluirPedido();
 				
 		try {
-			facadeFormaPagamento.criarFormaPagamento(TipoFormaPagamento.CARTAO);
+//			facadeFormaPagamento.criarFormaPagamento(TipoFormaPagamento.PIX);
+//			facadeFormaPagamento.removerFormaPagamento(3L);
+//			System.out.println(facadeFormaPagamento.recuperarFormaPagamentoPeloTipo("Cartão"));
+			
+//			facadeAutor.criarAutor("Autor 1");
+//			System.out.println(facadeAutor.recuperarAutor(2L));
+//			facadeAutor.removerAutor(4L);
+			
+//			System.out.println(facadePedido.recuperarPedido(2L));
+//			facadePedido.removerPedido(4L);
+//			facadePedido.finalizarPedido(5L, "Rua das caixas - Monteiro - PB", 1L);
+//			facadePedido.criarPedido(1L, 3);
+//			facadePedido.atualizarPedido(5L, 2L, 3);
+			
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
