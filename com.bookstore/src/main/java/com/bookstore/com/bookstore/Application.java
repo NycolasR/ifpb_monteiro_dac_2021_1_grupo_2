@@ -15,13 +15,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import com.bookstore.com.bookstore.facades.FacadeAutor;
+import com.bookstore.com.bookstore.facades.FacadeFormaPagamento;
+import com.bookstore.com.bookstore.facades.FacadePedido;
+
 import com.bookstore.com.bookstore.facades.FacadeEnderecos;
 import com.bookstore.com.bookstore.facades.FacadeUsuarios;
+
 import com.bookstore.com.bookstore.model.Autor;
+import com.bookstore.com.bookstore.model.Cartao;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Endereco;
+import com.bookstore.com.bookstore.model.FormaPagamento;
+import com.bookstore.com.bookstore.model.ItemPedido;
 import com.bookstore.com.bookstore.model.Livro;
+import com.bookstore.com.bookstore.model.Pedido;
 import com.bookstore.com.bookstore.model.RegistroVendas;
+import com.bookstore.com.bookstore.model.TipoFormaPagamento;
 import com.bookstore.com.bookstore.model.Usuario;
 import com.bookstore.com.bookstore.service.AutorService;
 import com.bookstore.com.bookstore.service.EditoraService;
@@ -54,6 +64,13 @@ public class Application implements CommandLineRunner {
 	private Usuario clienteTeste;
 	
 	private Autor autor1, autor2, autor3, autor4, autor5, autor6, autor7, autor8;
+	private Pedido pedido1, pedido2, pedido3, pedido4, pedido5;
+	private ItemPedido itemPedido1, itemPedido2, itemPedido3, itemPedido4, itemPedido5;
+	private FormaPagamento formaPagamento1, formaPagamento2, formaPagamento3, formaPagamento4;
+	
+	private FacadeFormaPagamento facadeFormaPagamento;
+	private FacadeAutor facadeAutor;
+	private FacadePedido facadePedido;
 	
 	private Endereco endereco1, endereco2, endereco3;
 	
@@ -66,6 +83,9 @@ public class Application implements CommandLineRunner {
 			FormaPagamentoService formaPagamentoService,
 			AutorService autorService,
 			PedidoService pedidoService,
+			FacadeFormaPagamento facadeFormaPagamento,
+			FacadeAutor facadeAutor,
+			FacadePedido facadePedido,
 			FacadeUsuarios facadeUsuarios,
 			FacadeEnderecos facadeEnderecos) {
 		
@@ -77,8 +97,12 @@ public class Application implements CommandLineRunner {
 		this.formaPagamentoService = formaPagamentoService;
 		this.autorService = autorService;
 		this.pedidoService = pedidoService;
+		this.facadeFormaPagamento = facadeFormaPagamento;
+		this.facadeAutor = facadeAutor;
+		this.facadePedido = facadePedido;
 		this.facadeUsuarios = facadeUsuarios;
 		this.facadeEnderecos = facadeEnderecos;
+
 		
 	}
 
@@ -90,8 +114,9 @@ public class Application implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 //		main_Nycolas();
-		main_Pedro();
-//		main_Gabriel();
+//		main_Pedro();
+		main_Gabriel();
+
 	}
 	
 	private void main_Pedro() {
@@ -193,8 +218,8 @@ public class Application implements CommandLineRunner {
 		editoraService.salvarEditora(editora1);
 		editoraService.salvarEditora(editora2);
 
-		criarClientes();
-		testarRegistroVendas();
+//		criarClientes();
+//		testarRegistroVendas();
 		
 		System.err.println("\nDeu certo\n");
 		
@@ -205,6 +230,34 @@ public class Application implements CommandLineRunner {
 		//CRUD AUTOR
 //		criarAutores();
 //		excluirAutor();
+		
+		//CRUD PEDIDO
+//		criarItensPedidos();
+//		criarPedidos();
+//		criarFormasDePagamento();
+//		escluirPedido();
+				
+		try {
+//			facadeFormaPagamento.criarFormaPagamento(TipoFormaPagamento.PIX);
+//			facadeFormaPagamento.removerFormaPagamento(3L);
+//			System.out.println(facadeFormaPagamento.recuperarFormaPagamentoPeloTipo("Cartão"));
+			
+//			facadeAutor.criarAutor("Autor 1");
+//			System.out.println(facadeAutor.recuperarAutor(2L));
+//			facadeAutor.removerAutor(4L);
+			
+//			System.out.println(facadePedido.recuperarPedido(2L));
+//			facadePedido.removerPedido(4L);
+//			facadePedido.finalizarPedido(5L, "Rua das caixas - Monteiro - PB", 1L);
+//			facadePedido.criarPedido(1L, 3);
+//			facadePedido.atualizarPedido(5L, 2L, 3);
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
 		
 		
 	}
@@ -336,6 +389,44 @@ public class Application implements CommandLineRunner {
 		Autor autor = autorService.recuperarPeloNome("Autor 5").get(0);
 		
 		autorService.deletarPeloId(autor.getID());
+	}
+	
+	private void criarPedidos() {
+		
+		pedido1 = new Pedido();
+		
+		pedido1.adicionarItemPedido(itemPedidoService.recuperarItensPedidos().get(0));
+		pedido1.setFormaPagamento(formaPagamentoService.recuperarFormasPagamento().get(0));
+		
+		pedidoService.salvarPedido(pedido1);
+		
+		
+	}
+	
+	private void criarItensPedidos() {
+		
+		itemPedido1 = new ItemPedido();
+				
+		itemPedido1.setLivro(livroService.listarLivros().get(0)); //setando um livro ao itemPedido
+		itemPedido1.setQuantidade(3);
+		
+		itemPedidoService.salvarItemPedido(itemPedido1);
+
+		
+	}
+	
+	private void criarFormasDePagamento() {
+		
+		formaPagamento1 = new Cartao();
+		
+		formaPagamentoService.salvarFormaPagamento(formaPagamento1);
+		
+	}
+	
+	private void escluirPedido(){
+		
+		
+		pedidoService.deletarPeloId(1L);
 	}
 }
 

@@ -42,6 +42,16 @@ public class FormaPagamentoService {
 	}
 	
 	/**
+	 * Esse método recupera uma FormaPagamento específica pelo seu tipo
+	 * @param tipo correspondente a FormaPagamento buscada
+	 * @return retorna uma FormaPagamento encontrada
+	 */
+	public FormaPagamento recuperarPeloTipo(String tipo){
+		
+		return formaPagamentoRepository.findByTipo(tipo);
+	}
+	
+	/**
 	 * Esse método recupera uma lista de todas as FormaPagamento
 	 * @return lista de FormaPagamento
 	 */

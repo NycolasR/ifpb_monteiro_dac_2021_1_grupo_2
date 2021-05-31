@@ -3,6 +3,7 @@ package com.bookstore.com.bookstore.model;
 import java.math.BigDecimal;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 /**
  * 
@@ -11,11 +12,12 @@ import javax.persistence.DiscriminatorValue;
  * uma classe concreta Strategy, ou seja, que herda da super classe FormaPagamento (Interface Strategy)
  *
  */
+@Entity
 @DiscriminatorValue("Cartão")
 public class Cartao extends FormaPagamento{
-
+	
 	public Cartao() {
-		setNomeTipo("Cartão"); // O atributo nomeTipo da superclasse (FormaPagamento) é adicionado correspondendo ao tipo da classe que à herda (Cartão).
+		setNome("Cartão"); //adicionando ao atributo nome de FormaPagamento, o seu respectivo nome
 	}
 	
 	/**

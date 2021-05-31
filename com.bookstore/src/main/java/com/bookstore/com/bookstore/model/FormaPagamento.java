@@ -3,6 +3,7 @@ package com.bookstore.com.bookstore.model;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TB_FORMA_PAGAMENTO")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TIPO")
+@DiscriminatorColumn(name = "TIPO", discriminatorType = DiscriminatorType.STRING)
 public abstract class FormaPagamento {
 	
 	@Id
@@ -29,19 +30,19 @@ public abstract class FormaPagamento {
 	@Column(name = "ID")
 	private Long ID;
 	
-	@Column(name = "NOME_TIPO")
-	private String nomeTipo; // nomeTipo representa o tipo que cada subtipificação de FormaPagamento pode ser.
+	@Column(name = "NOME")
+	private String nome;
 	
 	public Long getID() {
 		return ID;
 	}
-
+	
 	public String getNome() {
-		return nomeTipo;
+		return nome;
 	}
 	
-	public void setNomeTipo(String nomeTipo) {
-		this.nomeTipo = nomeTipo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
 	/**
@@ -52,7 +53,7 @@ public abstract class FormaPagamento {
 	
 	@Override
 	public String toString() {
-		return "Forma de pagamento: " + nomeTipo;
+		return "Forma de pagamento: " + nome;	//ajeitar aqui depois
 	}
 	
 	public boolean equals(FormaPagamento formaPagamento) {
