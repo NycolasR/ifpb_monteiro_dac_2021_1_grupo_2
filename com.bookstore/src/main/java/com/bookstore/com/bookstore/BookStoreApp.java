@@ -6,6 +6,8 @@ import java.util.Scanner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 import com.bookstore.com.bookstore.facades.FacadeEditoras;
 import com.bookstore.com.bookstore.facades.FacadeEnderecos;
@@ -299,11 +301,60 @@ public class BookStoreApp implements CommandLineRunner {
 				break;
 
 			case 9: // Pedro
-
+				try {
+					Page<Livro> livros = facadeLivros.paginarLivros("preco",Sort.Direction.ASC, 1, true);
+					System.out.println("\n5 Livros mais baratos em estoque:\n");
+					for(Livro l : livros) {
+						System.out.println("Livro: " + l.getTitulo() + " || Preço: " + l.getPreco() );
+					}
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				
+				System.out.println("\n Prossione Enter para continuar.");
+				scanner.nextLine();
+			
 				break;
 
 			case 10: // Pedro
-
+				int pagina = 1;
+				boolean condicao = true;
+				while(condicao) {
+					Page<Livro> livros = facadeLivros.paginarLivros("titulo", Sort.Direction.ASC, pagina, false);
+					System.out.println("\nTodos os Livros:\n");
+					System.out.println("Total de paginas: " + livros.getTotalPages() 
+					+ " \nPagina atual: " + (livros.getNumber() + 1)  + "\n");
+					
+					for(Livro l : livros) {
+						System.out.println("Dados do Livro: " + l.getTitulo()
+								+ " ||ISBN: " + l.getISBN()
+								+ " ||Descrição: " + l.getDescricao()
+								+ " ||Preço: R$" + l.getPreco()
+								+ " ||Edição: " + l.getEdicao()
+								+ " ||Ano de Publicação: " + l.getAnoPublicacao()
+								+ " ||Quantidade disponível no estoque: " + l.getQuantidadeEmEstoque() + " unidades" );
+					}
+					
+					while(true) {
+						System.out.println("\nDigite a pagina desejada: \n(Pressione Enter para sair) ");
+						String proximaPagina = scanner.nextLine();
+						
+						if(proximaPagina.isEmpty()) {
+							condicao = false;
+							break;
+						}else if(Integer.parseInt(proximaPagina) >0 && Integer.parseInt(proximaPagina) <= livros.getTotalPages()) {
+							pagina = Integer.parseInt(proximaPagina);
+							break;
+						}else {
+							System.err.println("\n[ERROR] Numero de pagina invalido");
+						}
+						
+					}
+						
+					
+						
+					
+				}
 				break;
 
 			case 11: // Gabriel

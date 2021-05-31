@@ -11,6 +11,9 @@ import java.util.Optional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 import com.bookstore.com.bookstore.facades.FacadeEnderecos;
 import com.bookstore.com.bookstore.facades.FacadeUsuarios;
@@ -93,7 +96,17 @@ public class Application implements CommandLineRunner {
 	
 	private void main_Pedro() {
 		
-		usuarioService.excluirTudo();
+//		usuarioService.excluirTudo();
+		
+//		Editora editora1 = new Editora("Editora 1", "Cidade 1");
+//		editoraService.salvarEditora(editora1);
+		
+//		Page<Livro> livros = livroService.listarLivros("preco",Sort.Direction.ASC, 1);
+//		
+//		for(Livro l : livros) {
+//			System.out.println(l.getTitulo());
+//		}
+		
 		
 //		try {
 //			for(Usuario u : usuarioService.usuarioPorNome("Pedro")) {
