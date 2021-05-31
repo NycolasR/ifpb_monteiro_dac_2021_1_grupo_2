@@ -15,10 +15,10 @@ public class UsuarioService {
 	public UsuarioRepository usuarioRepository;
 	
 	public void salvar(Usuario usuario) throws Exception {
-		if(verificarExistencia(usuario)) {
+		if(verificarExistencia(usuario.getEmail())) {
 			usuarioRepository.save(usuario);			
 		}else {
-			String mensagem = "JÃ¡ existe um usuario cadastrado com o email " + usuario.getEmail();
+			String mensagem = "Ja existe um usuario cadastrado com o email " + usuario.getEmail();
 			throw new Exception(mensagem);			
 		}
 	}
@@ -28,7 +28,7 @@ public class UsuarioService {
 		if(userTemp.equals(usuario)) {
 			usuarioRepository.save(usuario);
 		}else {
-			throw new Exception("O Email nÃ£o pode ser altereado");
+			throw new Exception("O Email nao pode ser altereado");
 		}
 	}
 	
@@ -56,9 +56,13 @@ public class UsuarioService {
 		throw new Exception("Nenhum usuario com o nome " + nome + " encontrado");
 	}
 	
-	private boolean verificarExistencia(Usuario usuario) {
+	public Long quantidadeDeUsuariosCadastrados() {
+		return usuarioRepository.count();
+	}
+	
+	public boolean verificarExistencia(String email) {
 		try {
-			usuarioPorEmail(usuario.getEmail());
+			usuarioPorEmail(email);
 		}catch (Exception e){
 			return true;
 		}

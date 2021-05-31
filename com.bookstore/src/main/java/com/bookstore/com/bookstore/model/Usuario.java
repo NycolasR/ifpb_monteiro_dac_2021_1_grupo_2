@@ -128,11 +128,11 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario: {"
-			+ "\n	id: " + id + ","
-			+ "\n	nome: " + nome + ","
-			+ "\n	email: " + email + ", "
-			+ "\n	senha: " + senha + ", "
-			+ "\n	administrador: " + isAdmin + ", "
+			+ "\n	id: " + id 
+			+ "\n	nome: " + nome 
+			+ "\n	email: " + email 
+			+ "\n	senha: " + senha 
+			+ "\n	administrador: " + isAdmin 
 			+ "\n}";
 	}
 	
