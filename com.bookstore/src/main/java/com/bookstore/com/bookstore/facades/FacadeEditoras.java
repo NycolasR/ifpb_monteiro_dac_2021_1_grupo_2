@@ -43,13 +43,8 @@ public class FacadeEditoras {
 			String resposta = scanner.nextLine();
 			
 			if(resposta.equalsIgnoreCase("Y")) {
-				System.out.print("Informe o nome da editora: ");
-				String nome = scanner.nextLine();
-				
-				System.out.print("Informe a cidade da editora: ");
-				String cidade = scanner.nextLine();
-				
-				return criarEditora(nome, cidade);
+
+				return recuperarEditoraSelecionada(scanner);
 			} else {
 				
 				System.err.print("Informe o ID da editora selecionada: ");
@@ -64,10 +59,24 @@ public class FacadeEditoras {
 					}
 				}
 			}
+		}else {
 			
+			System.out.println("[ERRO] Não existem editoras cadastradas no sistema.");
+			System.out.println("Cadastrar Nova Editora");
+			return recuperarEditoraSelecionada(scanner);
 		}
 		
-		throw new Exception("[ERRO] Não existem editoras cadastradas no sistema.");
+	}
+	
+	private Editora recuperarEditoraSelecionada(Scanner scanner) {
+				
+		System.out.print("Informe o nome da editora: ");
+		String nome = scanner.nextLine();
+		
+		System.out.print("Informe a cidade da editora: ");
+		String cidade = scanner.nextLine();
+		
+		return criarEditora(nome, cidade);
 	}
 
 	public Editora criarEditora(String nome, String cidade) {

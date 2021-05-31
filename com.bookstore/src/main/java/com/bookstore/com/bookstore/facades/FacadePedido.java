@@ -16,6 +16,7 @@ import com.bookstore.com.bookstore.model.FormaPagamento;
 import com.bookstore.com.bookstore.model.ItemPedido;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.model.Pedido;
+import com.bookstore.com.bookstore.model.Usuario;
 import com.bookstore.com.bookstore.service.ItemPedidoService;
 import com.bookstore.com.bookstore.service.LivroService;
 import com.bookstore.com.bookstore.service.PedidoService;
@@ -33,15 +34,20 @@ public class FacadePedido {
 	private FacadeFormaPagamento facadeFormaPagamento;
 	
 	@Autowired
+	private FacadeUsuarios facadeUsuarios;
+	
+	@Autowired
 	private ItemPedidoService itemPedidoService;
 	
 	public void criarPedido(Long idLivro, Integer quantidade) throws Exception{
 		
 		Livro livro = facadeLivros.recuperarLivro(idLivro);
+//		Usuario usuario = facadeUsuarios.consultarPorEmail(emailUsuario);
 		
 		Pedido pedido = new Pedido();
 		ItemPedido itemPedido = new ItemPedido(livro, quantidade);		
 		pedido.adicionarItemPedido(itemPedido);
+//		pedido.setUsuario(usuario);
 		
 		itemPedidoService.salvarItemPedido(itemPedido);
 		pedidoService.salvarPedido(pedido);
@@ -113,8 +119,8 @@ public class FacadePedido {
 	
 	/**
 	 * Esse método faz a diminuição do estoque em relação a quantidade de livros que foram pedidos de cada livro
-	 * @param pedido
-	 * @throws Exception
+	 * @param pedido que vai possui os livros para diminuir do estoque
+	 * @throws Exception lança exceção caso o estoque não possua a quantidade solicitada
 	 */
 	private void diminuirDoEstoque(Pedido pedido) throws Exception {	
 		
