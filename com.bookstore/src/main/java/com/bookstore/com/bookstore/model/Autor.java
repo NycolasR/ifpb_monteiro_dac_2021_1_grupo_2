@@ -3,8 +3,10 @@ package com.bookstore.com.bookstore.model;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,11 +33,16 @@ public class Autor {
 	@Column(name = "NOME")
 	private String nome;
 	
-	@ManyToMany
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "TB_LIVRO_AUTOR",
-			   joinColumns = @JoinColumn(name = "ID_AUTOR"), 
-			   inverseJoinColumns = @JoinColumn(name = "ISBN_LIVRO"))
+			   joinColumns = @JoinColumn(name = "FK_AUTOR"), 
+			   inverseJoinColumns = @JoinColumn(name = "FK_LIVRO"))
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
+	
+	public void adicionarLivro(Livro livro) {
+		livros.add(livro);
+	}
 
 	public Autor(String nome) {
 		
