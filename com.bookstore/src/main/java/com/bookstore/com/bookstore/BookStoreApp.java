@@ -420,11 +420,11 @@ public class BookStoreApp implements CommandLineRunner {
 	 * 
 	 * @param texto String que deve ser apresentado ao usuario.
 	 * @param isNumero Bollean que diz se a entrada deve ser apenas numerica ou não.
-	 * @param isobrigatorio Boolean que diz se a resposta do usuario é obrigatoria ou não.
+	 * @param isObrigatorio Boolean que diz se a resposta do usuario é obrigatoria ou não.
 	 * @return retorna uma string que é a entrada já validada. 
 	 * @throws Exception Lança uma exceção caso o usuario queria cancelar oq esta fazendo.
 	 */
-	private String validarEntrada(String texto, boolean isNumero, boolean isobrigatorio) throws Exception{ 
+	private String validarEntrada(String texto, boolean isNumero, boolean isObrigatorio) throws Exception{ 
 		Scanner scannerValidacao = new Scanner(System.in);	
 		
 		String entrada = null;
@@ -433,9 +433,9 @@ public class BookStoreApp implements CommandLineRunner {
 		while(true) {
 			entrada = scannerValidacao.nextLine();
 			
-			if(isobrigatorio == false && entrada.trim().isEmpty()){
+			if(isObrigatorio == false && entrada.trim().isEmpty()){
 				break;
-			}else if((isobrigatorio == true && entrada.trim().isEmpty()) || (isNumero == true && (entrada.matches("^[0-9]+$") == false))) {
+			}else if((isObrigatorio == true && entrada.trim().isEmpty()) || (isNumero == true && (entrada.matches("^[0-9]+$") == false))) {
 				System.err.println("[ERROR] Entrada invalida, tente novamente! \nDiginte \"close\" para cancelar.");
 			}else if(entrada.toLowerCase().equals("close")) {
 				throw new Exception("Operacao cancelada.");
