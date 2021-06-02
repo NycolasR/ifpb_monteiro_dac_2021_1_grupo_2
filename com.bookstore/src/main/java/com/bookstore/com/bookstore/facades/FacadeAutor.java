@@ -17,7 +17,7 @@ public class FacadeAutor {
 	@Autowired
 	private AutorService autorService;
 	
-	public Autor criarAutor(String nome) throws Exception{
+	public Autor criarAutor(String nome) throws Exception {
 		
 		Autor autor = new Autor(nome);
 		autorService.salvarAutor(autor);
@@ -96,7 +96,7 @@ public class FacadeAutor {
 			
 		}
 		
-		throw new Exception("[ERRO] Não existem autores cadastradas no sistema.");
+		throw new Exception("[ERRO] Não existem autores cadastrados no sistema.");
 	}
 	
 }
