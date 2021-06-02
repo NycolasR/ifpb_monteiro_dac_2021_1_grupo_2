@@ -10,13 +10,24 @@ import org.springframework.stereotype.Component;
 import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.service.AutorService;
-
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Classe Facade responsável por métodos relacionados a Autor.
+ *
+ */
 @Component
 public class FacadeAutor {
 
 	@Autowired
 	private AutorService autorService;
 	
+	/**
+	 * Método responsável por criar um autor
+	 * @param nome nome do autor
+	 * @return retorna o Autor criado
+	 * @throws Exception lança exceção caso ele não tenha sido cadastrado corretamente ao banco
+	 */
 	public Autor criarAutor(String nome) throws Exception {
 		
 		Autor autor = new Autor(nome);
@@ -26,12 +37,23 @@ public class FacadeAutor {
 		
 	}
 	
+	/**
+	 * Esse método remove um Autor pelo seu id
+	 * @param id id correspondente ao Autor
+	 * @throws Exception lança exceção caso não seja encontrado o Autor
+	 */
 	public void removerAutor(Long id) throws Exception{
 		
 		recuperarAutor(id);
 		autorService.deletarPeloId(id);
 	}
 	
+	/**
+	 * Esse método recupera um Autor pelo seu id
+	 * @param id id correspondente ao Autor
+	 * @return retorna o Autor encontrado
+	 * @throws Exception lança exceção caso não seja encontrado o Autor
+	 */
 	public Autor recuperarAutor(Long id) throws Exception{
 		
 	    Optional<Autor> autor = autorService.recuperarPeloId(id);
@@ -43,6 +65,10 @@ public class FacadeAutor {
 		throw new Exception("[ERRO] Autor inexistente");
 	}
 	
+	/**
+	 * Esse método atualiza um Autor 
+	 * @param autor Autor que se deseja atualizar
+	 */
 	public void atualizarAutor(Autor autor) {
 		
 		autorService.atualizarAutor(autor);
