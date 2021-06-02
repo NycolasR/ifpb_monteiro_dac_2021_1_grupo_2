@@ -163,16 +163,7 @@ public class BookStoreApp implements CommandLineRunner {
 
 			case 3: // Gabriel - Cadastrar Autor
 
-				//Ler dados a respeito do Autor
-				System.out.print("Informe o nome do Autor: ");
-				String nomeAutor = scanner.nextLine();
-				
-				try {
-					facadeAutor.criarAutor(nomeAutor);
-				}catch (Exception e) {
-					System.out.println(e.getMessage());
-					break;
-				}
+				codigoCase3();
 				
 				break;
 
@@ -255,7 +246,8 @@ public class BookStoreApp implements CommandLineRunner {
 					autorSelecionado = facadeAutor.selecionarAutor(true);
 				} catch (Exception e) {
 					System.err.println(e.getMessage());
-					break;
+					System.err.println("Será necessário que você cadastre ao menos 1 autor.");
+					autorSelecionado = codigoCase3();
 				}
 				
 				// Seta tudo um no outro e salva
@@ -272,7 +264,7 @@ public class BookStoreApp implements CommandLineRunner {
 
 				System.err.println(editoraSelecionada);
 				System.err.println(autorSelecionado);
-				System.err.println(facadeLivros.recuperarLivro(idLivro));
+				System.err.println(livro);
 				
 				break;
 
@@ -440,5 +432,13 @@ public class BookStoreApp implements CommandLineRunner {
 				flag = false;
 			}
 		}
+	}
+
+	private Autor codigoCase3() throws Exception {
+		//Ler dados a respeito do Autor
+		System.out.print("Informe o nome do Autor: ");
+		String nomeAutor = new Scanner(System.in).nextLine();
+		
+		return facadeAutor.criarAutor(nomeAutor);
 	}
 }
