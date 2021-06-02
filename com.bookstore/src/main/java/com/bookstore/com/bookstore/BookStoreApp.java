@@ -19,23 +19,10 @@ import com.bookstore.com.bookstore.facades.FacadeUsuarios;
 import com.bookstore.com.bookstore.model.Autor;
 import com.bookstore.com.bookstore.model.Editora;
 import com.bookstore.com.bookstore.model.Livro;
-import com.bookstore.com.bookstore.service.AutorService;
-import com.bookstore.com.bookstore.service.FormaPagamentoService;
-import com.bookstore.com.bookstore.service.ItemPedidoService;
-import com.bookstore.com.bookstore.service.PedidoService;
-import com.bookstore.com.bookstore.service.RegistroVendasService;
-import com.bookstore.com.bookstore.service.UsuarioService;
 
 @SpringBootApplication
 public class BookStoreApp implements CommandLineRunner {
 
-	private UsuarioService usuarioService;
-	private RegistroVendasService registroVendasService;
-	private ItemPedidoService itemPedidoService;
-	private FormaPagamentoService formaPagamentoService;
-	private AutorService autorService;
-	private PedidoService pedidoService;
-	
 	private FacadeLivros facadeLivros;
 	private FacadeEditoras facadeEditoras;
 	private FacadeUsuarios facadeUsuarios;
@@ -50,12 +37,6 @@ public class BookStoreApp implements CommandLineRunner {
 	}
 	
 	public BookStoreApp(
-			UsuarioService usuarioService,
-			RegistroVendasService registroVendasService,
-			ItemPedidoService itemPedidoService,
-			FormaPagamentoService formaPagamentoService,
-			AutorService autorService,
-			PedidoService pedidoService,
 			FacadeLivros facadeLivros,
 			FacadeEditoras facadeEditoras,
 			FacadeUsuarios facadeUsuarios,
@@ -63,14 +44,7 @@ public class BookStoreApp implements CommandLineRunner {
 			FacadePedido facadePedido,
 			FacadeAutor facadeAutor,
 			FacadeFormaPagamento facadeFormaPagamento) {
-		
-		this.usuarioService = usuarioService;
-		this.registroVendasService = registroVendasService;
-		this.itemPedidoService = itemPedidoService;
-		this.formaPagamentoService = formaPagamentoService;
-		this.autorService = autorService;
-		this.pedidoService = pedidoService;
-		
+	
 		this.facadeLivros = facadeLivros;
 		this.facadeEditoras = facadeEditoras;
 		this.facadeUsuarios = facadeUsuarios;
