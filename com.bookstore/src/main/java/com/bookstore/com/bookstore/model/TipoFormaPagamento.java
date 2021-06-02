@@ -1,5 +1,10 @@
 package com.bookstore.com.bookstore.model;
-
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Essa classe corresponde a tipificação das formas de pagamento
+ *
+ */
 public enum TipoFormaPagamento {
 
 	CARTAO("Cartão"),

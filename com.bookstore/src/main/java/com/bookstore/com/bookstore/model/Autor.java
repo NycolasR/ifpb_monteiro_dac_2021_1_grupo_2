@@ -77,7 +77,7 @@ public class Autor {
 	
 	@Override
 	public String toString() {
-		return nome;
+		return "Nome Autor: " + nome;
 	}
 	
 	public boolean equals(Autor autor) {
