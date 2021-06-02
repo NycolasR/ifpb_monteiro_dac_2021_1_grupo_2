@@ -16,7 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Essa classe tem relação 1:N para com as classes Endereço e Pedido.
+ *
+ */
 @Entity
 @Table(name = "TB_USUARIO")
 public class Usuario {
