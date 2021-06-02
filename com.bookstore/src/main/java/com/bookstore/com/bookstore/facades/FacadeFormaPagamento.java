@@ -12,14 +12,25 @@ import com.bookstore.com.bookstore.model.Pix;
 import com.bookstore.com.bookstore.model.TipoFormaPagamento;
 import com.bookstore.com.bookstore.model.TransferenciaBancaria;
 import com.bookstore.com.bookstore.service.FormaPagamentoService;
-
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Classe Facade responsável por métodos relacionados a FormaPagamento.Esse padrão de projeto
+ * foi escolhido para ser implementado, pois o mesmo busca facilitar a utilização de 
+ * métodos de classes distintas que se relacionam entre si, por parte das classes clientes.
+ *
+ */
 @Component
 public class FacadeFormaPagamento {
 
 	@Autowired
 	private FormaPagamentoService formaPagamentoService;
 	
-	
+	/**
+	 * Método responsável por criar uma FormaPagamento, recebendo um TipoFormaPagamento
+	 * @param tipoFormaPagamento tipo correspondente a uma FormaPagamento
+	 * @throws Exception lança exceção caso a FormaPagamento já exista
+	 */
 	public void criarFormaPagamento(TipoFormaPagamento tipoFormaPagamento) throws Exception{
 				
 		if(formaPagamentoService.recuperarPeloTipo(tipoFormaPagamento.getTipo()) == null) {
@@ -31,7 +42,12 @@ public class FacadeFormaPagamento {
 			 throw new Exception("[ERRO] Forma de Pagamento já cadastrada");
 		}
 	}
-		
+	
+	/**
+	 * Esse método remove uma FormaPagamento
+	 * @param id correspondente a FormaPagamento
+	 * @throws Exception lança exceção caso não seja encontrada a FormaPagamento
+	 */
 	public void removerFormaPagamento(Long id) throws Exception{
 		
 		recuperarFormaPagamento(id);
@@ -39,6 +55,12 @@ public class FacadeFormaPagamento {
 		
 	}
 	
+	/**
+	 * Esse método recupera uma FormaPagamento
+	 * @param id correspondente a FormaPagamento
+	 * @return retorna a FormaPagamento encontrada
+	 * @throws Exception lança exceção caso não seja encontrada a FormaPagamento
+	 */
 	public FormaPagamento recuperarFormaPagamento(Long id) throws Exception {
 		
 		Optional<FormaPagamento> formaPagamento = formaPagamentoService.recuperarPeloId(id);
@@ -50,6 +72,12 @@ public class FacadeFormaPagamento {
 		throw new Exception("[ERRO] Forma de pagamento inexistente");
 	}
 	
+	/**
+	 * Esse método recupera uma FormaPagamento pelo tipo
+	 * @param tipo tipo relacionado a FormaPagamento que se deseja encontrar
+	 * @return retorna a FormaPagamento encontrada
+	 * @throws Exception lança exceção caso não seja encontrada a FormaPagamento
+	 */
 	public FormaPagamento recuperarFormaPagamentoPeloTipo(String tipo) throws Exception{
 		
 		FormaPagamento formaPagamento = formaPagamentoService.recuperarPeloTipo(tipo);
@@ -61,6 +89,10 @@ public class FacadeFormaPagamento {
 		
 	}
 	
+	/**
+	 * Esse método atualiza uma FormaPagamento 
+	 * @param formaPagamento que se deseja atualizar
+	 */
 	public void atualizarFormaPagamento(FormaPagamento formaPagamento) {
 		
 		formaPagamentoService.atualizarFormaPagamento(formaPagamento);
