@@ -91,7 +91,7 @@ public class BookStoreApp implements CommandLineRunner {
 					
 					while(true) {
 						emailCadastro = validarEntrada("Informe o e-mail do Unsuario: ",false,true);
-						if(facadeUsuarios.verificarExistencia(emailCadastro)) {
+						if(!facadeUsuarios.verificarExistencia(emailCadastro)) {
 							break;
 						}
 						System.err.println("[ERROR] Endereço de e-mail indisponivel");

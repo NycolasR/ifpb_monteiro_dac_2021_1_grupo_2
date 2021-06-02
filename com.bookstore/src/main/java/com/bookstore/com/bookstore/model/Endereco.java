@@ -7,7 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Essa classe é dependente da classe Usuario e tem relacionamento N:1 com a mesma.
+ *
+ */
 @Entity
 @Table(name = "TB_ENDERECO")
 public class Endereco {

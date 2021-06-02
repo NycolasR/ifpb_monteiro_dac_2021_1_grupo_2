@@ -1,5 +1,11 @@
 package com.bookstore.com.bookstore.model;
 
+/**
+ * 
+ * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
+ * Esse enum enumera as possiveis categorias de um livro.
+ *
+ */
 public enum Categoria {
 
 	INFORMATICA,
