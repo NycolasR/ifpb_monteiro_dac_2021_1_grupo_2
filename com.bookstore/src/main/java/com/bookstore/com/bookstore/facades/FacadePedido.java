@@ -18,7 +18,9 @@ import com.bookstore.com.bookstore.service.RegistroVendasService;
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
- * Classe Facade responsável por métodos relacionados a Pedido.
+ * Classe Facade responsável por métodos relacionados a Pedido. Esse padrão de projeto
+ * foi escolhido para ser implementado, pois o mesmo busca facilitar a utilização de 
+ * métodos de classes distintas que se relacionam entre si, por parte das classes clientes.
  *
  */
 @Component
