@@ -83,72 +83,55 @@ public class BookStoreApp implements CommandLineRunner {
 			switch(opcao) {
 
 			case 1: // Pedro
-				
-				System.out.print("Informe o nome do Usuario: ");
-				String nomeCadastro = scanner.nextLine();
-				
-				System.out.print("Informe o e-mail do Unsuario: ");
-				String emailCadastro = null;
-				
-				while(true) {
-					emailCadastro = scanner.nextLine();
-					if(facadeUsuarios.verificarExistencia(emailCadastro)) {
+				try {
+					
+					String nomeCadastro = validarEntrada("Informe o nome do Usuario: ",false,true);					
+					
+					String emailCadastro = null;
+					
+					while(true) {
+						emailCadastro = validarEntrada("Informe o e-mail do Unsuario: ",false,true);
+						if(facadeUsuarios.verificarExistencia(emailCadastro)) {
+							break;
+						}
+						System.err.println("[ERROR] Endereço de e-mail indisponivel");
+						System.out.println("Por favor, insira um endereço de e-mail diferente:");
+					}
+					
+					String senhaCadastro = validarEntrada("Informe o senha do Unsuario: ",false,true);
+					
+					System.out.println("\n[ATENCAO] Usuarios devem ter ao menos 1 endereço cadastrado "
+							+ "\nPor favor, cadastre um endereço abaixo. ");
+					
+					System.out.println("\nCadastro de Endereço:");
+					
+					String rua = validarEntrada("Rua: ",false,true);
+					Integer numero = Integer.parseInt(validarEntrada("numero: ",true,true));
+					String bairro = validarEntrada("bairro: ",false,true);
+					String uf = validarEntrada("UF: ",false,true).toUpperCase();
+					String cidade = validarEntrada("Cidade: ",false,true);
+					String complemento = validarEntrada("Complemento: ",false,true);
+					Integer cep = Integer.parseInt(validarEntrada("CEP (Sem \"-\" ou \".\"): ",true,true));
+					
+					try {
+						facadeUsuarios.cadastrarUsuario(nomeCadastro, emailCadastro, senhaCadastro);
+						facadeUsuarios.addEndereco(emailCadastro, facadeEnderecos.criarEndereco(rua, numero, bairro, uf, cidade, complemento, cep));
+						System.err.println();
+						System.out.println("Cadastro realizado com sucesso! \nBem vindo a BookStore Sr(a) "+ nomeCadastro + "!");
+					}catch (Exception e) {
+						System.err.println(e.getMessage());
 						break;
 					}
-					System.out.println("[ERROR] Endereço de e-mail indisponivel");
-					System.out.println("Por favor, insira um endereço de e-mail diferente:");
-				}
-
 				
-				System.out.print("Informe o senha do Unsuario: ");
-				String senhaCadastro = scanner.nextLine();
-				
-				try {
-					facadeUsuarios.cadastrarUsuario(nomeCadastro, emailCadastro, senhaCadastro);
-					System.out.println("Cadastro realizado com sucesso!");
-				}catch (Exception e) {
-					System.out.println(e.getMessage());
-					break;
-				}
-				
-				System.out.println("\n[ATENCAO] Usuarios devem ter ao menos 1 endereço cadastrado "
-						+ "\nPor favor, cadastre um endereço abaixo: "
-						+ "\n Rua:");
-				
-				String rua = scanner.nextLine();
-				
-				System.out.println("numero: ");
-				Integer numero = Integer.parseInt(scanner.nextLine());
-				
-				System.out.println("bairro: ");
-				String bairro = scanner.nextLine();
-				
-				System.out.println("UF: ");
-				String uf = scanner.nextLine().toUpperCase();
-				
-				System.out.println("Cidade: ");
-				String cidade = scanner.nextLine();
-				
-				System.out.println("Complemento: ");
-				String complemento = scanner.nextLine();
-				
-				System.out.println("CEP (Sem \"-\" ou \".\"): ");
-				Integer cep = Integer.parseInt(scanner.nextLine());
-
-				try {
-					facadeUsuarios.addEndereco(emailCadastro, facadeEnderecos.criarEndereco(rua, numero, bairro, uf, cidade, complemento, cep));
-					System.out.println("Bem vindo a BookStore Sr(a) "+ nomeCadastro + "!");
-				}catch (Exception e) {
-					System.out.println(e.getMessage());
-					break;
+				}catch ( Exception e ){
+					System.err.println(e.getMessage());
 				}
 				
 				break;
 
 			case 2: // Pedro
 
-				System.out.print("Informe o e-mail do Unsuario: ");
-				String emailConsulta = scanner.nextLine();
+				String emailConsulta = validarEntrada("Informe o e-mail do Unsuario: ", false,true);
 				
 				try {
 					System.out.println(facadeUsuarios.consultarPorEmail(emailConsulta).toString());
@@ -180,8 +163,7 @@ public class BookStoreApp implements CommandLineRunner {
 				}
 				
 				//Ler dados a respeito do Autor
-				System.out.print("Informe o novo nome do Autor: ");
-				String novoNomeAutor = scanner.nextLine();
+				String novoNomeAutor = validarEntrada("Informe o novo nome do Autor: ", false,true);
 				
 				System.out.println("\nDados atualizados:");
 				System.err.println(autorEditado);
@@ -194,14 +176,11 @@ public class BookStoreApp implements CommandLineRunner {
 			case 5: // Nycolas - Cadastrar Livro
 				
 				// Ler dados do livro
-				System.out.print("Informe o título do livro: ");
-				String titulo = scanner.nextLine();
+				String titulo = validarEntrada("Informe o título do livro: ", false,true);
 				
-				System.out.print("Informe o ISBN do livro: ");
-				Long isbn = Long.parseLong(scanner.nextLine());
+				Long isbn = Long.parseLong(validarEntrada("Informe o ISBN do livro: ", true,true));
 				
-				System.out.print("Informe a descrição do livro: ");
-				String descricao = scanner.nextLine();
+				String descricao = validarEntrada("Informe a descrição do livro: ", false,true);
 				
 				System.out.print("Informe o preço do livro: ");
 				BigDecimal preco = null;
@@ -214,14 +193,11 @@ public class BookStoreApp implements CommandLineRunner {
 					}
 				}
 				
-				System.out.print("Informe a edição do livro: ");
-				Integer edicao = Integer.parseInt(scanner.nextLine());
+				Integer edicao = Integer.parseInt(validarEntrada("Informe a edição do livro: ", true,true));
 				
-				System.out.print("Informe o ano de publicação do livro: ");
-				Integer anoPublicacao = Integer.parseInt(scanner.nextLine());
+				Integer anoPublicacao = Integer.parseInt(validarEntrada("Informe o ano de publicação do livro: ", true,true));
 				
-				System.out.print("Informe a quantidade de unidades do livro para estoque: ");
-				Integer qntdEstoque = Integer.parseInt(scanner.nextLine());
+				Integer qntdEstoque = Integer.parseInt(validarEntrada("Informe a quantidade de unidades do livro para estoque: ", true,true));
 				
 				// Adicionar categorias ao livro
 				
@@ -339,7 +315,6 @@ public class BookStoreApp implements CommandLineRunner {
 					}
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
-					break;
 				}
 				
 				System.out.println("\n Prossione Enter para continuar.");
@@ -351,7 +326,13 @@ public class BookStoreApp implements CommandLineRunner {
 				int pagina = 1;
 				boolean condicao = true;
 				while(condicao) {
-					Page<Livro> livros = facadeLivros.paginarLivros("titulo", Sort.Direction.ASC, pagina, false);
+					Page<Livro> livros = null;
+					try {
+						livros = facadeLivros.paginarLivros("titulo", Sort.Direction.ASC, pagina, false);
+					}catch (Exception e) {
+						System.out.println(e.getMessage());
+						break;
+					}
 					System.out.println("\nTodos os Livros:\n");
 					System.out.println("Total de paginas: " + livros.getTotalPages() 
 					+ " \nPagina atual: " + (livros.getNumber() + 1)  + "\n");
@@ -367,8 +348,7 @@ public class BookStoreApp implements CommandLineRunner {
 					}
 					
 					while(true) {
-						System.out.println("\nDigite a pagina desejada: \n(Pressione Enter para sair) ");
-						String proximaPagina = scanner.nextLine();
+						String proximaPagina = validarEntrada("\nDigite a pagina desejada: \n(Pressione Enter para sair) ", true, false);
 						
 						if(proximaPagina.isEmpty()) {
 							condicao = false;
@@ -383,6 +363,8 @@ public class BookStoreApp implements CommandLineRunner {
 					}
 					
 				}
+				
+				
 				break;
 
 			case 11: // Gabriel - Adicionar um livro a um pedido (carrinho de compras)
@@ -431,5 +413,37 @@ public class BookStoreApp implements CommandLineRunner {
 		String nomeAutor = new Scanner(System.in).nextLine();
 		
 		return facadeAutor.criarAutor(nomeAutor);
+	}
+	
+	/**
+	 * Método usado para fazer a validação de uma entrada.
+	 * 
+	 * @param texto String que deve ser apresentado ao usuario.
+	 * @param isNumero Bollean que diz se a entrada deve ser apenas numerica ou não.
+	 * @param isobrigatorio Boolean que diz se a resposta do usuario é obrigatoria ou não.
+	 * @return retorna uma string que é a entrada já validada. 
+	 * @throws Exception Lança uma exceção caso o usuario queria cancelar oq esta fazendo.
+	 */
+	private String validarEntrada(String texto, boolean isNumero, boolean isobrigatorio) throws Exception{ 
+		Scanner scannerValidacao = new Scanner(System.in);	
+		
+		String entrada = null;
+		
+		System.out.println(texto);
+		while(true) {
+			entrada = scannerValidacao.nextLine();
+			
+			if(isobrigatorio == false && entrada.trim().isEmpty()){
+				break;
+			}else if((isobrigatorio == true && entrada.trim().isEmpty()) || (isNumero == true && (entrada.matches("^[0-9]+$") == false))) {
+				System.err.println("[ERROR] Entrada invalida, tente novamente! \nDiginte \"close\" para cancelar.");
+			}else if(entrada.toLowerCase().equals("close")) {
+				throw new Exception("Operacao cancelada.");
+			}else{
+				break;
+			}	
+			System.out.println(texto);
+		}
+		return entrada;
 	}
 }
