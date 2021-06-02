@@ -138,7 +138,7 @@ public class FacadeLivros {
 		if(!pagTemp.isEmpty()) {
 			return pagTemp;			
 		}
-		throw new Exception("Nenhum Livro cadastrado");
+		throw new Exception("[ERRO] Nenhum Livro cadastrado");
 	}
 	
 	public void deletarLivro(Livro livro) {

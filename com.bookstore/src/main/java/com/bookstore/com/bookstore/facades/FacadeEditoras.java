@@ -59,7 +59,7 @@ public class FacadeEditoras {
 					}
 				}
 			}
-		}else {
+		} else {
 			
 			System.out.println("[ERRO] Não existem editoras cadastradas no sistema.");
 			System.out.println("Cadastrar Nova Editora");
