@@ -33,9 +33,8 @@ public class Autor {
 	@Column(name = "NOME")
 	private String nome;
 	
-	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinTable(name = "TB_LIVRO_AUTOR",
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable( name = "TB_LIVRO_AUTOR",
 			   joinColumns = @JoinColumn(name = "FK_AUTOR"), 
 			   inverseJoinColumns = @JoinColumn(name = "FK_LIVRO"))
 	private Set<Livro> livros = new LinkedHashSet<Livro>();

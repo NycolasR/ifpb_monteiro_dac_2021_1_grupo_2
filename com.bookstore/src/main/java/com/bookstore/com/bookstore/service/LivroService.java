@@ -84,6 +84,7 @@ public class LivroService {
 	 */
 	public void deletarTodosOsLivros() {
 		livroRepository.deleteAll();
+		livroRepository.deletarInstancasLivroAutor();
 	}
 	
 	/**
@@ -96,6 +97,7 @@ public class LivroService {
 		
 		if(deletado.isPresent()) { // Verifica se há um objeto no Optional
 			livroRepository.delete(deletado.get());
+			livroRepository.deletarLivroAutor(id);
 		}
 	}
 	
