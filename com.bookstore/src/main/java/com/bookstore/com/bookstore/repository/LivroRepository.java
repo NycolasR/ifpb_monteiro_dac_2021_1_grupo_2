@@ -11,6 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstore.com.bookstore.model.Livro;
 
+/**
+ * 
+ * @author NPG (Grupo 2)
+ * Interface para acesso ao banco de dados voltado para a entidade Livro.
+ * Implementações fornecidas pelo Spring, logo não é necessário a uma classe
+ * implementar esta interface.
+ * 
+ */
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, Long> {
 	
@@ -28,6 +36,5 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 	@Modifying
 	@Query(value = "truncate table tb_livro_autor", nativeQuery = true)
 	public void deletarInstancasLivroAutor();
-	
 	
 }

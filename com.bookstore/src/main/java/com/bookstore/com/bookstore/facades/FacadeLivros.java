@@ -13,12 +13,30 @@ import org.springframework.stereotype.Component;
 import com.bookstore.com.bookstore.model.Livro;
 import com.bookstore.com.bookstore.service.LivroService;
 
+/**
+ * 
+ * @author NPG (Grupo 2)
+ * Classe Façade usada para interfacear certas funcionalidades relativas a Livro.
+ * Esse padrão de projeto foi escolhido para ser implementado, pois o mesmo busca facilitar a utilização de 
+ * métodos de classes distintas que se relacionam entre si, por parte das classes clientes.
+ */
 @Component
 public class FacadeLivros {
 	
 	@Autowired
 	private LivroService livroService;
 	
+	/**
+	 * Método usado para criar um livro e salvá-lo
+	 * @param isbn ISBN do livro
+	 * @param titulo Título do livro
+	 * @param descricao Descrição do livro
+	 * @param preco Preço do livro
+	 * @param edicao Edição do livro
+	 * @param anoPublicacao Ano de publicação do livro
+	 * @param qntdEstoque Quantidade do livro que estará em estoque
+	 * @return O registro de Livro pronto
+	 */
 	public Long salvarLivro(
 			Long isbn, 
 			String titulo, 
@@ -33,6 +51,11 @@ public class FacadeLivros {
 		return livro.getId();
 	}
 	
+	/**
+	 * Método usado para atualizar um registro de Livro de forma flexível
+	 * @param livro Livro que se deseja atualizar
+	 * @param atributo Atributo do livro que está para ser atualizado
+	 */
 	public void atualizarAtributoLivro(Livro livro, String atributo) {
 		Scanner input = new Scanner(System.in);
 		String resposta = input.nextLine();
@@ -96,6 +119,12 @@ public class FacadeLivros {
 		}
 	}
 	
+	/**
+	 * Método usado para recuperar o registro de um Livro
+	 * @param id ID do livro que se deseja obter
+	 * @return O registro caso encontrado
+	 * @throws Exception Lança exceção se o registro não for encontrado
+	 */
 	public Livro recuperarLivro(Long id) throws Exception {
 		Optional<Livro> optional = livroService.recuperarPeloId(id);
 		
@@ -105,6 +134,11 @@ public class FacadeLivros {
 		throw new Exception("[ERRO] Livro não encontrado na base de dados.");
 	}
 
+	/**
+	 * Método usado para listar e selecionar um livro
+	 * @return O livro selecionado 
+	 * @throws Exception Lança exceção caso não existam livros registrados
+	 */
 	public Livro selecionarLivro() throws Exception {
 		
 		if(livroService.existemRegistros()) {
@@ -141,10 +175,18 @@ public class FacadeLivros {
 		throw new Exception("[ERRO] Nenhum Livro cadastrado");
 	}
 	
+	/**
+	 * Método usado para deletar um registro de livro
+	 * @param livro Livro que está para ser deletado
+	 */
 	public void deletarLivro(Livro livro) {
 		livroService.deletarPeloId(livro.getId());
 	}
 
+	/**
+	 * Método usado para atualizar um registro de livro
+	 * @param livro Livro que está para ser atualizado
+	 */
 	public void atualizarLivro(Livro livroEditado) {
 		livroService.atualizarLivro(livroEditado);
 	}
