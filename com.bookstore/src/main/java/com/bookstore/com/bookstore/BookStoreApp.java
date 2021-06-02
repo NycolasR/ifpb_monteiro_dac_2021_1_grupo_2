@@ -347,7 +347,6 @@ public class BookStoreApp implements CommandLineRunner {
 					}
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
-					break;
 				}
 				
 				System.out.println("\n Prossione Enter para continuar.");
@@ -359,7 +358,13 @@ public class BookStoreApp implements CommandLineRunner {
 				int pagina = 1;
 				boolean condicao = true;
 				while(condicao) {
-					Page<Livro> livros = facadeLivros.paginarLivros("titulo", Sort.Direction.ASC, pagina, false);
+					Page<Livro> livros = null;
+					try {
+						livros = facadeLivros.paginarLivros("titulo", Sort.Direction.ASC, pagina, false);
+					}catch (Exception e) {
+						System.out.println(e.getMessage());
+						break;
+					}
 					System.out.println("\nTodos os Livros:\n");
 					System.out.println("Total de paginas: " + livros.getTotalPages() 
 					+ " \nPagina atual: " + (livros.getNumber() + 1)  + "\n");
@@ -391,6 +396,10 @@ public class BookStoreApp implements CommandLineRunner {
 					}
 					
 				}
+				
+				System.out.println("\n Prossione Enter para continuar.");
+				scanner.nextLine();
+				
 				break;
 
 			case 11: // Gabriel - Adicionar um livro a um pedido (carrinho de compras)
