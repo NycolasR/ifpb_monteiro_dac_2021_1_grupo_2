@@ -60,7 +60,7 @@ public class Livro {
 	@JoinTable(name = "TB_CATEGORIA")
 	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
 
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros", cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros")
 	private Set<Autor> autores = new LinkedHashSet<Autor>();
 
 	public Livro(
