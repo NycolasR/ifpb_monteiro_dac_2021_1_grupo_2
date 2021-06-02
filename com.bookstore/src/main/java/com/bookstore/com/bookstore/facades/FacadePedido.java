@@ -156,8 +156,7 @@ public class FacadePedido {
 	 * foram pedidos de cada livro
 	 * 
 	 * @param pedido que vai possui os livros para diminuir do estoque
-	 * @throws Exception lança exceção caso o estoque não possua a quantidade
-	 *                   solicitada
+	 * @throws Exception lança exceção caso o estoque não possua a quantidade solicitada
 	 */
 	private void diminuirDoEstoque(Pedido pedido) throws Exception {
 
