@@ -1,6 +1,9 @@
 # IFPB - Campus Monteiro
 ## Projeto da disciplina DAC 2021.1 - Grupo 2
-Este é um projeto para um e-commerce de livros desenvolvido pela equipe NPG como requisito para aprovação na disciplina de Desenvolvimento de Aplicações Corporativas 2021.1. 
+Este é um projeto para um e-commerce de livros desenvolvido pela equipe NPG como requisito para aprovação na disciplina de Desenvolvimento de Aplicações Corporativas 2021.1.
+
+## Diagrama de classes 
+![Diagrama de classes](Diagrama de classes do Book Store.png)
 
 ## Quem somos?
 A NPG é uma equipe de três desenvolvedores de sistemas universitários estudantes do IFPB - Campus Monteiro. A sigla representa a inicial de cada integrante:
@@ -20,6 +23,7 @@ A NPG é uma equipe de três desenvolvedores de sistemas universitários estudan
    * [MySQL](https://www.mysql.com/)
    * [MySQL Workbench 8.0](https://dev.mysql.com/downloads/workbench/)
    * [Maven](https://mvnrepository.com/)
+   * [Astah UML](https://astah.net/downloads/)
 <!--te-->
 
 ## Funcionalidades
