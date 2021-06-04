@@ -49,7 +49,7 @@ public class LivroService {
 	 * @param campoOrdenacao String que especifica a partir de qual atributo de Livro
 	 * a página será ordenada.
 	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
-	 * @param numeroPagina Número da página que se deseja obter os registrs
+	 * @param numeroPagina Número da página que se deseja obter os registros
 	 * @param inEstoque Boolean que especifica se a busca deve ser realizada apenas entre os livros em estoque ou em geral.
 	 * @return Uma página com os livros ordenados da forma especificada.
 	 */

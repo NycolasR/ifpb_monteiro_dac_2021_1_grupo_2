@@ -167,6 +167,17 @@ public class FacadeLivros {
 		throw new Exception("[ERRO] Não existem livros cadastrados no sistema.");
 	}
 	
+	/**
+	 * Método usado para retornar registros de livros ordenados e paginados.
+	 * 5 registros por página.
+	 * @param campoOrdenacao String que especifica a partir de qual atributo de Livro
+	 * a página será ordenada.
+	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
+	 * @param numeroPagina Número da página que se deseja obter os registros
+	 * @param inEstoque Boolean que especifica se a busca deve ser realizada apenas entre os livros em estoque ou em geral.
+	 * @return Uma página com os livros ordenados da forma especificada.
+	 * @throws Exception Lança exceção se não houver nenhum livro na página.
+	 */
 	public Page<Livro> paginarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, boolean inEstoque) throws Exception{
 		Page<Livro> pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);
 		if(!pagTemp.isEmpty()) {

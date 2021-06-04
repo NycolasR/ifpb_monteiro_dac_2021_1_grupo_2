@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
