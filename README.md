@@ -3,7 +3,7 @@
 Este é um projeto para um e-commerce de livros desenvolvido pela equipe NPG como requisito para aprovação na disciplina de Desenvolvimento de Aplicações Corporativas 2021.1.
 
 ## Diagrama de classes 
-![Diagrama de classes](Diagrama de classes do Book Store.png)
+![Diagrama de classes](Diagrama_de_classes_do_Book_Store.png)
 
 ## Quem somos?
 A NPG é uma equipe de três desenvolvedores de sistemas universitários estudantes do IFPB - Campus Monteiro. A sigla representa a inicial de cada integrante:
