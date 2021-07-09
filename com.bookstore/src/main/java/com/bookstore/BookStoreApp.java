@@ -1,4 +1,4 @@
-package com.bookstore.main;
+package com.bookstore;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
