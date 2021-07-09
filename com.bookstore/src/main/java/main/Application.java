@@ -1,4 +1,4 @@
-package com.bookstore.com.bookstore;
+package main;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
