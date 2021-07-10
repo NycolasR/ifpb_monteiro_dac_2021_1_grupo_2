@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.com.bookstore.model.Editora;
-import com.bookstore.com.bookstore.repository.EditoraRepository;
+import com.bookstore.model.Editora;
+import com.bookstore.repository.EditoraRepository;
 
 /**
  * 

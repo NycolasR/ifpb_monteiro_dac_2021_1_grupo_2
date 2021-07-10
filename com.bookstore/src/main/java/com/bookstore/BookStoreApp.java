@@ -2,40 +2,20 @@ package com.bookstore;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
-import com.bookstore.com.bookstore.facades.FacadeAutor;
-import com.bookstore.com.bookstore.facades.FacadeEditoras;
-import com.bookstore.com.bookstore.facades.FacadeEnderecos;
-import com.bookstore.com.bookstore.facades.FacadeFormaPagamento;
-import com.bookstore.com.bookstore.facades.FacadeLivros;
-import com.bookstore.com.bookstore.facades.FacadePedido;
-import com.bookstore.com.bookstore.facades.FacadeUsuarios;
-import com.bookstore.com.bookstore.model.Autor;
-import com.bookstore.com.bookstore.model.Editora;
-import com.bookstore.com.bookstore.model.Livro;
-
 @SpringBootApplication
 public class BookStoreApp implements CommandLineRunner {
-
-	private FacadeLivros facadeLivros;
-	private FacadeEditoras facadeEditoras;
-	private FacadeUsuarios facadeUsuarios;
-	private FacadeEnderecos facadeEnderecos;
-	private FacadePedido facadePedido;
-	private FacadeAutor facadeAutor;
-	private FacadeFormaPagamento facadeFormaPagamento;
-	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BookStoreApp.class, args);
 	}
 	
+/*
 	public BookStoreApp(
 			FacadeLivros facadeLivros,
 			FacadeEditoras facadeEditoras,
@@ -446,4 +426,11 @@ public class BookStoreApp implements CommandLineRunner {
 		}
 		return entrada;
 	}
+
+@Override
+public void run(String... args) throws Exception {
+	// TODO Auto-generated method stub
+	
+}
+	
 }

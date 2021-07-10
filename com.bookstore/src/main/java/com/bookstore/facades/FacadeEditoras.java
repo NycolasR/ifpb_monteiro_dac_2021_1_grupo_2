@@ -7,8 +7,8 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bookstore.com.bookstore.model.Editora;
-import com.bookstore.com.bookstore.service.EditoraService;
+import com.bookstore.model.Editora;
+import com.bookstore.service.EditoraService;
 
 /**
  * 

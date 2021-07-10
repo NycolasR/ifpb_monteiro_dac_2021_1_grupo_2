@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.com.bookstore.model.Autor;
-import com.bookstore.com.bookstore.model.Pedido;
-import com.bookstore.com.bookstore.repository.PedidoRepository;
+import com.bookstore.model.Autor;
+import com.bookstore.model.Pedido;
+import com.bookstore.repository.PedidoRepository;
 
 /**
  * 

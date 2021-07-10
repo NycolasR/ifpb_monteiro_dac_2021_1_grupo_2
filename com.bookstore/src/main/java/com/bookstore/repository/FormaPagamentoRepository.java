@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.bookstore.com.bookstore.model.FormaPagamento;
+import com.bookstore.model.FormaPagamento;
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)

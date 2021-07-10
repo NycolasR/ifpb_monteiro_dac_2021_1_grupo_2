@@ -7,9 +7,10 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bookstore.com.bookstore.model.Autor;
-import com.bookstore.com.bookstore.model.Editora;
-import com.bookstore.com.bookstore.service.AutorService;
+import com.bookstore.model.Autor;
+import com.bookstore.service.AutorService;
+
+
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)

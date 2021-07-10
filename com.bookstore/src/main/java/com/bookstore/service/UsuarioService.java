@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.com.bookstore.model.Usuario;
-import com.bookstore.com.bookstore.repository.UsuarioRepository;
+import com.bookstore.model.Usuario;
+import com.bookstore.repository.UsuarioRepository;
 
 /**
  * 

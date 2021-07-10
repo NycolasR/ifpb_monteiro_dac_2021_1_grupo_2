@@ -7,14 +7,14 @@ import java.util.Iterator;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.bookstore.com.bookstore.model.FormaPagamento;
-import com.bookstore.com.bookstore.model.ItemPedido;
-import com.bookstore.com.bookstore.model.Livro;
-import com.bookstore.com.bookstore.model.Pedido;
-import com.bookstore.com.bookstore.model.RegistroVendas;
-import com.bookstore.com.bookstore.service.ItemPedidoService;
-import com.bookstore.com.bookstore.service.PedidoService;
-import com.bookstore.com.bookstore.service.RegistroVendasService;
+import com.bookstore.model.FormaPagamento;
+import com.bookstore.model.ItemPedido;
+import com.bookstore.model.Livro;
+import com.bookstore.model.Pedido;
+import com.bookstore.model.RegistroVendas;
+import com.bookstore.service.ItemPedidoService;
+import com.bookstore.service.PedidoService;
+import com.bookstore.service.RegistroVendasService;
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)

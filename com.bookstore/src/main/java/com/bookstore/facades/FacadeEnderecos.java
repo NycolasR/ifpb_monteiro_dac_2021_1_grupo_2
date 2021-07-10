@@ -3,8 +3,8 @@ package com.bookstore.facades;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bookstore.com.bookstore.model.Endereco;
-import com.bookstore.com.bookstore.service.EnderecoService;
+import com.bookstore.model.Endereco;
+import com.bookstore.service.EnderecoService;
 
 /**
  * 

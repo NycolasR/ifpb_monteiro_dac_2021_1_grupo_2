@@ -10,8 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import com.bookstore.com.bookstore.model.Livro;
-import com.bookstore.com.bookstore.service.LivroService;
+import com.bookstore.model.Livro;
+import com.bookstore.service.LivroService;
 
 /**
  * 

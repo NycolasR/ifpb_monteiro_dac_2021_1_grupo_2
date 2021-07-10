@@ -15,36 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
-import com.bookstore.com.bookstore.facades.FacadeAutor;
-import com.bookstore.com.bookstore.facades.FacadeFormaPagamento;
-import com.bookstore.com.bookstore.facades.FacadePedido;
-
-import com.bookstore.com.bookstore.facades.FacadeEnderecos;
-import com.bookstore.com.bookstore.facades.FacadeUsuarios;
-
-import com.bookstore.com.bookstore.model.Autor;
-import com.bookstore.com.bookstore.model.Cartao;
-import com.bookstore.com.bookstore.model.Editora;
-import com.bookstore.com.bookstore.model.Endereco;
-import com.bookstore.com.bookstore.model.FormaPagamento;
-import com.bookstore.com.bookstore.model.ItemPedido;
-import com.bookstore.com.bookstore.model.Livro;
-import com.bookstore.com.bookstore.model.Pedido;
-import com.bookstore.com.bookstore.model.RegistroVendas;
-import com.bookstore.com.bookstore.model.TipoFormaPagamento;
-import com.bookstore.com.bookstore.model.Usuario;
-import com.bookstore.com.bookstore.service.AutorService;
-import com.bookstore.com.bookstore.service.EditoraService;
-import com.bookstore.com.bookstore.service.LivroService;
-import com.bookstore.com.bookstore.service.PedidoService;
-import com.bookstore.com.bookstore.service.FormaPagamentoService;
-import com.bookstore.com.bookstore.service.ItemPedidoService;
-import com.bookstore.com.bookstore.service.RegistroVendasService;
-import com.bookstore.com.bookstore.service.UsuarioService;
-
 //@SpringBootApplication
 public class Application implements CommandLineRunner {
-	
+
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	/*
 	private EditoraService editoraService;
 	private UsuarioService usuarioService;
 	private RegistroVendasService registroVendasService;
@@ -428,6 +407,7 @@ public class Application implements CommandLineRunner {
 		
 		pedidoService.deletarPeloId(1L);
 	}
+	*/
 }
 
 

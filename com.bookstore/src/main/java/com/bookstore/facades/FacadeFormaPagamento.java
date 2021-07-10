@@ -5,13 +5,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bookstore.com.bookstore.model.Boleto;
-import com.bookstore.com.bookstore.model.Cartao;
-import com.bookstore.com.bookstore.model.FormaPagamento;
-import com.bookstore.com.bookstore.model.Pix;
-import com.bookstore.com.bookstore.model.TipoFormaPagamento;
-import com.bookstore.com.bookstore.model.TransferenciaBancaria;
-import com.bookstore.com.bookstore.service.FormaPagamentoService;
+import com.bookstore.model.Boleto;
+import com.bookstore.model.Cartao;
+import com.bookstore.model.FormaPagamento;
+import com.bookstore.model.Pix;
+import com.bookstore.model.TipoFormaPagamento;
+import com.bookstore.model.TransferenciaBancaria;
+import com.bookstore.service.FormaPagamentoService;
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)

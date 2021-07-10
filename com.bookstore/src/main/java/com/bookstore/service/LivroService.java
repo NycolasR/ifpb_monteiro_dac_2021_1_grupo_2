@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.com.bookstore.model.Livro;
-import com.bookstore.com.bookstore.repository.LivroRepository;
+import com.bookstore.model.Livro;
+import com.bookstore.repository.LivroRepository;
 
 /**
  * 
