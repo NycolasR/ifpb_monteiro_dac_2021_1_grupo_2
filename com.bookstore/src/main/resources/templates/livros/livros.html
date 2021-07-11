@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head th:replace="~{fragmentos :: head('Home - Lista de Livros')}">
-</head>
+<head th:replace="~{fragmentos :: head('Home - Lista de Livros')}"></head>
 <body>
-    <main class="container">
-        <div>
-            <header th:insert="~{fragmentos :: header('Home - Lista de Livros')}">
-            </header>
 
-            <div class="listaLivros" th:each="livro : ${livros}">
-                <div class="card">
-                    <div class="card-header">
-                    </div>
-                    <div class="card-body">
-                        <div> Título: <span th:text="${livro.titulo}"></span></div>
+    <header th:replace="~{fragmentosadm :: header}"></header>
+    <main>
+        <div class="listaLivros" th:each="livro : ${livros}">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div> Título: <span th:text="${livro.titulo}"></span></div>
 
-                    </div>
                 </div>
             </div>
         </div>
-        <footer th:replace="~{fragmentos :: footer}">
-    	</footer>
     </main>
+    <footer th:replace="~{fragmentosadm :: footer}"></footer>
 </body>
 </html>

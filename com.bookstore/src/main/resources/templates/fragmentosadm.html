@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head th:fragment="head(titulo)">
+	<meta charset="UTF-8">
+	<title th:text="${titulo}">Titulo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+</head>
+<body>
+	<header class="bg-color-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+            <div class="container">
+
+                <!--Inserir LOGO aqui-->
+                <a class="navbar-brand" href="#">
+                    <h3 class="fw-bold d-inline-block">Livraria Turing</h3>
+                    <h5>Administração</h5>
+                    <!--<img src="" width="52" height="32" alt="">-->
+                </a>
+                <button 
+                    class="btn btn-outline-dark "
+                    type="submit">
+                    Sair
+                </button>
+            </div>
+        </nav>
+    </header>
+    <footer th:fragment="footer">
+        &copy; 
+        Livraria Turing
+    </footer>
+</body>
+</html>

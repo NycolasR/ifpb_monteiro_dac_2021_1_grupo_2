@@ -56,60 +56,52 @@ public class FacadeLivros {
 	 * @param livro Livro que se deseja atualizar
 	 * @param atributo Atributo do livro que está para ser atualizado
 	 */
-	public void atualizarAtributoLivro(Livro livro, String atributo) {
-		Scanner input = new Scanner(System.in);
-		String resposta = input.nextLine();
+	public void atualizarAtributoLivro(Livro livro, String atributo, String valor) {
+//		Scanner input = new Scanner(System.in);
+//		String resposta = input.nextLine();
 
-		if(!resposta.isEmpty()) {
+		if(!valor.isEmpty()) {
 
 			switch (atributo) {
 			case "titulo":
-				livro.setTitulo(resposta);
+				livro.setTitulo(valor);
 				break;
 
 			case "ISBN":
-				Long isbn = Long.parseLong(resposta);
+				Long isbn = Long.parseLong(valor);
 				
 				if(isbn < 0)
-					System.err.println("[ERRO] Não é permitido registrar ISBNs negativos");
+					System.err.println("[ERRO] Não é permitido registrar ISBNs negativos");//transformar em exceção
 				else
-					livro.setISBN(Long.parseLong(resposta));
+					livro.setISBN(Long.parseLong(valor));
 				
 				break;
 				
 			case "descricao":
-				livro.setDescricao(resposta);
+				livro.setDescricao(valor);
 				break;
 				
 			case "preco":
-				while(true) {
-					try {
-						livro.setPreco(new BigDecimal(resposta));
-						break;
-					} catch(NumberFormatException e) {
-						System.err.print("[ERRO] Insira um formato de preço válido: ");
-						resposta = input.nextLine();
-					}
-					
+				try {
+					livro.setPreco(new BigDecimal(valor));
+					break;
+				} catch(NumberFormatException e) {
+					//aqui deve-se lançar uma exceção e não tratar
+					System.err.print("[ERRO] Insira um formato de preço válido: "); //transformar em exceção
 				}
 				break;
 				
 			case "edicao":
-				livro.setEdicao(Integer.parseInt(resposta));
+				livro.setEdicao(Integer.parseInt(valor));
 				break;
 				
 			case "anoPublicacao":
-				livro.setAnoPublicacao(Integer.parseInt(resposta));
+				livro.setAnoPublicacao(Integer.parseInt(valor));
 				break;
 				
 			case "quantidadeEmEstoque":
-				
-				while(Integer.parseInt(resposta) <= 0) {
-					System.err.print("[ERRO] Insira um valor não negativo: ");
-					resposta = input.nextLine();
-				}
-				
-				Integer novaQuantidade = livro.getQuantidadeEmEstoque() + Integer.parseInt(resposta);
+							
+				Integer novaQuantidade = livro.getQuantidadeEmEstoque() + Integer.parseInt(valor);
 				livro.setQuantidadeEmEstoque(novaQuantidade);
 				break;
 
