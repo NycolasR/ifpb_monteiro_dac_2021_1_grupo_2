@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head th:replace="~{fragmentos :: head('Home - Lista de Livros')}"></head>
+<head th:replace="~{fragmentos :: head('CRUD Livros')}"></head>
 <body>
 
-    <header th:replace="~{fragmentosadm :: header}"></header>
+    <header th:replace="~{fragmentosadm :: header('Livros')}"></header>
     <main>
         <div class="listaLivros" th:each="livro : ${livros}">
             <div class="card">

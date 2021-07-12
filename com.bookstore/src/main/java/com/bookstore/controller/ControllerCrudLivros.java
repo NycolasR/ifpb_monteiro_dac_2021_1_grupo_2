@@ -12,12 +12,12 @@ import com.bookstore.model.Livro;
 import com.bookstore.service.LivroService;
 
 @Controller
-public class ControllerLivro {
+public class ControllerCrudLivros {
 	
 	@Autowired
 	private LivroService livroService;
 
-	@GetMapping("/livros")
+	@GetMapping("/livro")
 	public String listarLivros(Model model) {
 		
 		List<Livro> livros = livroService.listarLivros();
