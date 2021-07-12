@@ -3,7 +3,19 @@
 <head th:replace="~{fragmentos :: head('CRUD Autores')}"></head>
 <body>
     <header th:replace="~{fragmentosadm :: header('Autores')}"></header>
-    <main>    
+    <main class="mw-100 ms-3 me-3 border border-3 border-success row rounded">  
+
+        <div class="bg-success m-3 pb-3 col rounded " >
+            <div class="text-center text-white mt-2 mb-3">Autores</div>
+            <div class="list-group ps-3 pe-3" th:each="autor : ${autores}">
+                <a href="#" class="list-group-item list-group-item-action mb-1" >
+                    <div th:text="${autor.nome}"></div>
+                </a>
+            </div>
+        </div>
+        <div class="border border-success border-3 m-3 p-1 col rounded">
+            Teste
+        </div>
     </main>
     <footer th:replace="~{fragmentosadm :: footer}"></footer>
 </body>
