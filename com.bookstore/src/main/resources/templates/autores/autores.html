@@ -2,23 +2,101 @@
 <html lang="pt-br">
 <head th:replace="~{fragmentos :: head('CRUD Autores')}"></head>
 <body>
+    <!--Esse header reutiliza de fragmentos das telas de administração-->
     <header th:replace="~{fragmentosadm :: header('Autores')}"></header>
+
     <main class="ms-3 me-3 border border-3 border-success rounded">  
 
+        <!--Essa div está relacionada ao listamento dos livros-->
         <div class="bg-success m-3 pb-3 rounded w-50 ms-auto me-auto" >
             <div class="text-center text-white pt-2 mb-2">Autores</div>
             <div class=" ms-3 me-3 navbar-nav-scroll rounded">
-                <div class="list-group navbar-nav-scroll" th:each="autor : ${autores}">
-                    <a href="#" class="list-group-item list-group-item-action" >
-                        <div th:text="${autor.nome}"></div>
-                    </a>
+                <div class="list-group" th:each="autor : ${autores}">
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-crud-autores"
+                    th:id="${autor}" onclick="upload(id)" th:text="${autor}"></a>
                 </div>
             </div>
         </div>
+
+        <!--Essa div está relacionada ao botão de adicionar-->
         <div class=" m-3 p-1 rounded text-center">
-            <button type="submit" class="btn btn-outline-success ">ADICIONAR</button>
+            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modal-crud-autores" id="btnadicionarprimario" onclick="upload(id)">
+                ADICIONAR
+            </button>
         </div>
+
+        <!--Essa div está relacionada ao modal de crud, que possibilita a adição, atualização e remoção de autores-->
+        <div class="modal" id="modal-crud-autores">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!--O header do modal apenas adiciona o botão de fechar-->
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close border border-success btn-outline-success" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!--O body do modal contem os campos de crud, e os botões de adicionar, atualizar, remover e cancelar-->
+                    <div class="modal-body pt-0">
+                        <form action="post" class="text-center">
+                            <label for="inputnomeautor" class="form-label">Nome do Autor</label>
+                            <input type="text" class="form-control border border-success" id="inputnomeautor" required>
+                            <br>
+                            <div class="mt-3 pt-3">
+                                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" >
+                                    Adicionar
+                                </button>
+                                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar">Atualizar</button>
+                                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover">Remover</button>
+                                <button type="button" class="btn btn-outline-success me-1 ms-1 mb-1" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
     <footer th:replace="~{fragmentosadm :: footer}"></footer>
+    <script>
+
+        /* a variável a baixo recupera único campo do formulário*/
+        var campoNome = document.getElementById('inputnomeautor')
+
+        /* Essa função faz upload de elementos da página para que sejam reutilizáveis */
+        function upload(id){
+
+            /* as variável a baixo recuperam o botões do modal*/
+            var botaoAdicionar = document.getElementById('btnadicionar')
+            var botaoAtualizar = document.getElementById('btnatualizar')
+            var botaoRemover = document.getElementById('btnremover')
+
+            /* a condição a baixo valida se o botão clicado foi o de adicionar, então os campos são anulados e o botão remover e atualizar ocultados*/
+            if(id == "btnadicionarprimario"){
+                botaoAtualizar.hidden = true
+                botaoRemover.hidden = true
+                botaoAdicionar.hidden = false;
+                anularCampos()
+            
+            /* se não, os campos são preenchidos, o botão remover e atualizar permanecem, e o botão adicionar ocultado*/
+            }else{
+                botaoAdicionar.hidden = true
+                botaoAtualizar.hidden = false
+                botaoRemover.hidden = false
+                preencherCampos(id)
+            }              
+        }
+
+        /* Essa função preenche todos os campos da página */
+        function preencherCampos(id){
+            var objetoTexto = document.getElementById(id).innerText
+            campoNome.value = objetoTexto
+        }
+
+        /* Essa função anula (esvazia) todos os campos da página */
+        function anularCampos(){
+            campoNome.value = null;
+        }
+        
+    </script>
+
 </body>
 </html>

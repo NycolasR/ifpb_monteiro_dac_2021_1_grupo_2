@@ -20,8 +20,9 @@ public class ControllerCrudAutores {
 	public String recuperarAutores(Model model) {
 
 		List<Autor> autores = autorService.recuperarAutores();
+		
 		model.addAttribute("autores", autores);
-
+		
 		return "autores/autores";
 	}
 
