@@ -64,6 +64,7 @@ public class ControllerCrudAutores {
 	@PostMapping("/autorformupdate/{id}")
 	public String atualizarAutor(@PathVariable("id") Long id) {
 		
+		
 		try {
 			facadeAutor.atualizarAutor(facadeAutor.recuperarAutor(id));
 		} catch (Exception e) {
