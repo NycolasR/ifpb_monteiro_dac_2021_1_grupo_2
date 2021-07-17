@@ -38,7 +38,7 @@ public class ControllerCrudAutores {
 		
 		Autor autor = new Autor("");
 		
-		if(id > 0) {
+		if(id > 0) {//os ids cadastrados no banco são maiores que 0
 			 
 			 autor = autorService.recuperarPeloId(id).get();
 		}
