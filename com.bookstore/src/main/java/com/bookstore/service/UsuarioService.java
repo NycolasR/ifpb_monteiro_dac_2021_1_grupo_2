@@ -1,6 +1,7 @@
 package com.bookstore.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class UsuarioService {
 	 * @throws Exception Se o usuario não estiver cadastrado ou se o email tenha sido alterado. 
 	 */
 	public void atualizar(Usuario usuario) throws Exception {
-		Usuario userTemp = usuarioPorEmail(usuario.getEmail());
+		Usuario userTemp = recuperarPeloEmail(usuario.getEmail());
 		if(userTemp.equals(usuario)) {
 			usuarioRepository.save(usuario);
 		}else {
@@ -56,7 +57,7 @@ public class UsuarioService {
 	 * @throws Exception Caso nenhum usuario seja encontrado com o email passado por parametro.
 	 */
 	public void excluir(String email) throws Exception {
-		usuarioRepository.delete(usuarioPorEmail(email));		
+		usuarioRepository.delete(recuperarPeloEmail(email));		
 	}
 	
 	/**
@@ -72,11 +73,11 @@ public class UsuarioService {
 	 * @return Objeto(Usuario) encontrado
 	 * @throws Exception Caso nenhum usuario seja encontrado com o email passado por parametro
 	 */
-	public Usuario usuarioPorEmail(String email)throws Exception{
+	public Usuario recuperarPeloEmail(String email) throws Exception {
 		if(usuarioRepository.findByEmailIs(email).size() >= 1) 
 			return (Usuario) usuarioRepository.findByEmailIs(email).get(0);
 		
-		throw new Exception("NÃ£o ha nenhum usuario com o email: " + email + " cadastrado.");
+		throw new Exception("[ERRO] Usuário " + email + " não encontrado");
 		
 	}
 	
@@ -86,12 +87,21 @@ public class UsuarioService {
 	 * @return Uma lista de usuarios encontrados
 	 * @throws Exception caso nenhum usuario seja encontrado.
 	 */
-	public List<Usuario> usuarioPorNome(String nome)throws Exception{
+	public List<Usuario> recuperarPeloNome(String nome) throws Exception {
 		List<Usuario> usersTemp = usuarioRepository.findByNome(nome);
 		if(usersTemp.size()>=1)
 			return usersTemp;
 		
-		throw new Exception("Nenhum usuario com o nome " + nome + " encontrado");
+		throw new Exception("[ERRO] Usuário " + nome + " não encontrado");
+	}
+	
+	public Usuario recuperarPeloId(Long id) throws Exception {
+		Optional<Usuario> optional = usuarioRepository.findById(id);
+		
+		if(optional.isPresent())
+			return optional.get();
+		
+		throw new Exception("[ERRO] Usuário não encontrado");
 	}
 	
 	/**
@@ -109,7 +119,7 @@ public class UsuarioService {
 	 */
 	public boolean verificarExistencia(String email) {
 		try {
-			usuarioPorEmail(email);
+			recuperarPeloEmail(email);
 		}catch (Exception e){
 			return false;
 		}

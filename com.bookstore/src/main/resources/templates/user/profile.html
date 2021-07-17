@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head th:replace="~{fragmentos :: head('Meu perfil')}"></head>
+<body>
+
+    <hr>
+    <div class="container bootstrap snippet">
+        <div class="row">
+            <div class="col-sm-10"><h1>Alan Turing</h1></div>
+            
+            <!-- Inserir Logo do sistema aqui -->
+            <div class="col-sm-2 rounded-circle">
+                <a href="#" class="pull-right">
+                    <img 
+                        title="profile image" 
+                        class="img-circle img-responsive" 
+                        src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100">
+                </a>
+            </div>
+            
+        </div>
+        <div class="row">
+
+
+            
+
+            <div class="col-sm-3"><!--left col-->
+                
+                <div class="text-center rounded-circle">
+                    <img 
+                    src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" 
+                    class="avatar img-circle img-thumbnail" 
+                    alt="avatar">
+                </div>
+                
+            </div><!--/col-3-->
+
+            <div class="col-sm-9">
+                
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button 
+                            class="nav-link active" 
+                            id="perfil-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#perfil" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="perfil" 
+                            aria-selected="true">
+                                Meu Perfil
+                        </button>
+                    </li>
+
+
+
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" 
+                            id="endrecos-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#endrecos" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="endrecos"
+                            aria-selected="false">
+                                Meus Endereços
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button 
+                            class="nav-link" 
+                            id="carrinho-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#carrinho" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="carrinho" 
+                            aria-selected="false">
+                                Carrinho de Compras
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button 
+                            class="nav-link" 
+                            id="pedidos-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#pedidos" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="pedidos" 
+                            aria-selected="false">
+                                Meus Pedidos
+                        </button>
+                    </li>
+
+
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div 
+                        class="tab-pane fade show active" 
+                        id="perfil" 
+                        role="tabpanel" 
+                        aria-labelledby="home-tab">
+                            
+                        <h2 class="pt-1 pb-1">Atualizar Dados Pessoais</h2>
+
+                        <hr>
+                        <form class="row g-3 pb-4 needs-validation">
+                            <div class="col-12">
+                                <label 
+                                    for="inputNome" 
+                                    class="form-label">
+                                    Seu nome
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="inputNome"
+                                    required
+                                    placeholder="Escreva seu nome aqui">
+                            </div>
+
+
+                            <div class="col-12">
+                                <label 
+                                    for="inputEmail" 
+                                    class="form-label">
+                                    Seu E-mail
+                                </label>
+                                <input
+                                    type="email" 
+                                    class="form-control" 
+                                    id="inputEmail"
+                                    placeholder="exemplo@exemplo.com"
+                                    required>
+                                
+                            </div>
+
+                            <button class="btn btn-lg btn-outline-success w-25 mx-auto" type="submit">
+                                Criar Conta
+                            </button>
+                            <button class="btn btn-lg btn-outline-dark w-25 mx-auto" type="reset">
+                                Limpar Campos
+                            </button>
+                        </form>
+                    
+                        <hr>
+
+                    </div>
+
+                    <div 
+                        class="tab-pane fade" 
+                        id="endrecos"
+                        role="tabpanel" 
+                        aria-labelledby="endrecos-tab">
+                            
+                        <h2 class="pt-1 pb-1">Meus Endereços Cadastrados</h2>
+                        <hr>
+                            <!-- 
+                                Inserir cards de endereços
+                            -->
+
+                    </div>
+
+                    <div 
+                        class="tab-pane fade" 
+                        id="carrinho" 
+                        role="tabpanel" 
+                        aria-labelledby="contact-tab">
+                            
+                        <h2 class="pt-1 pb-1">Meu Carrinho de Compras</h2>
+                        <hr>
+                    </div>
+
+                    <div 
+                        class="tab-pane fade" 
+                        id="pedidos" 
+                        role="tabpanel" 
+                        aria-labelledby="contact-tab">
+                            
+                        <h2 class="pt-1 pb-1">Meus Pedidos Finalizados</h2>
+                        <hr>
+                    </div>
+                </div>
+
+            </div><!--/col-9-->
+            
+        </div><!--/row-->                           
+</body>
+</html>
