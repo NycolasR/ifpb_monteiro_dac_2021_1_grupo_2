@@ -17,17 +17,13 @@ public class ControllerUsuario {
 	
 	@GetMapping("/perfil/{id}")
 	public String recuperarPaginaPerfil(@PathVariable("id") Long id, Model model) {
-		
-//		tr
-//			Usuario usuario = usuarioService.recuperarPeloId(id);
-//		
-//			model.addAttributeusuario", uario);
-//	
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+	
+//			Usuario usuar = sriorviecuperPeloId(id);
+//			model.addAttriffsuar, uriff
+//		} catch (Ex
+//
 		
 		return "user/profile";
 	}
-	
+
 }
