@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-10">
-                <h1>Alan Turing</h1>
+                <h1 class="text-success" th:text="${usuario.nome}">Nome do usuário</h1>
             </div>
             
             <!-- Inserir Logo do sistema aqui -->
@@ -22,8 +22,8 @@
 
             <div class="col-sm-3"><!--left col-->
                 
-                <div class="rounded-circle imagem-redonda">
-                    <img 
+                <div class="rounded-circle">
+                    <img style="border-radius: 50%;"
                     src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" 
                     class="img-fluid img-thumbnail"
                     alt="avatar">
@@ -36,7 +36,7 @@
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button 
-                            class="nav-link active" 
+                            class="nav-link text-success active" 
                             id="perfil-tab" 
                             data-bs-toggle="tab" 
                             data-bs-target="#perfil" 
@@ -52,7 +52,7 @@
 
 
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" 
+                        <button class="nav-link text-success" 
                             id="endrecos-tab" 
                             data-bs-toggle="tab" 
                             data-bs-target="#endrecos" 
@@ -66,7 +66,7 @@
 
                     <li class="nav-item" role="presentation">
                         <button 
-                            class="nav-link" 
+                            class="nav-link text-success" 
                             id="carrinho-tab" 
                             data-bs-toggle="tab" 
                             data-bs-target="#carrinho" 
@@ -80,7 +80,7 @@
 
                     <li class="nav-item" role="presentation">
                         <button 
-                            class="nav-link" 
+                            class="nav-link text-success" 
                             id="pedidos-tab" 
                             data-bs-toggle="tab" 
                             data-bs-target="#pedidos" 
@@ -101,42 +101,42 @@
                         role="tabpanel" 
                         aria-labelledby="home-tab">
                             
-                        <h2 class="pt-1 pb-1">Atualizar Dados Pessoais</h2>
+                        <h2 class="pt-1 pb-1 text-success">Meus Dados Pessoais</h2>
 
                         <hr>
                         <form class="row g-3 pb-4 needs-validation">
                             <div class="col-12">
                                 <label 
                                     for="inputNome" 
-                                    class="form-label">
+                                    class="form-label text-success">
                                     Seu nome
                                 </label>
                                 <input 
                                     type="text" 
                                     class="form-control" 
                                     id="inputNome"
-                                    required
-                                    placeholder="Escreva seu nome aqui">
+                                    th:field="${usuario.nome}"
+                                    required>
                             </div>
 
 
                             <div class="col-12">
                                 <label 
                                     for="inputEmail" 
-                                    class="form-label">
+                                    class="form-label text-success">
                                     Seu E-mail
                                 </label>
                                 <input
                                     type="email" 
                                     class="form-control" 
                                     id="inputEmail"
-                                    placeholder="exemplo@exemplo.com"
+                                    th:field="${usuario.email}"
                                     required>
                                 
                             </div>
 
                             <button class="btn btn-lg btn-outline-success w-25 mx-auto" type="submit">
-                                Criar Conta
+                                Salvar Dados
                             </button>
                             <button class="btn btn-lg btn-outline-dark w-25 mx-auto" type="reset">
                                 Limpar Campos
@@ -153,115 +153,42 @@
                         role="tabpanel" 
                         aria-labelledby="endrecos-tab">
                             
-                        <h2 class="pt-1 pb-1">Meus Endereços Cadastrados</h2>
+                        <h2 class="pt-1 pb-1 text-success">Meus Endereços Cadastrados</h2>
                         <hr>
                         
                         <div class="row row-cols-2 row-cols-sm-3 justify-content-center">
-                            <div class="card col m-1" style="width: 16rem;">
+                            <div class="card col m-1 text-white bg-success" th:each="endereco : ${enderecos}" style="width: 16rem;">
                                 <div class="card-body">
-                                  <h6 class="card-subtitle mb-2">Rua: </h6>
-                                  <p class="card-text">R. Pedro Xaviel<br>nº 1</p>
-    
-                                  <h6 class="card-subtitle mb-2">Bairro: </h6>
-                                  <p class="card-text">Bairro 1</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Cidade: </h6>
-                                  <p class="card-text">Patos - PB</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Complemento: </h6>
-                                  <p class="card-text">Casa na esquina</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">CEP: </h6>
-                                  <p class="card-text">58.700.400</p>
-                                  
-                                  <a href="#" class="btn btn-outline-success">Editar</a>
-                                </div>
-                              </div>
+                                    <h6 class="card-subtitle mb-2">Rua:</h6>
+                                    <p class="card-text" th:text="${endereco.rua}"></p>
 
-                              <div class="card col m-1" style="width: 16rem;">
-                                <div class="card-body">
-                                  <h6 class="card-subtitle mb-2">Rua: </h6>
-                                  <p class="card-text">R. Pedro Xaviel<br>nº 1</p>
-    
-                                  <h6 class="card-subtitle mb-2">Bairro: </h6>
-                                  <p class="card-text">Bairro 1</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Cidade: </h6>
-                                  <p class="card-text">Patos - PB</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Complemento: </h6>
-                                  <p class="card-text">Casa na esquina</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">CEP: </h6>
-                                  <p class="card-text">58.700.400</p>
-                                  
-                                  <a href="#" class="btn btn-outline-success">Editar</a>
-                                </div>
-                              </div>
+                                    <h6 class="card-subtitle mb-2">Nº:</h6>
+                                    <p class="card-text" th:text="${endereco.numero}"></p>
+                                    
+                                    <h6 class="card-subtitle mb-2">Bairro:</h6>
+                                    <p class="card-text" th:text="${endereco.bairro}">Bairro 1</p>
+                                    
+                                    <h6 class="card-subtitle mb-2">Cidade:</h6>
+                                    <p class="card-text" th:text="${endereco.cidade}"></p>
+                                    
+                                    <h6 class="card-subtitle mb-2">UF:</h6>
+                                    <p class="card-text" th:text="${endereco.UF}"></p>
 
-                              <div class="card col m-1" style="width: 16rem;">
-                                <div class="card-body">
-                                  <h6 class="card-subtitle mb-2">Rua: </h6>
-                                  <p class="card-text">R. Pedro Xaviel<br>nº 1</p>
-    
-                                  <h6 class="card-subtitle mb-2">Bairro: </h6>
-                                  <p class="card-text">Bairro 1</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Cidade: </h6>
-                                  <p class="card-text">Patos - PB</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Complemento: </h6>
-                                  <p class="card-text">Casa na esquina</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">CEP: </h6>
-                                  <p class="card-text">58.700.400</p>
-                                  
-                                  <a href="#" class="btn btn-outline-success">Editar</a>
+                                    <h6 class="card-subtitle mb-2">Complemento:</h6>
+                                    <p class="card-text" th:text="${endereco.complemento}"></p>
+                                    
+                                    <h6 class="card-subtitle mb-2">CEP:</h6>
+                                    <p class="card-text" th:text="${endereco.CEP}"></p>
+                                    
+                                    <div class="card-footer bg-transparent border-success text-center">
+                                        <a href="#" class="btn btn-outline-light">Editar</a>
+                                    </div>
                                 </div>
-                              </div>
+                            </div>
 
-                              <div class="card col m-1" style="width: 16rem;">
-                                <div class="card-body">
-                                  <h6 class="card-subtitle mb-2">Rua: </h6>
-                                  <p class="card-text">R. Pedro Xaviel<br>nº 1</p>
-    
-                                  <h6 class="card-subtitle mb-2">Bairro: </h6>
-                                  <p class="card-text">Bairro 1</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Cidade: </h6>
-                                  <p class="card-text">Patos - PB</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Complemento: </h6>
-                                  <p class="card-text">Casa na esquina</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">CEP: </h6>
-                                  <p class="card-text">58.700.400</p>
-                                  
-                                  <a href="#" class="btn btn-outline-success">Editar</a>
-                                </div>
-                              </div>
-
-                              <div class="card col m-1" style="width: 16rem;">
-                                <div class="card-body">
-                                  <h6 class="card-subtitle mb-2">Rua: </h6>
-                                  <p class="card-text">R. Pedro Xaviel<br>nº 1</p>
-    
-                                  <h6 class="card-subtitle mb-2">Bairro: </h6>
-                                  <p class="card-text">Bairro 1</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Cidade: </h6>
-                                  <p class="card-text">Patos - PB</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">Complemento: </h6>
-                                  <p class="card-text">Casa na esquina</p>
-                                  
-                                  <h6 class="card-subtitle mb-2">CEP: </h6>
-                                  <p class="card-text">58.700.400</p>
-                                  
-                                  <a href="#" class="btn btn-outline-success">Editar</a>
-                                </div>
-                              </div>
-
+                            <div class="text-center">
+                                <a href="#" class="btn btn-outline-success">Adicionar</a>
+                            </div>
                         </div>
 
                     </div>
@@ -272,7 +199,7 @@
                         role="tabpanel" 
                         aria-labelledby="contact-tab">
                             
-                        <h2 class="pt-1 pb-1">Meu Carrinho de Compras</h2>
+                        <h2 class="pt-1 pb-1 text-success">Meu Carrinho de Compras</h2>
                         <hr>
 
 
@@ -281,15 +208,15 @@
     
                                 <div class="row">
                                     <div class="col-sm-12 col-md-8 g-1">
-                                        <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
+                                        <h5 class="mb-2 text-success">Livro: Harry Potter e a Pedra Filosofal</h5>
     
                                         <div class="row d-flex align-items-center">
                                             <div class="col-4 align-middle">
-                                                <h6 class="mr-2">Quantidade:</h6>
+                                                <h6 class="mr-2 text-success">Quantidade:</h6>
                                             </div>
                                             <div class="col-4">
                                                 <input
-                                                    class="form-control col-sm form-control-number quantidadeLivros" 
+                                                    class="form-control col-sm form-control-number quantidadeLivros text-success" 
                                                     type="number" 
                                                     name="quantidadeLivros"
                                                     min="1"
@@ -297,7 +224,7 @@
                                             </div>
                                         </div>
     
-                                        <h6 class="mt-3">Subtotal: R$ <span class="valorSubtotal"></span></h6>
+                                        <h6 class="mt-3 text-success">Subtotal: R$ <span class="valorSubtotal"></span></h6>
                                     </div>
     
                                     <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
@@ -308,73 +235,9 @@
                                 </div>
                             </div>
 
-                            <div class="list-group-item list-group-item-action pb-3 ancoraItemPedido" aria-current="true">
-    
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-8 g-1">
-                                        <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-    
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-4 align-middle">
-                                                <h6 class="mr-2">Quantidade:</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <input
-                                                    class="form-control col-sm form-control-number quantidadeLivros" 
-                                                    type="number" 
-                                                    name="quantidadeLivros"
-                                                    min="1"
-                                                    oninput="atualizarSubTotal(10, 1)">
-                                            </div>
-                                        </div>
-    
-                                        <h6 class="mt-3">Subtotal: R$ <span class="valorSubtotal"></span></h6>
-                                    </div>
-    
-                                    <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
-                                        <button class="btn btn-outline-danger" onclick="excluirItemPedido(1)">
-                                            Excluir <img th:src="@{/images/excluir-lixeira-48.png}" width="25" height="25" alt="">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list-group-item list-group-item-action pb-3 ancoraItemPedido" aria-current="true">
-    
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-8 g-1">
-                                        <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-    
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-4 align-middle">
-                                                <h6 class="mr-2">Quantidade:</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <input
-                                                    class="form-control col-sm form-control-number quantidadeLivros" 
-                                                    type="number" 
-                                                    name="quantidadeLivros"
-                                                    min="1"
-                                                    oninput="atualizarSubTotal(10, 2)">
-                                            </div>
-                                        </div>
-    
-                                        <h6 class="mt-3">Subtotal: R$ <span class="valorSubtotal"></span></h6>
-                                    </div>
-    
-                                    <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
-                                        <button class="btn btn-outline-danger" onclick="excluirItemPedido(2)">
-                                            Excluir <img th:src="@{/images/excluir-lixeira-48.png}" width="25" height="25" alt="">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-
                             <div class="list-group-item list-group-item-action pb-3" aria-current="true">
                                 <div class="align-items-center justify-content-center">
-                                    <h4>Total a pagar: R$ <span id="valorTotalAPagar"></span></h4>
+                                    <h4 class="text-success">Total a pagar: R$ <span id="valorTotalAPagar"></span></h4>
                                 </div>
                             </div>
 
@@ -390,30 +253,18 @@
                         role="tabpanel" 
                         aria-labelledby="contact-tab">
                             
-                        <h2 class="pt-1 pb-1">Meus Pedidos Finalizados</h2>
+                        <h2 class="pt-1 pb-1 text-success">Meus Pedidos Finalizados</h2>
                         <hr>
 
                         <div class="list-group mb-3">
-                            <div class="list-group-item list-group-item-action pb-3" aria-current="true">
+                            <div class="list-group-item list-group-item-action pb-3 border-success" aria-current="true">
     
                                 <div class="row">
                                     <div class="col-sm-12 col-md-8 g-1 mt-2">
                                         <section class="sessaoDadosItensPedido">
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">10</span></h6>
-                                                <br>
-                                            </div>
-    
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Câmara Secreta</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">20</span></h6>
-                                                <br>
-                                            </div>
-    
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">30</span></h6>
+                                            <div class="dadosItemPedido text-success">
+                                                <h5 class="mb-2 text-success">Livro: Harry Potter e a Pedra Filosofal</h5>
+                                                <h6 class="mt-3 text-success">Quantidade <span class="qntdItens">10</span></h6>
                                                 <br>
                                             </div>
                                         </section>
@@ -426,30 +277,30 @@
                                     </div>
 
                                     <section class="sessaoDadosAdicionais">
-                                        <ul class="list-group">
+                                        <ul class="list-group text-white">
 
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
                                                 <div class="fw-bold">Endereço selecionado</div>
                                                 Rua P. Xavier nº 1
                                               </div>
                                             </li>
 
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
                                                 <div class="fw-bold">Quantidade total de livros</div>
                                                 60 livros
                                               </div>
                                             </li>
 
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
                                                 <div class="fw-bold">Status do Pedido</div>
                                                 <strong>Finalizado</strong> 
                                               </div>
                                             </li>
 
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                                 <div class="ms-2 me-auto">
                                                   <div class="fw-bold">Valor total</div>
                                                   R$ 60,00
@@ -460,147 +311,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="list-group mb-3">
-                            <div class="list-group-item list-group-item-action pb-3" aria-current="true">
-    
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-8 g-1 mt-2">
-                                        <section class="sessaoDadosItensPedido">
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">10</span></h6>
-                                                <br>
-                                            </div>
-    
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Câmara Secreta</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">20</span></h6>
-                                                <br>
-                                            </div>
-    
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">30</span></h6>
-                                                <br>
-                                            </div>
-                                        </section>
-                                    </div>
-    
-                                    <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
-                                        <button class="btn btn-outline-danger" onclick="excluirItemPedido(0)">
-                                            Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="">
-                                        </button>
-                                    </div>
-
-                                    <section class="sessaoDadosAdicionais">
-                                        <ul class="list-group">
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                              <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Endereço selecionado</div>
-                                                Rua P. Xavier nº 1
-                                              </div>
-                                            </li>
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                              <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Quantidade total de livros</div>
-                                                60 livros
-                                              </div>
-                                            </li>
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                              <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Status do Pedido</div>
-                                                <strong>Finalizado</strong> 
-                                              </div>
-                                            </li>
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                <div class="ms-2 me-auto">
-                                                  <div class="fw-bold">Valor total</div>
-                                                  R$ 60,00
-                                                </div>
-                                              </li>
-                                          </ul>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="list-group mb-3">
-                            <div class="list-group-item list-group-item-action pb-3" aria-current="true">
-    
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-8 g-1 mt-2">
-                                        <section class="sessaoDadosItensPedido">
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">10</span></h6>
-                                                <br>
-                                            </div>
-    
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Câmara Secreta</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">20</span></h6>
-                                                <br>
-                                            </div>
-    
-                                            <div class="dadosItemPedido">
-                                                <h5 class="mb-2 text-dark">Livro: Harry Potter e a Pedra Filosofal</h5>
-                                                <h6 class="mt-3">Quantidade <span class="qntdItens">30</span></h6>
-                                                <br>
-                                            </div>
-                                        </section>
-                                    </div>
-    
-                                    <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
-                                        <button class="btn btn-outline-danger" onclick="excluirItemPedido(0)">
-                                            Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="">
-                                        </button>
-                                    </div>
-
-                                    <section class="sessaoDadosAdicionais">
-                                        <ul class="list-group">
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                              <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Endereço selecionado</div>
-                                                Rua P. Xavier nº 1
-                                              </div>
-                                            </li>
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                              <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Quantidade total de livros</div>
-                                                60 livros
-                                              </div>
-                                            </li>
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                              <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Status do Pedido</div>
-                                                <strong>Finalizado</strong> 
-                                              </div>
-                                            </li>
-
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                                <div class="ms-2 me-auto">
-                                                  <div class="fw-bold">Valor total</div>
-                                                  R$ 60,00
-                                                </div>
-                                              </li>
-                                          </ul>
-                                    </section>
-                                </div>
-                            </div>
-
-                        </div>
-
 
                     </div>
                 </div>
