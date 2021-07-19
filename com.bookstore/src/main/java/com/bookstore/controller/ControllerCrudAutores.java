@@ -1,7 +1,5 @@
 package com.bookstore.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,23 +10,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bookstore.facades.FacadeAutor;
 import com.bookstore.model.Autor;
-import com.bookstore.service.AutorService;
 
 @Controller
 public class ControllerCrudAutores {
-
-	@Autowired
-	private AutorService autorService;
 	
 	@Autowired
 	private FacadeAutor facadeAutor;
 
 	@GetMapping("/autor")
 	public String recuperarAutores(Model model) {
-
-		List<Autor> autores = autorService.recuperarAutores();
 		
-		model.addAttribute("autores", autores);
+		model.addAttribute("autores", facadeAutor.recuperarAutores());
 		
 		return "autores/autores";
 	}
@@ -36,14 +28,18 @@ public class ControllerCrudAutores {
 	@GetMapping("/autorform/{id}")
 	public String resgatarFormulario(@PathVariable("id") Long id, Model model) {
 		
-		Autor autor = new Autor("");
-		
-		if(id > 0) {//os ids cadastrados no banco são maiores que 0
-			 
-			 autor = autorService.recuperarPeloId(id).get();
+		try {
+			
+			if(id > 0) {//os ids cadastrados no banco são maiores que 0
+				 
+				model.addAttribute("autor",facadeAutor.recuperarAutor(id));
+			}else {
+				model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		model.addAttribute("autor",autor);
 		
 		return "autores/autoresform";
 	}
@@ -52,9 +48,8 @@ public class ControllerCrudAutores {
 	public String criarAutor(@ModelAttribute Autor autor) {
 		
 		try {
-			facadeAutor.criarAutor(autor.getNome());
+			facadeAutor.criarAutor(autor);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -66,10 +61,8 @@ public class ControllerCrudAutores {
 		
 		
 		try {
-			autor.setID(id);
-			facadeAutor.atualizarAutor(autor);
+			facadeAutor.atualizarAutor(autor, id);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -82,7 +75,6 @@ public class ControllerCrudAutores {
 		try {
 			facadeAutor.removerAutor(id);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

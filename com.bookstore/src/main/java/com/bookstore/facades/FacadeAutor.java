@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bookstore.model.Autor;
+import com.bookstore.model.Editora;
 import com.bookstore.service.AutorService;
 
 
@@ -31,9 +32,9 @@ public class FacadeAutor {
 	 * @return retorna o Autor criado
 	 * @throws Exception lança exceção caso ele não tenha sido cadastrado corretamente ao banco
 	 */
-	public Autor criarAutor(String nome) throws Exception {
+	public Autor criarAutor(Autor autor) throws Exception {
 		
-		Autor autor = new Autor(nome);
+//		Autor autor = new Autor(nome);
 		autorService.salvarAutor(autor);
 		
 		return recuperarAutor(autor.getID());
@@ -41,12 +42,11 @@ public class FacadeAutor {
 	}
 	
 	/**
-	 * Esse método remove um Autor pelo seu id
+	 * Esse método remove um Autor pelo seu id caso o mesmo não esteja sendo utilizado em algum livro
 	 * @param id id correspondente ao Autor
 	 * @throws Exception lança exceção caso não seja encontrado o Autor
 	 */
 	public void removerAutor(Long id) throws Exception{
-		
 		recuperarAutor(id);
 		autorService.deletarPeloId(id);
 	}
@@ -69,63 +69,37 @@ public class FacadeAutor {
 	}
 	
 	/**
-	 * Esse método atualiza um Autor 
-	 * @param autor Autor que se deseja atualizar
+	 * Método responsável por recuperar os autores cadastrados no banco
+	 * @return retorna a lista de autores cadastrados no banco
 	 */
-	public void atualizarAutor(Autor autor) {
+	public List<Autor> recuperarAutores(){
 		
-		autorService.atualizarAutor(autor);
+		return autorService.recuperarAutores();
 	}
 	
 	/**
-	 * Esse método será utilizado no main, no entando existe uma alta probabilidade do mesmo ser excluido posteriormente
-	 * @return Autor encontrado
-	 * @throws Exception caso não existam registros de autores
+	 * Método retorna uma entidade com os atributos nulos, ou seja, vazios, para serem adicionados
+	 * nos campos do fromulário
+	 * @return retorna um Autor com os atributos vazios
 	 */
-	public Autor selecionarAutor(boolean isPerguntar) throws Exception {
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		if(autorService.existemRegistros()) {
-			
-			List<Autor> autores = autorService.recuperarAutores();
-			
-			System.out.println("Autores Cadastrados:\n");
-			for (Autor autor : autores) {
-				System.out.println("ID: " + autor.getID() + " | Nome: " + autor.getNome());
-			}
-			
-			String resposta = "N";
-			
-			if(isPerguntar) {
-				System.out.print("Deseja salvar um novo autor? (Y/N) ");
-				resposta = scanner.nextLine();	
-			}
-
-			
-			if(resposta.equalsIgnoreCase("Y")) {
-				System.out.print("Informe o nome do autor: ");
-				String nome = scanner.nextLine();
-								
-				return criarAutor(nome);
-			} else {
-				
-				System.err.print("Informe o ID do autor selecionado: ");
-				Long id = Long.parseLong(scanner.nextLine());
-				
-				while(true) {
-					try {
-						return recuperarAutor(id);
-					} catch (Exception e) {
-						System.err.print(e.getMessage() + " Informe o ID novamente: ");
-						id = Long.parseLong(scanner.nextLine());
-					}
-				}
-			}
-			
-		}
-		
-		throw new Exception("[ERRO] Não existem autores cadastrados no sistema.");
+	public Autor recuperarAutorNulo() {
+	
+		return new Autor("");
 	}
+	
+	/**
+	 * Esse método atualiza um Autor 
+	 * @param autorDto autor com novos parâmetros para atualizar
+	 * @param id do autor
+	 * @throws Exception lança escessão caso não encontre o autor com id passado
+	 */
+	public void atualizarAutor(Autor autorDto, Long id) throws Exception {
+		
+		Autor autorUpdate = recuperarAutor(id);
+		
+		autorUpdate.setNome(autorDto.getNome());
+		autorService.atualizarAutor(autorUpdate);
+	}
+	
 	
 }
