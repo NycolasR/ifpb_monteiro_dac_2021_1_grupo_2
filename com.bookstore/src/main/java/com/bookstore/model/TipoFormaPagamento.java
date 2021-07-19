@@ -23,5 +23,11 @@ public enum TipoFormaPagamento {
 		return tipo;
 	}
 	
+//	public String toString() {
+//		return tipo;
+//	}
+	
+
+	
 	
 }

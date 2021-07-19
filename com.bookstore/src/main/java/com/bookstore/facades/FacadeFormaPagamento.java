@@ -1,5 +1,8 @@
 package com.bookstore.facades;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +90,15 @@ public class FacadeFormaPagamento {
 		}
 		throw new Exception("[ERRO] Forma de pagamento inexistente");
 		
+	}
+	
+	/**
+	 * Método que retorna as formas de pagamento registradas no banco de dados
+	 * @return retorna uma lista contendo as formas de pagamento contidas no banco
+	 */
+	public List<FormaPagamento> recuperarFormasDePagamento(){
+		
+		return formaPagamentoService.recuperarFormasPagamento();
 	}
 	
 	/**
