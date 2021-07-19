@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+/.gitignore
+/.mvn/
+/Divisão de responsabilidades - Main.txt
+/mvnw
+/mvnw.cmd
+/pom.xml
+/recomendacoes.txt
+/src/

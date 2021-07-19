@@ -13,6 +13,7 @@ public class BookStoreApp implements CommandLineRunner {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BookStoreApp.class, args);
+		System.out.println("Server is running");
 	}
 	
 /*
