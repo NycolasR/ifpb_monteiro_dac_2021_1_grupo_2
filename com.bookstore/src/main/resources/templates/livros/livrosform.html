@@ -5,10 +5,6 @@
     <main>
         <form action="#" th:object="${livro}" method="POST">
 
-            <label for="inputisbn" class="form-label">ISBN</label>
-            <input type="text" class="form-control border border-success" id="inputisbn" 
-            th:field="*{isbn}" required>
-
             <label for="inputtitulo" class="form-label">Título</label>
             <input type="text" class="form-control border border-success " id="inputtitulo" th:field="*{titulo}" required>
             
