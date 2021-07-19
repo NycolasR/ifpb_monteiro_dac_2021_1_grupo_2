@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head th:replace="~{fragmentos :: head('CRUD Editoras')}"></head>
+    <body>
+        <main>
+            <form action="#" th:object="${editora}" class="text-center" method="POST">
+                <label for="inputnomeautor" class="form-label">Nome da Editora</label>
+                <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomeeditora" th:field="*{nome}" required>
+                <label for="inputnomeautor" class="form-label">Cidade da editora</label>
+                <input type="text" class="form-control border border-success w-50 ms-auto me-auto"id="inputcidadeeditora" th:field="*{cidade}" required>
+                <br>
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "*{nome} != '' ? true" 
+                th:formaction="@{/editoraformadd}">
+                    Adicionar
+                </button>
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "*{nome} == '' ? true" 
+                th:formaction="@{/editoraformupdate/{id}(id=*{id})}">
+                    Atualizar
+                </button>
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "*{nome} == '' ? true" 
+                th:formaction="@{/editoraformremove/{id}(id=*{id})}">
+                    Remover
+                </button>
+            </form>
+        </main>
+    </body>
+</html>
