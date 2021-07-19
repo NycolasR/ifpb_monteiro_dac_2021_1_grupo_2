@@ -4,18 +4,29 @@
 <body>
 
     <header th:replace="~{fragmentosadm :: header('Livros')}"></header>
-    <main>
-        <div class="listaLivros" th:each="livro : ${livros}">
-            <div class="card">
-                <div class="card-header">
-                </div>
-                <div class="card-body">
-                    <div> Título: <span th:text="${livro.titulo}"></span></div>
+    <main class="ms-3 me-3 border border-3 border-success rounded">  
 
+        <!--Essa div está relacionada ao listamento dos livros-->
+        <div class="bg-success m-3 pb-3 rounded w-50 ms-auto me-auto" >
+            <div class="text-center text-white pt-2 mb-2">Livros</div>
+            <div class=" ms-3 me-3 navbar-nav-scroll rounded">
+                <div class="list-group" th:each="livro : ${livros}">
+                    <a  href="#" th:href="@{/livroform/{id}(id=${livro.id})}" class="list-group-item list-group-item-action">
+                        <h5 th:text="${livro.titulo}"></h5>
+                        <div th:each="autor : ${livro.autores}">
+                            <h6 th:text="${autor.nome}"></h6>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-    </main>
+
+        <!--Essa div está relacionada ao botão de adicionar-->
+        <div class=" m-3 p-1 rounded text-center">
+            <a href="#" th:href="@{/livroform/{id}(id=0)}"><button type="button" class="btn btn-outline-success" >ADICIONAR</button></a>
+        </div>
+
+    <main>
     <footer th:replace="~{fragmentosadm :: footer}"></footer>
 </body>
 </html>

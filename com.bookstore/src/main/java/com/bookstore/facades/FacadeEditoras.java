@@ -85,6 +85,7 @@ public class FacadeEditoras {
 		
 		editoraUpdate.setNome(editoraDto.getNome());
 		editoraUpdate.setCidade(editoraDto.getCidade());
+		editoraUpdate.setLivros(editoraDto.getLivros());
 		
 		editoraService.atualizarEditora(editoraUpdate);
 	}

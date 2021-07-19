@@ -27,88 +27,15 @@ public class FacadeLivros {
 	private LivroService livroService;
 	
 	/**
-	 * Método usado para criar um livro e salvá-lo
-	 * @param isbn ISBN do livro
-	 * @param titulo Título do livro
-	 * @param descricao Descrição do livro
-	 * @param preco Preço do livro
-	 * @param edicao Edição do livro
-	 * @param anoPublicacao Ano de publicação do livro
-	 * @param qntdEstoque Quantidade do livro que estará em estoque
+	 * Método usado para criar um livro 
+	 * @param livro livro a ser adicionado ao banco
 	 * @return O registro de Livro pronto
 	 */
-	public Long salvarLivro(
-			Long isbn, 
-			String titulo, 
-			String descricao, 
-			BigDecimal preco, 
-			Integer edicao, 
-			Integer anoPublicacao, 
-			Integer qntdEstoque) {
+	public Long criarLivro(Livro livro) {
 		
-		Livro livro = new Livro(isbn, titulo, descricao, preco, edicao, anoPublicacao, qntdEstoque);
+//		Livro livro = new Livro(isbn, titulo, descricao, preco, edicao, anoPublicacao, qntdEstoque);
 		livroService.salvarLivro(livro);
 		return livro.getId();
-	}
-	
-	/**
-	 * Método usado para atualizar um registro de Livro de forma flexível
-	 * @param livro Livro que se deseja atualizar
-	 * @param atributo Atributo do livro que está para ser atualizado
-	 */
-	public void atualizarAtributoLivro(Livro livro, String atributo, String valor) {
-//		Scanner input = new Scanner(System.in);
-//		String resposta = input.nextLine();
-
-		if(!valor.isEmpty()) {
-
-			switch (atributo) {
-			case "titulo":
-				livro.setTitulo(valor);
-				break;
-
-			case "ISBN":
-				Long isbn = Long.parseLong(valor);
-				
-				if(isbn < 0)
-					System.err.println("[ERRO] Não é permitido registrar ISBNs negativos");//transformar em exceção
-				else
-					livro.setISBN(Long.parseLong(valor));
-				
-				break;
-				
-			case "descricao":
-				livro.setDescricao(valor);
-				break;
-				
-			case "preco":
-				try {
-					livro.setPreco(new BigDecimal(valor));
-					break;
-				} catch(NumberFormatException e) {
-					//aqui deve-se lançar uma exceção e não tratar
-					System.err.print("[ERRO] Insira um formato de preço válido: "); //transformar em exceção
-				}
-				break;
-				
-			case "edicao":
-				livro.setEdicao(Integer.parseInt(valor));
-				break;
-				
-			case "anoPublicacao":
-				livro.setAnoPublicacao(Integer.parseInt(valor));
-				break;
-				
-			case "quantidadeEmEstoque":
-							
-				Integer novaQuantidade = livro.getQuantidadeEmEstoque() + Integer.parseInt(valor);
-				livro.setQuantidadeEmEstoque(novaQuantidade);
-				break;
-
-			default:
-				break;
-			}
-		}
 	}
 	
 	/**
@@ -127,38 +54,14 @@ public class FacadeLivros {
 	}
 
 	/**
-	 * Método usado para listar e selecionar um livro
-	 * @return O livro selecionado 
-	 * @throws Exception Lança exceção caso não existam livros registrados
+	 * Nyk depois escreve aqui o que esse método faz
+	 * @param campoOrdenacao
+	 * @param sortDirection
+	 * @param numeroPagina
+	 * @param inEstoque
+	 * @return
+	 * @throws Exception
 	 */
-	public Livro selecionarLivro() throws Exception {
-		
-		if(livroService.existemRegistros()) {
-			Scanner input = new Scanner(System.in);
-			
-			List<Livro> livros = livroService.listarLivros();
-			
-			System.out.println("Livros Cadastrados:\n");
-			for (Livro livro : livros) {
-				System.out.println("ID: " + livro.getId() + " | Título: " + livro.getTitulo());
-			}
-			
-			System.err.print("Informe o ID do livro selecionado: ");
-			Long id = Long.parseLong(input.nextLine());
-			
-			while(true) {
-				try {
-					return recuperarLivro(id);
-				} catch (Exception e) {
-					System.err.print(e.getMessage() + " Informe o ID novamente: ");
-					id = Long.parseLong(input.nextLine());
-				}
-			}
-		}
-		
-		throw new Exception("[ERRO] Não existem livros cadastrados no sistema.");
-	}
-	
 	public Page<Livro> paginarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, boolean inEstoque) throws Exception{
 		Page<Livro> pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);
 		if(!pagTemp.isEmpty()) {
@@ -168,18 +71,62 @@ public class FacadeLivros {
 	}
 	
 	/**
+	 * Método responsável por recuperar os livros cadastrados no banco
+	 * @return retorna a lista de livros cadastrados no banco
+	 */
+	public List<Livro> recuperarLivros(){
+		
+		return livroService.listarLivros();
+	}
+	
+	/**
+	 * Método retorna uma entidade com os atributos nulos, ou seja, vazios, para serem adicionados
+	 * nos campos do fromulário
+	 * @return retorna um Livro com os atributos vazios
+	 */
+	public Livro recuperarLivroNulo() {
+		
+		return new Livro(0L, "", "", BigDecimal.ZERO, 1, 1, 0);
+	}
+	
+	/**
 	 * Método usado para deletar um registro de livro
 	 * @param livro Livro que está para ser deletado
+	 * @throws Exception lança excessão caso o id não corresponda a algum livro do banco 
 	 */
-	public void deletarLivro(Livro livro) {
-		livroService.deletarPeloId(livro.getId());
+	public void deletarLivro(Long id) throws Exception {
+		recuperarLivro(id);
+		livroService.deletarPeloId(id);
 	}
 
 	/**
 	 * Método usado para atualizar um registro de livro
-	 * @param livro Livro que está para ser atualizado
+	 * @param livro Livro com atributos atualizados
+	 * @param id do livro
+	 * @throws Exception lança excessão caso o id não corresponda a algum livro do banco 
 	 */
-	public void atualizarLivro(Livro livroEditado) {
-		livroService.atualizarLivro(livroEditado);
+	public void atualizarLivro(Livro livroDto, Long id) throws Exception {
+		
+		Livro livroUpdate = recuperarLivro(id);
+		
+		livroUpdate.setISBN(livroDto.getISBN());
+		livroUpdate.setImagemCapa(livroDto.getImagemCapa());
+		livroUpdate.setTitulo(livroDto.getTitulo());;
+		livroUpdate.setDescricao(livroDto.getDescricao());
+		livroUpdate.setPreco(livroDto.getPreco());
+		livroUpdate.setEdicao(livroDto.getEdicao());
+		livroUpdate.setAnoPublicacao(livroDto.getAnoPublicacao());
+		livroUpdate.setCategorias(livroDto.getCategorias());
+		livroUpdate.setAutores(livroDto.getAutores());
+		livroUpdate.setQuantidadeEmEstoque(livroDto.getQuantidadeEmEstoque());
+		
+		livroService.atualizarLivro(livroUpdate);
 	}
+	
+	
+	
+	
+	
+	
+	
 }

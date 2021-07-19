@@ -1,29 +1,43 @@
 package com.bookstore.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import com.bookstore.model.Livro;
-import com.bookstore.service.LivroService;
+import com.bookstore.facades.FacadeLivros;
 
 @Controller
 public class ControllerCrudLivros {
-	
+
 	@Autowired
-	private LivroService livroService;
+	private FacadeLivros facadeLivros;
 
 	@GetMapping("/livro")
-	public String listarLivros(Model model) {
-		
-		List<Livro> livros = livroService.listarLivros();
-		model.addAttribute("livros", livros);
-		
+	public String recuperarLivros(Model model) {
+
+		model.addAttribute("livros", facadeLivros.recuperarLivros());
+
 		return "livros/livros";
 	}
-	
+
+	@GetMapping("/livroform/{id}")
+	public String recuperarFormulario(@PathVariable("id") Long id, Model model) {
+
+		try {
+
+			if (id > 0) {// os ids cadastrados no banco são maiores que 0
+
+				model.addAttribute("livro", facadeLivros.recuperarLivro(id));
+			} else {
+				model.addAttribute("livro", facadeLivros.recuperarLivroNulo());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "livros/livrosform";
+	}
+
 }
