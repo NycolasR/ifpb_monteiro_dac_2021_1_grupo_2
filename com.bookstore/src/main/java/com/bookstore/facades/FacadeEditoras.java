@@ -30,6 +30,7 @@ public class FacadeEditoras {
 	 * @throws Exception Lança exceção caso o registro não seja encontrado na base de dados.
 	 */
 	public Editora recuperarEditora(Long id) throws Exception {
+		
 		Optional<Editora> optional = editoraService.recuperarPeloId(id);
 		
 		if(optional.isPresent())
@@ -37,70 +38,23 @@ public class FacadeEditoras {
 		
 		throw new Exception("[ERRO] Editora não encontrada na base de dados.");
 	}
-
+	
 	/**
-	 * Método usado para selecionar e obter um registro de uma Editora. Este registro pode ser um novo.
-	 * @return A Editora escolhida.
+	 * Método usado para obter todas as instâncias de Editora do banco
+	 * @return retorna uma lista das Editoras cadastradas no banco
 	 */
-	public Editora selecionarEditora() {
-		Scanner scanner = new Scanner(System.in);
-		
-		// Verifica se há editoras cadastradas
-		if(editoraService.existemRegistros()) {
-			
-			List<Editora> editoras = editoraService.listarEditoras();
-			
-			// Lista as editoras: cada linha possui o ID seguido do nome da editora
-			System.out.println("Editoras Cadastradas:\n");
-			for (Editora editora : editoras) {
-				System.out.println("ID: " + editora.getId() + " | Nome: " + editora.getNome());
-			}
-			
-			// Pergunta se o usuário deseja criar uma nova além das existentes
-			System.out.print("Deseja salvar uma nova editora? (Y/N) ");
-			String resposta = scanner.nextLine();
-			
-			
-			if(resposta.equalsIgnoreCase("Y")) {
-				return lerDadosDeNovaEditora(); // Criando uma nova editora
-				
-			} else { // Recuperando uma já existente
-				
-				System.err.print("Informe o ID da editora selecionada: ");
-				Long id = Long.parseLong(scanner.nextLine());
-				
-				while(true) {
-					try {
-						return recuperarEditora(id);
-					} catch (Exception e) {
-						System.err.print(e.getMessage() + " Informe o ID novamente: ");
-						id = Long.parseLong(scanner.nextLine());
-					}
-				}
-			}
-		} else { // Não existindo nenhum registro, força-se o cliente a criar uma nova
-			
-			System.out.println("[ERRO] Não existem editoras cadastradas no sistema.");
-			System.out.println("Cadastrar Nova Editora");
-			return lerDadosDeNovaEditora();
-		}
-		
+	public List<Editora> recuperarEditoras(){
+		return editoraService.listarEditoras();
 	}
 	
 	/**
-	 * Método usado para ler os dados de uma nova editora
-	 * @return O registro de Editora pronto
+	 * Método retorna uma entidade com os atributos nulos, ou seja, vazios, para serem adicionados
+	 * nos campos do fromulário
+	 * @return retorna uma Editora com os atributos vazios
 	 */
-	private Editora lerDadosDeNovaEditora() {
-		Scanner scanner = new Scanner(System.in);
-		
-		System.out.print("Informe o nome da editora: ");
-		String nome = scanner.nextLine();
-		
-		System.out.print("Informe a cidade da editora: ");
-		String cidade = scanner.nextLine();
-		
-		return criarEditora(nome, cidade);
+	public Editora recuperarEditoraNula() {
+	
+		return new Editora("", "");
 	}
 
 	/**
@@ -109,10 +63,10 @@ public class FacadeEditoras {
 	 * @param cidade Cidade da Editora
 	 * @return O registro de Editora pronto
 	 */
-	public Editora criarEditora(String nome, String cidade) {
-		Editora editora = new Editora();
-		editora.setNome(nome);
-		editora.setCidade(cidade);
+	public Editora criarEditora(Editora editora) {
+//		Editora editora = new Editora();
+//		editora.setNome(nome);
+//		editora.setCidade(cidade);
 		
 		editoraService.salvarEditora(editora);
 		
@@ -121,10 +75,28 @@ public class FacadeEditoras {
 	
 	/**
 	 * Método usado para atualizar uma Editora
-	 * @param editora O registro que se deseja atualizar
+	 * @param editoraDto editora com novos parâmetros para atualizar
+	 * @param id da editora
+	 * @throws Exception lança escessão caso não encontre a editora com id passado
 	 */
-	public void atualizarEditora(Editora editora) {
-		editoraService.atualizarEditora(editora);
+	public void atualizarEditora(Editora editoraDto, Long id) throws Exception {
+		
+		Editora editoraUpdate = recuperarEditora(id);
+		
+		editoraUpdate.setNome(editoraDto.getNome());
+		editoraUpdate.setCidade(editoraDto.getCidade());
+		editoraUpdate.setLivros(editoraDto.getLivros());
+		
+		editoraService.atualizarEditora(editoraUpdate);
+	}
+	
+	/**
+	 * Método utilizado para remover uma editora do banco, caso nenhum livro esteja utilizando-a
+	 * @param id da editora 
+	 */
+	public void removerEditora(Long id) throws Exception{
+		recuperarEditora(id);
+		editoraService.deletarPeloId(id);
 	}
 }
 

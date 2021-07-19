@@ -172,7 +172,7 @@ public class FacadePedido {
 
 			livro.setQuantidadeEmEstoque(livro.getQuantidadeEmEstoque() - itemPedido.getQuantidade());
 
-			facadeLivros.atualizarLivro(livro);
+			facadeLivros.atualizarLivro(livro, livro.getId());
 
 		}
 	}

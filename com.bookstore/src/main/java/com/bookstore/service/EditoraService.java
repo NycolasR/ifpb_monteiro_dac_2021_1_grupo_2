@@ -57,7 +57,7 @@ public class EditoraService {
 	}
 	
 	/**
-	 * Método usado para deletar um dado registro na tabela identificado
+	 * Método usado para deletar um dado registrado na tabela identificado
 	 * pelo seu ID
 	 * @param id ID do registro que se deseja deletar
 	 */
@@ -65,7 +65,7 @@ public class EditoraService {
 		Optional<Editora> deletado = recuperarPeloId(id);
 		
 		if(deletado.isPresent()) { // Verifica se há um objeto no Optional
-			editoraRepository.delete(deletado.get());
+			editoraRepository.deletarEditora(deletado.get().getId());
 		}
 	}
 	
