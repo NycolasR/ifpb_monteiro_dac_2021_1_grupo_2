@@ -220,31 +220,39 @@
 
                                             <!--
                                                 <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                              <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Endereço selecionado</div>
-                                                <h6 th:text="${pedido.endereco.rua"}></h6>
-                                              </div>
-                                            </li>
+                                                  <div class="ms-2 me-auto">
+                                                    <div class="d-flex justify-content-start align-itens-center">
+                                                        <div class="fw-bold">Endereço selecionado  </div>
+                                                        <h6 th:text="${pedido.endereco.rua"}></h6>
+                                                    </div>
+                                                  </div>
+                                                </li>
                                             -->
 
                                             <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Quantidade total de livros</div>
-                                                <h6 th:text="${pedido.qntdItens}"></h6>
+                                                <div class="d-flex justify-content-start align-itens-center">
+                                                    <div class="fw-bold">Quantidade total de livros  </div>
+                                                    <h6 th:text="${pedido.qntdItens}"></h6>
+                                                </div>
                                               </div>
                                             </li>
 
                                             <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
-                                                <div class="fw-bold">Status do Pedido</div>
-                                                <h6 th:text="${pedido.statusPedido}"></h6>
+                                                  <div class="d-flex justify-content-start align-itens-center">
+                                                      <div class="fw-bold">Status do Pedido  </div>
+                                                      <h6 th:text="${pedido.statusPedido}"></h6>
+                                                  </div>
                                               </div>
                                             </li>
 
-                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                            <li class="list-group-item d-flex justify-content-between bg-success">
                                                 <div class="ms-2 me-auto">
-                                                  <div class="fw-bold">Valor total</div>
-                                                  <h6 th:value="${pedido.valorItensTotal}"></h6>
+                                                    <div class="d-flex justify-content-start align-itens-center">
+                                                        <div class="fw-bold">Valor total  </div>
+                                                        <h6 th:text="${pedido.valorItensTotal}"></h6>
+                                                    </div>
                                                 </div>
                                               </li>
                                           </ul>

@@ -226,10 +226,10 @@ public class Pedido {
 	public void setQntdItens(Integer qntdItens) {
 		this.qntdItens = qntdItens;
 	}
-	public BigDecimal getvalorItensTotal() {
+	public BigDecimal getValorItensTotal() {
 		return valorItensTotal;
 	}
-	public void setvalorItensTotal(BigDecimal valorItensTotal) {
+	public void setValorItensTotal(BigDecimal valorItensTotal) {
 		this.valorItensTotal = valorItensTotal;
 	}
 	public String getStatusPedido() {

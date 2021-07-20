@@ -139,7 +139,7 @@ public class FacadePedido {
 
 		Pedido pedido = recuperarPedido(idPedido);
 		FormaPagamento formaPagamento = facadeFormaPagamento.recuperarFormaPagamento(idFormaPagamento);
-		formaPagamento.realizarPagamento(pedido.getvalorItensTotal());
+		formaPagamento.realizarPagamento(pedido.getValorItensTotal());
 
 		pedido.setFormaPagamento(formaPagamento);
 		pedido.setLocalDeEntrega(localDeEntrega);

@@ -1,5 +1,6 @@
 package com.bookstore.controller;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +37,11 @@ public class ControllerUsuario {
 			model.addAttribute("enderecos", enderecos);
 			model.addAttribute("pedidos", pedidos);
 			
+			for (Iterator i = pedidos.iterator(); i.hasNext();) {
+				Pedido pedido = (Pedido) i.next();
+				System.out.println(pedido.getValorItensTotal());
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,9 +50,9 @@ public class ControllerUsuario {
 	
 	
 	/*
-	 * oefkf
+	 * oef
 	 * 
-	 *
+	
 	 * 
 	 
 	 * 
