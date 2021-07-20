@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="~{fragmentos :: head('CRUD Livros')}"></head>
+<body>
+    <main>
+        <form action="#" th:object="${livro}" method="POST">
+
+            <label for="inputtitulo" class="form-label">Título</label>
+            <input type="text" class="form-control border border-success " id="inputtitulo" th:field="*{titulo}" required>
+            
+            
+            <label for="inputdescricao" class="form-label">Descrição</label>
+            <textarea class="form-control border border-success" aria-label="With textarea" id="inputdescricao" th:field="*{descricao}" required></textarea>
+            
+
+            <label for="inputedicao" class="form-label">Edição</label>
+            <input type="number" class="form-control border border-success" id="inputedicao" 
+            th:field="*{edicao}" min="1" required>
+
+            <label for="inputanopublicacao" class="form-label">Ano de Publicação</label>
+            <input type="number" class="form-control border border-success" id="inputanopublicacao" 
+            th:field="*{anoPublicacao}"  min="1" required>
+
+            <br>
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "*{titulo} != '' ? true">
+                    Adicionar
+                </button>
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "*{titulo} == '' ? true">
+                    Atualizar
+                </button>
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "*{titulo} == '' ? true">
+                    Remover
+                </button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

@@ -40,7 +40,7 @@ public class FacadeUsuarios {
 		}
 		
 		usuarioService.salvar(usuarioTemp);
-		return usuarioService.usuarioPorEmail(email);
+		return usuarioService.recuperarPeloEmail(email);
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class FacadeUsuarios {
 	 * @throws Exception
 	 */
 	public Usuario consultarPorEmail(String email) throws Exception {
-		return usuarioService.usuarioPorEmail(email);
+		return usuarioService.recuperarPeloEmail(email);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class FacadeUsuarios {
 	 * @throws Exception caso o usuario não seja encontrado.
 	 */
 	public void addEndereco(String emailUsuario , Endereco endereco) throws Exception {
-		Usuario userTemp = usuarioService.usuarioPorEmail(emailUsuario);
+		Usuario userTemp = usuarioService.recuperarPeloEmail(emailUsuario);
 		userTemp.addEndereco(endereco);
 		usuarioService.atualizar(userTemp);
 	}

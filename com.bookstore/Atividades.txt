@@ -1,0 +1,67 @@
+- Tela Inicial
+	- Listagem dos livros (com paginação)
+	- Filtragem funcionando
+		- Barra de busca
+		- Categorias
+		
+- Login e Cadastro
+	- Tela de Login
+	- Tela de cadastro
+
+- CRUD
+	- CRUD de Livros
+		- Create
+		- Read
+		- Read All
+		- Update
+		- Delete
+	
+	- CRUD de Editora
+		- Create
+		- Read
+		- Read All
+		- Update
+		- Delete
+	
+	- CRUD de Autores (FEITO)
+		- Create (FEITO)
+		- Read (FEITO)
+		- Read All (FEITO)
+		- Update (FEITO)
+		- Delete (FEITO)
+	
+	- CRUD de FormaPagamento
+		- Select (btn habilitar)
+		- Read All (lista)
+		- Delete (btn desabilitar)
+
+- USUÁRIO COMUM
+	- Tela de Perfil
+		- CRUD de endereços
+			- Create
+			- Read
+			- Read All
+			- Update
+			- Delete
+			
+		- Próprio CRUD
+			- Read
+			- Update
+			
+		- Carrinho de Compras (pedido não finalizado)
+			- Add item
+			- Read (item pedido)
+			- Read All (itens pedido)
+			- Editar quantidade de itens
+			- Delete (um item)
+			
+		- Meus Pedidos
+			- Read All
+			- Delete
+
+- Extras
+	- Promoção
+	- Excluir conta
+
+
+

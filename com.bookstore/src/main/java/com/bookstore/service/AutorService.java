@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bookstore.model.Autor;
-import com.bookstore.model.ItemPedido;
 import com.bookstore.repository.AutorRepository;
 /**
  * 
@@ -77,7 +76,7 @@ public class AutorService {
 		Optional<Autor> deletado = recuperarPeloId(id);
 		
 		if(deletado.isPresent()) { // Verifica se há um objeto no Optional
-			autorRepository.delete(deletado.get());
+			autorRepository.deletarAutor(deletado.get().getID());
 		}
 	}
 	

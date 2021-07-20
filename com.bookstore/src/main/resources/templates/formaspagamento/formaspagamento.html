@@ -3,8 +3,40 @@
 <head th:replace="~{fragmentos :: head('CRUD Formas de Pagamento')}"></head>
 <body>
     <header th:replace="~{fragmentosadm :: header('Formas Pagamento')}"></header>
-    <main>    
-    </main>
+    <main class="ms-3 me-3 border border-3 border-success rounded row"> 
+
+        <div class="m-3 pb-3 rounded col" >
+            <div class="text-center pt-2 mb-2">Formas de Pagamento </div>
+            <div class=" ms-3 me-3 navbar-nav-scroll rounded">
+                <div class="card mb-1" th:each="tipoformapagamento : ${T(com.bookstore.model.TipoFormaPagamento).values()}">
+                    <div class="card-body">
+                        <form action="#" th:action="@{/formapagamentoformadd/{tipo}(tipo=${tipoformapagamento})}" method="POST">
+                            <h5 class="card-title" th:text="${tipoformapagamento.tipo}"></h5>
+                            <button type="submit" class="btn btn-outline-success">Habilitar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Essa div está relacionada ao listamento das formas de pagamento-->
+        <div class="bg-success m-3 pb-3 rounded col" >
+            <div class="text-center text-white pt-2 mb-2">Formas de Pagamento Habilitadas</div>
+            <div class=" ms-3 me-3 navbar-nav-scroll rounded">
+                <div class="card mb-1" th:each="formapagamento : ${formaspagamento}">
+                    <div class="card-body">
+                        <form action="#" th:action="@{/formapagamentoformremove/{id}(id=${formapagamento.ID})}" method="POST">
+                            <h5 class="card-title" th:text="${formapagamento.nome}"></h5>
+                            <button type="submit" class="btn btn-outline-success">
+                                Desabilitar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <main>
     <footer th:replace="~{fragmentosadm :: footer}"></footer>
 </body>
 </html>
