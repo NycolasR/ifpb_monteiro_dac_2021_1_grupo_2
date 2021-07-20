@@ -1,6 +1,7 @@
 package com.bookstore.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bookstore.model.Endereco;
+import com.bookstore.model.Pedido;
 import com.bookstore.model.Usuario;
 import com.bookstore.service.UsuarioService;
 
@@ -23,13 +25,16 @@ public class ControllerUsuario {
 	
 		Usuario usuario;
 		List<Endereco> enderecos;
+		Set<Pedido> pedidos;
 		
 		try {
 			usuario = usuarioService.recuperarPeloId(id);
 			enderecos = usuario.getEnderecos();
+			pedidos = usuario.getPedidos();
 			
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("enderecos", enderecos);
+			model.addAttribute("pedidos", pedidos);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,10 +45,10 @@ public class ControllerUsuario {
 	
 	/*
 	 * oefkf
-	 * dsafD
-	 *
 	 * 
 	 *
+	 * 
+	 
 	 * 
 	 * 
 	 */

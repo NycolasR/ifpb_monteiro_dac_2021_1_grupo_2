@@ -67,20 +67,6 @@
                     <li class="nav-item" role="presentation">
                         <button 
                             class="nav-link text-success" 
-                            id="carrinho-tab" 
-                            data-bs-toggle="tab" 
-                            data-bs-target="#carrinho" 
-                            type="button" 
-                            role="tab" 
-                            aria-controls="carrinho" 
-                            aria-selected="false">
-                                Carrinho de Compras
-                        </button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button 
-                            class="nav-link text-success" 
                             id="pedidos-tab" 
                             data-bs-toggle="tab" 
                             data-bs-target="#pedidos" 
@@ -195,76 +181,29 @@
 
                     <div 
                         class="tab-pane fade" 
-                        id="carrinho" 
-                        role="tabpanel" 
-                        aria-labelledby="contact-tab">
-                            
-                        <h2 class="pt-1 pb-1 text-success">Meu Carrinho de Compras</h2>
-                        <hr>
-
-
-                        <div class="list-group" id="listaAncoraItensPedido">
-                            <div class="list-group-item list-group-item-action pb-3 ancoraItemPedido" aria-current="true">
-    
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-8 g-1">
-                                        <h5 class="mb-2 text-success">Livro: Harry Potter e a Pedra Filosofal</h5>
-    
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-4 align-middle">
-                                                <h6 class="mr-2 text-success">Quantidade:</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <input
-                                                    class="form-control col-sm form-control-number quantidadeLivros text-success" 
-                                                    type="number" 
-                                                    name="quantidadeLivros"
-                                                    min="1"
-                                                    oninput="atualizarSubTotal(10, 0)">
-                                            </div>
-                                        </div>
-    
-                                        <h6 class="mt-3 text-success">Subtotal: R$ <span class="valorSubtotal"></span></h6>
-                                    </div>
-    
-                                    <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
-                                        <button class="btn btn-outline-danger" onclick="excluirItemPedido(0)">
-                                            Excluir <img th:src="@{/images/excluir-lixeira-48.png}" width="25" height="25" alt="">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list-group-item list-group-item-action pb-3" aria-current="true">
-                                <div class="align-items-center justify-content-center">
-                                    <h4 class="text-success">Total a pagar: R$ <span id="valorTotalAPagar"></span></h4>
-                                </div>
-                            </div>
-
-                            <div class="d-flex align-items-center justify-content-center navbar">
-                                <button type="button" class="btn btn-success">Finalizar Pedido</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div 
-                        class="tab-pane fade" 
                         id="pedidos" 
                         role="tabpanel" 
                         aria-labelledby="contact-tab">
                             
-                        <h2 class="pt-1 pb-1 text-success">Meus Pedidos Finalizados</h2>
+                        <h2 class="pt-1 pb-1 text-success">Meus Pedidos</h2>
                         <hr>
 
                         <div class="list-group mb-3">
                             <div class="list-group-item list-group-item-action pb-3 border-success" aria-current="true">
     
-                                <div class="row">
+                                <div class="row" th:each="pedido : ${pedidos}">
                                     <div class="col-sm-12 col-md-8 g-1 mt-2">
                                         <section class="sessaoDadosItensPedido">
-                                            <div class="dadosItemPedido text-success">
-                                                <h5 class="mb-2 text-success">Livro: Harry Potter e a Pedra Filosofal</h5>
-                                                <h6 class="mt-3 text-success">Quantidade <span class="qntdItens">10</span></h6>
+                                            <div class="dadosItemPedido text-success" th:each="itemPedido : ${pedido.itensPedidos}">
+                                                <div class="d-flex justify-content-start align-itens-center">
+                                                    <h5 class="mb-2 text-success">Livro:  </h5>
+                                                    <h5 class="mb-2 text-success" th:text="${itemPedido.livro.titulo}"></h5>
+                                                </div>
+                                                
+                                                <div class="d-flex justify-content-start align-itens-center">
+                                                    <h6 class="mt-3 text-success">Quantidade:  </h6>
+                                                    <h6 class="mt-3 text-success" th:text="${itemPedido.quantidade}"></h6>
+                                                </div>
                                                 <br>
                                             </div>
                                         </section>
@@ -279,31 +218,33 @@
                                     <section class="sessaoDadosAdicionais">
                                         <ul class="list-group text-white">
 
-                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                            <!--
+                                                <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
                                                 <div class="fw-bold">Endereço selecionado</div>
-                                                Rua P. Xavier nº 1
+                                                <h6 th:text="${pedido.endereco.rua"}></h6>
                                               </div>
                                             </li>
+                                            -->
 
                                             <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
                                                 <div class="fw-bold">Quantidade total de livros</div>
-                                                60 livros
+                                                <h6 th:text="${pedido.qntdItens}"></h6>
                                               </div>
                                             </li>
 
                                             <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                               <div class="ms-2 me-auto">
                                                 <div class="fw-bold">Status do Pedido</div>
-                                                <strong>Finalizado</strong> 
+                                                <h6 th:text="${pedido.statusPedido}"></h6>
                                               </div>
                                             </li>
 
                                             <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
                                                 <div class="ms-2 me-auto">
                                                   <div class="fw-bold">Valor total</div>
-                                                  R$ 60,00
+                                                  <h6 th:value="${pedido.valorItensTotal}"></h6>
                                                 </div>
                                               </li>
                                           </ul>
@@ -319,34 +260,5 @@
             
         </div><!--/row-->
         
-        
-
-        <script>
-            function atualizarTotal() {
-                var spansElement = document.getElementsByClassName("valorSubtotal");
-                var total = 0;
-    
-                for (let i = 0; i < spansElement.length; i++) {
-                    total += Number(spansElement[i].innerHTML);   
-                }
-    
-                var spanTotal = document.getElementById("valorTotalAPagar");
-                spanTotal.innerHTML = total;
-            }
-    
-            function atualizarSubTotal(valorIndividual, index) {
-                var spanElement = document.getElementsByClassName("valorSubtotal")[index];
-                var inputElement = document.getElementsByClassName("quantidadeLivros")[index];
-    
-                var valor = valorIndividual * inputElement.value;
-                spanElement.innerHTML = valor;
-    
-                atualizarTotal();
-            }
-    
-            function excluirItemPedido(index) {
-                alert("Implementar função");
-            }
-        </script>
 </body>
 </html>
