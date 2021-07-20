@@ -16,9 +16,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -54,10 +56,14 @@ public class Livro {
 	@Column(name = "ANO_PUBLICACAO")
 	private Integer anoPublicacao;
 	
-	@ElementCollection(fetch = FetchType.LAZY, targetClass = Categoria.class)
-	@Enumerated(EnumType.STRING)
-	@Column(name = "CATEGORIA", length = 30)
-	@JoinTable(name = "TB_CATEGORIA")
+//  Não excluir estas anotações
+//	@ElementCollection(fetch = FetchType.LAZY, targetClass = Categoria.class)
+//	@Enumerated(EnumType.STRING)
+//	@Column(name = "CATEGORIA", length = 30)
+//	@JoinTable(name = "TB_CATEGORIA")
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "LIVRO_FK")
 	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros")
