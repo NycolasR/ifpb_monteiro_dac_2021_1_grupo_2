@@ -58,8 +58,9 @@ public class Pedido {
 	@Column(name = "STATUS_PEDIDO")
 	private String statusPedido;
 	
-	@Column(name = "LOCAL_ENTREGA")
-	private String localDeEntrega;
+	@ManyToOne
+	@JoinColumn(name = "ENDERECO_FK")
+	private Endereco localDeEntrega;
 
 	@ManyToOne
 	@JoinColumn(name = "FORMA_PAGAMENTO_FK")
@@ -189,10 +190,10 @@ public class Pedido {
 	 * Os métodos a baixo são de get e set em relação aos atributos da classe.
 	 * 
 	 */
-	public String getLocalDeEntrega() {
+	public Endereco getLocalDeEntrega() {
 		return localDeEntrega;
 	}
-	public void setLocalDeEntrega(String localDeEntrega) {
+	public void setLocalDeEntrega(Endereco localDeEntrega) {
 		this.localDeEntrega = localDeEntrega;
 	}
 	public Usuario getUsuario() {

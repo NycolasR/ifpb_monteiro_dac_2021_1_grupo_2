@@ -31,6 +31,9 @@ public class FacadePedido {
 
 	@Autowired
 	private FacadeLivros facadeLivros;
+	
+	@Autowired
+	private FacadeEnderecos facadeEnderecos;
 
 	@Autowired
 	private FacadeFormaPagamento facadeFormaPagamento;
@@ -135,14 +138,14 @@ public class FacadePedido {
 	 * @param idFormaPagamento id da FormaPagamento para ser pago o Pedido
 	 * @throws Exception lança exceção caso o Pedido e a FormaPagamento não sejam encontrados.
 	 */
-	public void finalizarPedido(Long idPedido, String localDeEntrega, Long idFormaPagamento) throws Exception {
+	public void finalizarPedido(Long idPedido, Long localDeEntrega, Long idFormaPagamento) throws Exception {
 
 		Pedido pedido = recuperarPedido(idPedido);
 		FormaPagamento formaPagamento = facadeFormaPagamento.recuperarFormaPagamento(idFormaPagamento);
 		formaPagamento.realizarPagamento(pedido.getvalorItensTotal());
 
 		pedido.setFormaPagamento(formaPagamento);
-		pedido.setLocalDeEntrega(localDeEntrega);
+		pedido.setLocalDeEntrega(facadeEnderecos.recuperarEndereco(localDeEntrega));
 		pedido.setDataFechamento(Date.from(Instant.now()));
 		pedido.setStatusPedido("Finalizado");
 		

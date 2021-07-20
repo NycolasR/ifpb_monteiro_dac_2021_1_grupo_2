@@ -1,5 +1,7 @@
 package com.bookstore.facades;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +50,31 @@ public class FacadeEnderecos {
 		novoEndereco.setCidade(cidade);
 		novoEndereco.setComplemento(complemento);
 		novoEndereco.setCEP(cep);
+		
+		enderecoService.salvar(novoEndereco);
 		return novoEndereco;
 	}
+	
+	/**
+	 * Método responsável por recuperar um endereço salvo no banco pelo id
+	 * @param id do Endereco
+	 * @return retorna o endereco encontrado no banco
+	 * @throws Exception lança excessão caso o id não corresponda a nenhum id de algum endereco
+	 */
+	public Endereco recuperarEndereco(Long id) throws Exception{
+		
+		Optional<Endereco> endereco = enderecoService.recuperarPeloId(id);
+		
+		if (endereco.isPresent()) {
+			return endereco.get();
+		}
+		
+		throw new Exception("[ERRO] Endereço Inexistente");
+	}
+	
+	
+	
+	
+	
 	
 }
