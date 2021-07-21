@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
+import com.bookstore.facades.FacadePedido;
+
 @SpringBootApplication
 public class BookStoreApp implements CommandLineRunner {
 	
@@ -15,31 +17,27 @@ public class BookStoreApp implements CommandLineRunner {
 		SpringApplication.run(BookStoreApp.class, args);
 		System.out.println("Server is running");
 	}
-	
-/*
-	public BookStoreApp(
-			FacadeLivros facadeLivros,
-			FacadeEditoras facadeEditoras,
-			FacadeUsuarios facadeUsuarios,
-			FacadeEnderecos facadeEnderecos,
-			FacadePedido facadePedido,
-			FacadeAutor facadeAutor,
-			FacadeFormaPagamento facadeFormaPagamento) {
-	
-		this.facadeLivros = facadeLivros;
-		this.facadeEditoras = facadeEditoras;
-		this.facadeUsuarios = facadeUsuarios;
-		this.facadeEnderecos = facadeEnderecos;
+
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*
+	private FacadePedido facadePedido;
+
+	public BookStoreApp(FacadePedido facadePedido) {
+
 		this.facadePedido = facadePedido;
-		this.facadeAutor = facadeAutor;
-		this.facadeFormaPagamento = facadeFormaPagamento;
+
 	}
 	
 	@Override
 	public void run(String... args) throws Exception {
 
-		Scanner scanner = new Scanner(System.in);
-		boolean flag = true;
+	facadePedido.criarPedido(1L, 10);
+		facadePedido.finalizarPedido(1L, 1L, 14L);
 
 		while(flag) {
 
@@ -404,7 +402,7 @@ public class BookStoreApp implements CommandLineRunner {
 	 * @param isObrigatorio Boolean que diz se a resposta do usuario é obrigatoria ou não.
 	 * @return retorna uma string que é a entrada já validada. 
 	 * @throws Exception Lança uma exceção caso o usuario queria cancelar oq esta fazendo.
-	 */
+	 
 	private String validarEntrada(String texto, boolean isNumero, boolean isObrigatorio) throws Exception{ 
 		Scanner scannerValidacao = new Scanner(System.in);	
 		
@@ -427,11 +425,7 @@ public class BookStoreApp implements CommandLineRunner {
 		}
 		return entrada;
 	}
+*/
 
-@Override
-public void run(String... args) throws Exception {
-	// TODO Auto-generated method stub
-	
-}
 	
 }
