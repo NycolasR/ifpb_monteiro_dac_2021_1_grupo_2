@@ -43,7 +43,7 @@ public class UsuarioService {
 	 * @throws Exception Se o usuario não estiver cadastrado ou se o email tenha sido alterado. 
 	 */
 	public void atualizar(Usuario usuario) throws Exception {
-		Usuario userTemp = recuperarPeloEmail(usuario.getEmail());
+		Usuario userTemp = recuperarPeloId(usuario.getId());
 		if(userTemp.equals(usuario)) {
 			usuarioRepository.save(usuario);
 		}else {

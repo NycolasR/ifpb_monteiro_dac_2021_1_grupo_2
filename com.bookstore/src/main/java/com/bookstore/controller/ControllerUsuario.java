@@ -1,21 +1,16 @@
 package com.bookstore.controller;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.bookstore.facades.FacadeAutor;
-import com.bookstore.model.Autor;
 import com.bookstore.model.Endereco;
 import com.bookstore.model.Pedido;
 import com.bookstore.model.Usuario;
@@ -45,17 +40,33 @@ public class ControllerUsuario {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		return "user/profile";
 	}
 	
+	@PostMapping("/usuario_update/{id}")
+	public String atualizarUsuario(@ModelAttribute Usuario usuario, @PathVariable("id") Long id) {
+		try {
+			Usuario usuarioSalvo = usuarioService.recuperarPeloId(id);
+			
+			usuarioSalvo.setEmail(usuario.getEmail());
+			usuarioSalvo.setNome(usuario.getNome());
+			
+			usuarioService.atualizar(usuarioSalvo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/perfil/" + id;
+	}
 	
 	/*
-	 * oef
-	 * 
+	  oef
+	 *
 	
 	 * 
-	 
+
 	 * 
 	 * 
 	 */

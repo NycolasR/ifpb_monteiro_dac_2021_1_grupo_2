@@ -93,7 +93,7 @@ public class FacadePedido {
 			return pedido.get();
 		}
 
-		throw new Exception("[ERRO] Pedido Inexistente");
+		throw new Exception("[ERRO] Pedido inexistente");
 	}
 
 	/**
@@ -179,12 +179,13 @@ public class FacadePedido {
 
 		}
 	}
+	
 	/**
 	 * Esse método faz o registros das vendas feitas quando um pedido é finalizado
 	 * @param pedido pedido que vai ser finalizado
 	 * @throws Exception lança exceção caso não tenha nenhum usuário cadastrado para o pedido
 	 */
-	private void registrarVendas(Pedido pedido) throws Exception{
+	private void registrarVendas(Pedido pedido) throws Exception {
 		
 		if(pedido.getUsuario() != null) {
 			
@@ -200,7 +201,7 @@ public class FacadePedido {
 			}
 			
 			
-		}else {
+		} else {
 			throw new Exception("[ERRO] - Nenhum usuário cadastrado para o pedido");
 		}
 	}

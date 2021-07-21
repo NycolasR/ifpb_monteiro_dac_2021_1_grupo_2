@@ -32,9 +32,9 @@ public class ControllerCrudAutores {
 			
 			if(id > 0) {//os ids cadastrados no banco são maiores que 0
 				 
-				model.addAttribute("autor",facadeAutor.recuperarAutor(id));
+				model.addAttribute("autor", facadeAutor.recuperarAutor(id));
 			}else {
-				model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
+				model.addAttribute("autor", facadeAutor.recuperarAutorNulo());
 			}
 				
 		} catch (Exception e) {

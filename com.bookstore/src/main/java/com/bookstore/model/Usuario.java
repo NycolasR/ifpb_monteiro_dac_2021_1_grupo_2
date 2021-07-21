@@ -51,11 +51,11 @@ public class Usuario {
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "usuario")
 	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
 
-	private Long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	private void setId(Long iD) {
+	public void setId(Long iD) {
 		id = iD;
 	}
 

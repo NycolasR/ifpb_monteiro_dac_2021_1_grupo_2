@@ -2,13 +2,11 @@ package com.bookstore.facades;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bookstore.model.Autor;
-import com.bookstore.model.Editora;
 import com.bookstore.service.AutorService;
 
 

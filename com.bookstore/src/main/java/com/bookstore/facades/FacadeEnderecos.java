@@ -54,6 +54,14 @@ public class FacadeEnderecos {
 		enderecoService.salvar(novoEndereco);
 		return novoEndereco;
 	}
+
+	public Endereco criarEndereco(Endereco endereco) throws Exception {
+
+		enderecoService.salvar(endereco);
+
+		return recuperarEndereco(endereco.getId());
+
+	}
 	
 	/**
 	 * Método responsável por recuperar um endereço salvo no banco pelo id
@@ -69,12 +77,48 @@ public class FacadeEnderecos {
 			return endereco.get();
 		}
 		
-		throw new Exception("[ERRO] Endereço Inexistente");
+		throw new Exception("[ERRO] Endereço inexistente");
+	}
+
+	public Endereco recuperarEnderecoNulo() {
+		return new Endereco();
+	}
+
+	public void atualizarEndereco(Endereco enderecoDto, Long id) throws Exception {
+
+		Endereco enderecoUpdate = recuperarEndereco(id);
+
+		enderecoUpdate.setRua(enderecoDto.getRua());
+		enderecoUpdate.setNumero(enderecoDto.getNumero());
+		enderecoUpdate.setBairro(enderecoDto.getBairro());
+		enderecoUpdate.setUF(enderecoDto.getUF());
+		enderecoUpdate.setCidade(enderecoDto.getCidade());
+		enderecoUpdate.setComplemento(enderecoDto.getComplemento());
+		enderecoUpdate.setCEP(enderecoDto.getCEP());
+		
+		enderecoService.atualizarEndereco(enderecoUpdate);
 	}
 	
-	
-	
-	
-	
-	
+	public void removerAutor(Long id) throws Exception{
+		recuperarEndereco(id);
+		enderecoService.deletarEndereco(id);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

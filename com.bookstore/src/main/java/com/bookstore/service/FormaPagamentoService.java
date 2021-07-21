@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookstore.model.FormaPagamento;
-import com.bookstore.model.ItemPedido;
 import com.bookstore.repository.FormaPagamentoRepository;
 
 /**
