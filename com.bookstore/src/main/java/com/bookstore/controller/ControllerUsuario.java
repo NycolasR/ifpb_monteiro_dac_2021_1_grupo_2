@@ -7,9 +7,15 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.bookstore.facades.FacadeAutor;
+import com.bookstore.model.Autor;
 import com.bookstore.model.Endereco;
 import com.bookstore.model.Pedido;
 import com.bookstore.model.Usuario;
@@ -36,11 +42,6 @@ public class ControllerUsuario {
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("enderecos", enderecos);
 			model.addAttribute("pedidos", pedidos);
-			
-			for (Iterator i = pedidos.iterator(); i.hasNext();) {
-				Pedido pedido = (Pedido) i.next();
-				System.out.println(pedido.getValorItensTotal());
-			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

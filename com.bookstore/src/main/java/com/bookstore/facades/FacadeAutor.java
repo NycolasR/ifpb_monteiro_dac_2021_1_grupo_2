@@ -100,6 +100,4 @@ public class FacadeAutor {
 		autorUpdate.setNome(autorDto.getNome());
 		autorService.atualizarAutor(autorUpdate);
 	}
-	
-	
 }
