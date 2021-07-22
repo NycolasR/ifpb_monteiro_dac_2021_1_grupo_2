@@ -1,22 +1,156 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head th:replace="~{fragmentos :: head('CRUD Autores')}"></head>
+<head th:replace="~{fragmentos :: head('CRUD Endereços')}"></head>
 <body>
     <main>
-        <form action="#" th:object="${autor}" class="text-center" method="POST">
-            <label for="inputnomeautor" class="form-label">Nome do Autor</label>
-            <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomeautor" th:field="*{nome}" required>
+        <form action="#" th:object="${endereco}" class="text-center" method="POST">
+            <label 
+                for="input_rua" 
+                class="form-label">
+                Rua:
+            </label>
+
+            <input 
+                type="text" 
+                class="form-control border border-success w-50 ms-auto me-auto" 
+                id="input_rua" 
+                th:field="*{rua}" 
+                required
+            >
+
+            <label 
+                for="input_numero" 
+                class="form-label">
+                Número:
+            </label>
+
+            <input 
+                type="number"
+                class="form-control border border-success w-50 ms-auto me-auto" 
+                id="input_numero" 
+                th:field="*{numero}" 
+                required
+            >
+
+            <label 
+                for="input_bairro" 
+                class="form-label">
+                Bairro:
+            </label>
+
+            <input 
+                type="text"
+                class="form-control border border-success w-50 ms-auto me-auto" 
+                id="input_bairro" 
+                th:field="*{bairro}" 
+                required
+            >
+
+            <label 
+                for="input_uf" 
+                class="form-label">
+                UF:
+            </label>
+
+            <select 
+                class="form-control border border-success w-50 ms-auto me-auto" 
+                id="estado" 
+                name="estado"
+                th:field="*{UF}"
+            >
+                <option value="0">Selecione seu estado!</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+            </select>
+
+            <!--
+                <input 
+                    type="number"
+                    class="form-control border border-success w-50 ms-auto me-auto" 
+                    id="input_uf" 
+                    th:field="*{UF}"
+                    required
+                >                
+            -->
+
+            <label 
+                for="input_cidade" 
+                class="form-label">
+                Cidade:
+            </label>
+
+            <input 
+                type="text"
+                class="form-control border border-success w-50 ms-auto me-auto" 
+                id="input_cidade" 
+                th:field="*{cidade}" 
+                required
+            >
+
+            <label 
+                for="input_complemento" 
+                class="form-label">
+                Complemento:
+            </label>
+            
+            <textarea 
+                class="form-control"
+                id="input_complemento"
+                th:field="*{complemento}"
+            >
+            </textarea>
+            
+
+            <label 
+                for="input_CEP" 
+                class="form-label">
+                CEP:
+            </label>
+
+            <input 
+                type="number"
+                class="form-control border border-success w-50 ms-auto me-auto" 
+                id="input_CEP" 
+                th:field="*{CEP}"
+                required
+            >
+
             <br>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "*{nome} != '' ? true" 
-            th:formaction="@{/autorformadd}">
+            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "${endereco.id} == null ? true" 
+            th:formaction="@{/endereco_form_add}">
                 Adicionar
             </button>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "*{nome} == '' ? true" 
-            th:formaction="@{/autorformupdate/{id}(id=*{ID})}">
+            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "${endereco.id} != null ? true" 
+            th:formaction="@{/endereco_form_update/{id}(id=*{id})}">
                 Atualizar
             </button>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "*{nome} == '' ? true" 
-            th:formaction="@{/autorformremove/{id}(id=*{ID})}">
+            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "${endereco.id} != null ? true" 
+            th:formaction="@{/endereco_form_remove/{id}(id=*{id})}">
                 Remover
             </button>
         </form>

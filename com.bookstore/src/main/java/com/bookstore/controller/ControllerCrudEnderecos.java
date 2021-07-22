@@ -45,7 +45,7 @@ public class ControllerCrudEnderecos {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/endereco";
+		return "redirect:/endereco_form/" + endereco.getId();
 	}
 	
 	@PostMapping("/endereco_form_update/{id}")
@@ -58,7 +58,7 @@ public class ControllerCrudEnderecos {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/endereco";
+		return "redirect:/endereco_form/" + endereco.getId();
 	}
 	
 	@PostMapping("/endereco_form_remove/{id}")
@@ -70,9 +70,6 @@ public class ControllerCrudEnderecos {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/endereco";
+		return "redirect:/endereco_form/" + id;
 	}
-
-	
-
 }

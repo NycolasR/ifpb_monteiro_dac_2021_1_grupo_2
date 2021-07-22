@@ -48,9 +48,6 @@
                         </button>
                     </li>
 
-
-
-
                     <li class="nav-item" role="presentation">
                         <button class="nav-link text-success" 
                             id="endrecos-tab" 
@@ -119,7 +116,6 @@
                                     th:field="${usuario.email}"
                                     required>
                             </div>
-
                             <button th:formaction="@{/usuario_update/{id}(id=${usuario.id})}" class="btn btn-lg btn-outline-success w-25 mx-auto" type="submit">
                                 Salvar Dados
                             </button>
@@ -144,36 +140,53 @@
                         <div class="row row-cols-2 row-cols-sm-3 justify-content-center">
                             <div class="card col m-1 text-white bg-success" th:each="endereco : ${enderecos}" style="width: 16rem;">
                                 <div class="card-body">
-                                    <h6 class="card-subtitle mb-2">Rua:</h6>
-                                    <p class="card-text" th:text="${endereco.rua}"></p>
-
-                                    <h6 class="card-subtitle mb-2">Nº:</h6>
-                                    <p class="card-text" th:text="${endereco.numero}"></p>
-                                    
-                                    <h6 class="card-subtitle mb-2">Bairro:</h6>
-                                    <p class="card-text" th:text="${endereco.bairro}">Bairro 1</p>
-                                    
-                                    <h6 class="card-subtitle mb-2">Cidade:</h6>
-                                    <p class="card-text" th:text="${endereco.cidade}"></p>
-                                    
-                                    <h6 class="card-subtitle mb-2">UF:</h6>
-                                    <p class="card-text" th:text="${endereco.UF}"></p>
-
-                                    <h6 class="card-subtitle mb-2">Complemento:</h6>
+                                    <strong>
+                                        <p class="card-text" th:text="'Rua: ' + ${endereco.rua} + ' nº ' + ${endereco.numero}"></p>
+                                    </strong>
+                                    <br>
+                                    <strong>
+                                        <p class="card-text" th:text="'Nº ' + ${endereco.numero}"></p>
+                                    </strong>
+                                    <br>
+                                    <strong>
+                                        <p class="card-text" th:text="'Bairro: ' + ${endereco.bairro}">Bairro 1</p>
+                                    </strong>
+                                    <br>
+                                    <strong>
+                                        <p class="card-text" th:text="'Cidade: ' + ${endereco.cidade} + ' - ' + ${endereco.UF}"></p>
+                                    </strong>
+                                    <br>
+                                    <strong>
+                                        <p class="card-subtitle mb-2">Complemento:</p>
+                                    </strong>
                                     <p class="card-text" th:text="${endereco.complemento}"></p>
-                                    
-                                    <h6 class="card-subtitle mb-2">CEP:</h6>
-                                    <p class="card-text" th:text="${endereco.CEP}"></p>
-                                    
+                                    <br>
+                                    <strong>
+                                        <p class="card-text" th:text="'CEP: ' + ${endereco.CEP}"></p>
+                                    </strong>
+                                    <br>
                                     <div class="card-footer bg-transparent border-success text-center">
-                                        <a href="#" class="btn btn-outline-light">Editar</a>
+                                        <a 
+                                            href="#" 
+                                            th:href="@{/endereco_form/{id}(id=${endereco.id})}"
+                                            class="btn btn-outline-light">
+                                            Editar
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="text-center">
-                                <a href="#" class="btn btn-outline-success">Adicionar</a>
+
+                                
                             </div>
+                        </div>
+
+                        <div class="text-center">
+                            <a 
+                                href="#" 
+                                th:href="@{/endereco_form/{id}(id=0)}" 
+                                class="btn btn-outline-success">
+                                Adicionar
+                            </a>
                         </div>
 
                     </div>
@@ -216,16 +229,15 @@
 
                                     <section class="sessaoDadosAdicionais">
                                         <ul class="list-group text-white">
-
                                             <!--
-                                                <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                                  <div class="ms-2 me-auto">
-                                                    <div class="d-flex justify-content-start align-itens-center">
-                                                        <div class="fw-bold">Endereço selecionado  </div>
-                                                        <h6 th:text="${pedido.endereco.rua"}></h6>
-                                                    </div>
-                                                  </div>
-                                                </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                                <div class="ms-2 me-auto">
+                                                <div class="d-flex justify-content-start align-itens-center">
+                                                    <div class="fw-bold">Endereço selecionado  </div>
+                                                    <h6 th:text="${pedido.endereco.rua} + ' nº ' +  ${pedido.endereco.numero}"></h6>
+                                                </div>
+                                                </div>
+                                            </li>
                                             -->
 
                                             <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
@@ -266,6 +278,7 @@
             </div><!--/col-9-->
             
         </div><!--/row-->
+
         
 </body>
 </html>
