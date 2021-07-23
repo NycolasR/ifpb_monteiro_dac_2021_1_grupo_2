@@ -42,7 +42,7 @@ public class Endereco {
 	private String complemento;
 	
 	@Column(name = "CEP")
-	private Integer CEP;
+	private String CEP;
 	
 	
 	public Long getId() {
@@ -87,10 +87,10 @@ public class Endereco {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	public Integer getCEP() {
+	public String getCEP() {
 		return CEP;
 	}
-	public void setCEP(Integer cEP) {
+	public void setCEP(String cEP) {
 		CEP = cEP;
 	}
 	

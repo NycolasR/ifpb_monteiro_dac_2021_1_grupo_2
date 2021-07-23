@@ -2,158 +2,184 @@
 <html lang="pt-br">
 <head th:replace="~{fragmentos :: head('CRUD Endereços')}"></head>
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+            <div class="container">
+
+                <a class="navbar-brand" href="#">
+                    <img th:src="@{/images/logo.png}"  width="52" height="52" alt="">
+                    <h3 class="fw-bold d-inline-block">Livraria Turing</h3>
+                    <h5>Endereços</h5>
+                </a>
+                <a class="btn btn-outline-dark">Voltar</a>
+            </div>
+        </nav>
+    </header>
+
     <main>
-        <form action="#" th:object="${endereco}" class="text-center" method="POST">
-            <label 
-                for="input_rua" 
-                class="form-label">
-                Rua:
-            </label>
+        <div class="container mt-4 w-75">
+            <h4 class="fw-bold mb-5">
+                Crie, consulte, atualize ou delete um endereço.
+            </h4>
 
-            <input 
-                type="text" 
-                class="form-control border border-success w-50 ms-auto me-auto" 
-                id="input_rua" 
-                th:field="*{rua}" 
-                required
-            >
+            <form action="#" th:object="${endereco}" class="row g-3 pb-4 border border-success rounded needs-validation" method="POST">
+                <div class="col-sm-12 col-md-4">
+                    <label 
+                        for="input_rua" 
+                        class="form-label">
+                        Rua:
+                    </label>
+        
+                    <input 
+                        type="text" 
+                        class="form-control border border-success" 
+                        id="input_rua" 
+                        th:field="*{rua}" 
+                        required
+                    >
+                </div>
 
-            <label 
-                for="input_numero" 
-                class="form-label">
-                Número:
-            </label>
+                <div class="col-sm-12 col-md-4">
+                    <label 
+                        for="input_bairro" 
+                        class="form-label">
+                        Bairro:
+                    </label>
+        
+                    <input 
+                        type="text"
+                        class="form-control border border-success" 
+                        id="input_bairro" 
+                        th:field="*{bairro}" 
+                        required
+                    >
+                </div>
 
-            <input 
-                type="number"
-                class="form-control border border-success w-50 ms-auto me-auto" 
-                id="input_numero" 
-                th:field="*{numero}" 
-                required
-            >
+                <div class="col-sm-12 col-md-4">
+                    <label 
+                        for="input_CEP" 
+                        class="form-label">
+                        CEP:
+                    </label>
+        
+                    <input 
+                        type="number"
+                        class="form-control border border-success" 
+                        id="input_CEP" 
+                        th:field="*{CEP}"
+                        required
+                    >
+                </div>
+                
+                <div class="col-sm-12 col-md-4">
+                    <label 
+                        for="input_numero" 
+                        class="form-label">
+                        Número:
+                    </label>
+        
+                    <input 
+                        type="number"
+                        class="form-control border border-success" 
+                        id="input_numero" 
+                        th:field="*{numero}" 
+                        required
+                    >
+                </div>
 
-            <label 
-                for="input_bairro" 
-                class="form-label">
-                Bairro:
-            </label>
+                <div class="col-sm-12 col-md-4">
+                    <label 
+                        for="input_uf" 
+                        class="form-label">
+                        UF:
+                    </label>
+        
+                    <select 
+                        class="form-control border border-success" 
+                        id="estado" 
+                        name="estado"
+                        th:field="*{UF}"
+                    >
+                        <option value="0">Selecione seu estado!</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
 
-            <input 
-                type="text"
-                class="form-control border border-success w-50 ms-auto me-auto" 
-                id="input_bairro" 
-                th:field="*{bairro}" 
-                required
-            >
+                <div class="col-sm-12 col-md-4">
+                    <label 
+                        for="input_cidade" 
+                        class="form-label">
+                        Cidade:
+                    </label>
+        
+                    <input 
+                        type="text"
+                        class="form-control border border-success" 
+                        id="input_cidade" 
+                        th:field="*{cidade}" 
+                        required
+                    >
+                </div>
+                
+                <div class="col-12">
+                    <label 
+                        for="input_complemento" 
+                        class="form-label">
+                        Complemento:
+                    </label>
+                    
+                    <textarea 
+                        class="form-control border border-success"
+                        id="input_complemento"
+                        th:field="*{complemento}"
+                    >
+                    </textarea>
+                </div>
+    
+                <br>
+                <button type="submit" class="btn btn-outline-success mx-auto w-25" id="btnadicionar" th:hidden = "${endereco.id} != null ? true" 
+                th:formaction="@{/endereco_form_add}">
+                    Adicionar
+                </button>
+                <button type="submit" class="btn btn-outline-success mx-auto w-25" id="btnatualizar" th:hidden = "${endereco.id} == null ? true" 
+                th:formaction="@{/endereco_form_update/{id}(id=*{id})}">
+                    Atualizar
+                </button>
+                <button type="submit" class="btn btn-outline-danger mx-auto w-25" id="btnremover" th:hidden = "${endereco.id} == null ? true" 
+                th:formaction="@{/endereco_form_remove/{id}(id=*{id})}">
+                    Remover
+                </button>
+            </form>
+        </div>
 
-            <label 
-                for="input_uf" 
-                class="form-label">
-                UF:
-            </label>
-
-            <select 
-                class="form-control border border-success w-50 ms-auto me-auto" 
-                id="estado" 
-                name="estado"
-                th:field="*{UF}"
-            >
-                <option value="0">Selecione seu estado!</option>
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-            </select>
-
-            <!--
-                <input 
-                    type="number"
-                    class="form-control border border-success w-50 ms-auto me-auto" 
-                    id="input_uf" 
-                    th:field="*{UF}"
-                    required
-                >                
-            -->
-
-            <label 
-                for="input_cidade" 
-                class="form-label">
-                Cidade:
-            </label>
-
-            <input 
-                type="text"
-                class="form-control border border-success w-50 ms-auto me-auto" 
-                id="input_cidade" 
-                th:field="*{cidade}" 
-                required
-            >
-
-            <label 
-                for="input_complemento" 
-                class="form-label">
-                Complemento:
-            </label>
-            
-            <textarea 
-                class="form-control"
-                id="input_complemento"
-                th:field="*{complemento}"
-            >
-            </textarea>
-            
-
-            <label 
-                for="input_CEP" 
-                class="form-label">
-                CEP:
-            </label>
-
-            <input 
-                type="number"
-                class="form-control border border-success w-50 ms-auto me-auto" 
-                id="input_CEP" 
-                th:field="*{CEP}"
-                required
-            >
-
-            <br>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "${endereco.id} == null ? true" 
-            th:formaction="@{/endereco_form_add}">
-                Adicionar
-            </button>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "${endereco.id} != null ? true" 
-            th:formaction="@{/endereco_form_update/{id}(id=*{id})}">
-                Atualizar
-            </button>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "${endereco.id} != null ? true" 
-            th:formaction="@{/endereco_form_remove/{id}(id=*{id})}">
-                Remover
-            </button>
-        </form>
     </main>
+
+    <footer th:replace="~{fragmentosadm :: footer}"></footer>
 </body>
 </html>
