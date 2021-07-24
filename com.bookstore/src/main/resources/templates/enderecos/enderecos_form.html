@@ -34,7 +34,7 @@
                         type="text" 
                         class="form-control border border-success" 
                         id="input_rua" 
-                        th:field="*{rua}" 
+                        th:field="*{rua}"
                         required
                     >
                 </div>
@@ -67,8 +67,18 @@
                         class="form-control border border-success" 
                         id="input_CEP" 
                         th:field="*{CEP}"
+                        pattern="\d{5}-?\d{3}"
+                        th:errorclass="is-invalid"
                         required
                     >
+
+                    <div 
+                        class="invalid-feedback" 
+                        th:if="${#fields.hasErrors('input_CEP')}"
+                        th:errors="*{CEP}"
+                    >
+                        Erros CEP
+                    </div>
                 </div>
                 
                 <div class="col-sm-12 col-md-4">
@@ -91,7 +101,7 @@
                     <label 
                         for="input_uf" 
                         class="form-label">
-                        UF:
+                        Estado:
                     </label>
         
                     <select 

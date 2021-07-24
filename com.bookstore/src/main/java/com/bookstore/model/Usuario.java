@@ -15,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import com.sun.istack.NotNull;
 
 /**
  * 
@@ -31,16 +35,19 @@ public class Usuario {
 	@Column(name = "ID")
 	private Long id;
 	
+	@NotEmpty
 	@Column(name = "NOME")
 	private String nome;
 	
-//	@Email
+	@Email
 	@Column(name = "EMAIL")
 	private String email;
 	
+	@NotEmpty
 	@Column(name = "SENHA")
 	private String senha;
 	
+	@NotNull
 	@Column(name = "ADMINISTRADOR")
 	private boolean isAdmin;
 	
