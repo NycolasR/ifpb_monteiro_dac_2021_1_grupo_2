@@ -44,7 +44,7 @@ public class Usuario {
 	@Column(name = "ADMINISTRADOR")
 	private boolean isAdmin;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USUARIO_FK", nullable = false)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
