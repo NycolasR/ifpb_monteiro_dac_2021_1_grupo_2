@@ -3,9 +3,12 @@ package com.bookstore.controller;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +56,8 @@ public class ControllerUsuario {
 	}
 	
 	@PostMapping("/usuario_update/{id}")
-	public String atualizarUsuario(@ModelAttribute Usuario usuario, @PathVariable("id") Long id) {
+	public String atualizarUsuario(@ModelAttribute Usuario usuario, BindingResult result, @PathVariable("id") Long id) {
+		
 		try {
 			Usuario usuarioSalvo = usuarioService.recuperarPeloId(id);
 			
@@ -73,8 +77,6 @@ public class ControllerUsuario {
 	@GetMapping("/endereco_form/{id}")
 	public String resgatarFormulario(@PathVariable("id") Long id, Model model) {
 		
-		System.err.println(id);
-		
 		try {
 			if(id > 0) {//os ids cadastrados no banco são maiores que 0
 				model.addAttribute("endereco", facadeEnderecos.recuperarEndereco(id));
@@ -90,10 +92,13 @@ public class ControllerUsuario {
 	}
 	
 	@PostMapping("/endereco_form_add")
-	public String criarEndereco(@ModelAttribute Endereco endereco) {
+	public String criarEndereco(@Valid @ModelAttribute Endereco endereco, BindingResult result){
+		
+		if(result.hasErrors()) {
+			return "enderecos/enderecos_form";
+		}
 		
 		Usuario usuario;
-		System.out.println(endereco);
 		try {
 			usuario = usuarioService.recuperarPeloId(idUsuario);
 			usuario.addEndereco(endereco);
@@ -101,7 +106,6 @@ public class ControllerUsuario {
 			facadeEnderecos.criarEndereco(endereco);
 			
 			usuarioService.atualizar(usuario);
-			facadeEnderecos.atualizarEndereco(endereco, endereco.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,8 +114,11 @@ public class ControllerUsuario {
 	}
 	
 	@PostMapping("/endereco_form_update/{id}")
-	public String atualizarEndereco(@ModelAttribute Endereco endereco, @PathVariable("id") Long id) {
+	public String atualizarEndereco(@Valid @ModelAttribute Endereco endereco, BindingResult result, @PathVariable("id") Long id) {
 		
+		if(result.hasErrors()) {
+			return "enderecos/enderecos_form";
+		}
 		
 		try {
 			facadeEnderecos.atualizarEndereco(endereco, id);

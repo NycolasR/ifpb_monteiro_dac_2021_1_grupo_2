@@ -30,13 +30,22 @@
                         Rua:
                     </label>
         
-                    <input 
+                    <input
                         type="text" 
                         class="form-control border border-success" 
                         id="input_rua" 
                         th:field="*{rua}"
+                        th:errorclass="is-invalid"
+                        placeholder="Informe o nome da rua"
                         required
                     >
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('rua')}"
+                        th:errors="*{rua}"
+                    >Erros rua
+                    </div>
                 </div>
 
                 <div class="col-sm-12 col-md-4">
@@ -50,9 +59,18 @@
                         type="text"
                         class="form-control border border-success" 
                         id="input_bairro" 
-                        th:field="*{bairro}" 
+                        th:field="*{bairro}"
+                        th:errorclass="is-invalid"
+                        placeholder="Informe o nome do bairro"
                         required
                     >
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('bairro')}"
+                        th:errors="*{bairro}"
+                    >Erros bairro
+                    </div>
                 </div>
 
                 <div class="col-sm-12 col-md-4">
@@ -63,21 +81,22 @@
                     </label>
         
                     <input 
-                        type="text"
+                        type="number"
                         class="form-control border border-success" 
                         id="input_CEP" 
                         th:field="*{CEP}"
-                        pattern="\d{5}-?\d{3}"
+                        min="10000000"
+                        max="99999999"
                         th:errorclass="is-invalid"
+                        placeholder="Insira somente números!"
                         required
                     >
 
                     <div 
                         class="invalid-feedback" 
-                        th:if="${#fields.hasErrors('input_CEP')}"
+                        th:if="${#fields.hasErrors('CEP')}"
                         th:errors="*{CEP}"
-                    >
-                        Erros CEP
+                    >Erros CEP
                     </div>
                 </div>
                 
@@ -92,9 +111,19 @@
                         type="number"
                         class="form-control border border-success" 
                         id="input_numero" 
-                        th:field="*{numero}" 
+                        th:field="*{numero}"
+                        th:errorclass="is-invalid"
+                        min="1"
                         required
+                        placeholder="Insira somente números!"
                     >
+
+                    <div 
+                        class="invalid-feedback" 
+                        th:if="${#fields.hasErrors('numero')}"
+                        th:errors="*{numero}"
+                    >Erros numero
+                    </div>
                 </div>
 
                 <div class="col-sm-12 col-md-4">
@@ -109,6 +138,8 @@
                         id="estado" 
                         name="estado"
                         th:field="*{UF}"
+                        th:errorclass="is-invalid"
+                        required
                     >
                         <option value="0">Selecione seu estado!</option>
                         <option value="AC">Acre</option>
@@ -139,6 +170,13 @@
                         <option value="SE">Sergipe</option>
                         <option value="TO">Tocantins</option>
                     </select>
+
+                    <div 
+                        class="invalid-feedback" 
+                        th:if="${#fields.hasErrors('UF')}"
+                        th:errors="*{UF}"
+                    >Erros UF
+                    </div>
                 </div>
 
                 <div class="col-sm-12 col-md-4">
@@ -152,9 +190,18 @@
                         type="text"
                         class="form-control border border-success" 
                         id="input_cidade" 
-                        th:field="*{cidade}" 
+                        th:field="*{cidade}"
+                        th:errorclass="is-invalid"
+                        placeholder="Informe o nome da cidade"
                         required
                     >
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('cidade')}"
+                        th:errors="*{cidade}"
+                    >Erros cidade
+                    </div>
                 </div>
                 
                 <div class="col-12">
@@ -168,8 +215,18 @@
                         class="form-control border border-success"
                         id="input_complemento"
                         th:field="*{complemento}"
+                        th:errorclass="is-invalid"
+                        placeholder="Informe alguns dados adicionais"
+                        required
                     >
                     </textarea>
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('complemento')}"
+                        th:errors="*{complemento}"
+                    >Erros complemento
+                    </div>
                 </div>
     
                 <br>
@@ -181,7 +238,7 @@
                 th:formaction="@{/endereco_form_update/{id}(id=*{id})}">
                     Atualizar
                 </button>
-                <button type="submit" class="btn btn-outline-danger mx-auto w-25" id="btnremover" th:hidden = "${endereco.id} == null ? true" 
+                <button type="submit" class="btn btn-outline-danger  mx-auto w-25" id="btnremover"   th:hidden = "${endereco.id} == null ? true" 
                 th:formaction="@{/endereco_form_remove/{id}(id=*{id})}">
                     Remover
                 </button>
