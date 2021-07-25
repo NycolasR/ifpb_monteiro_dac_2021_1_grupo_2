@@ -54,9 +54,13 @@ public class ControllerUsuario {
 		} 
 		return "user/profile";
 	}
-	
+	 
 	@PostMapping("/usuario_update/{id}")
-	public String atualizarUsuario(@ModelAttribute Usuario usuario, BindingResult result, @PathVariable("id") Long id) {
+	public String atualizarUsuario(@Valid @ModelAttribute Usuario usuario, BindingResult result, @PathVariable("id") Long id) {
+		
+		if(result.hasErrors()) {
+			return "user/profile";
+		}
 		
 		try {
 			Usuario usuarioSalvo = usuarioService.recuperarPeloId(id);
