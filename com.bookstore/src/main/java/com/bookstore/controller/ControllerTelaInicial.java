@@ -8,7 +8,6 @@ public class ControllerTelaInicial {
 
 	@GetMapping("/inicio")
 	public String recuperarTelaInicial() {
-		
 		return "telasiniciais/tela-inicial";
 	}
 	

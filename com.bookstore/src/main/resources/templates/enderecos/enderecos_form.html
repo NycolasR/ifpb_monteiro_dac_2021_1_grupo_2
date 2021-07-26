@@ -11,7 +11,15 @@
                     <h3 class="fw-bold d-inline-block">Livraria Turing</h3>
                     <h5>Endereços</h5>
                 </a>
-                <a class="btn btn-outline-dark">Voltar</a>
+                <form action="#" method="GET">
+                    <button 
+                        type="submit"
+                        class="btn btn-outline-dark"
+                        th:formaction="@{/voltar}"
+                    >
+                        Voltar
+                    </button>
+                </form>
             </div>
         </nav>
     </header>

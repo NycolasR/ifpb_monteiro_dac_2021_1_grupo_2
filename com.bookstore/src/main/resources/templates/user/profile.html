@@ -3,362 +3,386 @@
     <head th:replace="~{fragmentos :: head('Meu perfil')}"></head>
 
     <style>
-        .profile-picture {
-            position: relative;
-            border-radius: 50%;
-            height: 10rem;
-            width: 10rem;
-            font-size: 40pt;
-            
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-
-            background: linear-gradient(
-                100deg,
-                #3ADE54,
-                #72F54C
-                #3cd30f,
-                #339116,
-                #2d6e1a,
-                
-            );
-            background-size: 300%, 300%;
-            background-repeat: repeat;
-            animation: colors 7s ease infinite;
+        .info {
+            border-radius: 5px;
+            background-color: rgb(195, 230, 195);
+            color: rgb(33, 33, 33);
+            padding: 5px;
         }
 
-        @keyframes colors {
-            0% {
-                background-position: 0%, 50%;
-            }
-            50% {
-                background-position: 100%, 50%;
-            }
-            100% {
-                background-position: 0%, 50%;
-            }
+        .info p {
+            text-indent: 30px;
+            text-align: justify;
         }
     </style>
 
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+            <div class="container">
 
-    <hr class="bg-success">
-    <div class="container">
-        <div class="row">
-            <div class="col-10">
-                <h1 class="text-success" th:text="${usuario.nome}">Nome do usuário</h1>
-            </div>
-            
-            <!-- Inserir Logo do sistema aqui -->
-            <div class="col-2">
-                <a href="#" class="pull-right">
-                    <img th:src="@{/images/logo.png}" width="52" height="52">
+                <a class="navbar-brand" href="#">
+					<img th:src="@{/images/logo.png}"  width="52" height="52" alt="">
+                    <h3 class="fw-bold d-inline-block">Livraria Turing</h3>
+                    <h5>Página de Perfil</h5>
                 </a>
             </div>
-            
-        </div>
-        <div class="row">
+        </nav>
+    </header>
 
-            <div class="col-md-3"><!--left col-->
-                
-                <div class="profile-picture rounded-circle mb-2">
-                    <h1 
-                        th:text="${usuario.nome[0]}" 
-                        class="position-absolute top-50 start-50 translate-middle text-dark">
-                    </h1>
-                    <!--
-                        <img style="border-radius: 50%;"
-                        src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" 
-                        class="img-fluid img-thumbnail"
-                        alt="avatar">
-                    -->
+    <main>
+        <div class="container">
+            <div class="row mt-4 mb-4">
+                <div class="col-10">
+                    <h1 class="text-success" th:text="'Bem vindo(a), ' + ${usuario.nome}">Nome do usuário</h1>
                 </div>
                 
-            </div><!--/col-3-->
-
-            <div class="col-md-9">
-                
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button 
-                            class="nav-link text-success active" 
-                            id="perfil-tab" 
-                            data-bs-toggle="tab" 
-                            data-bs-target="#perfil" 
-                            type="button" 
-                            role="tab" 
-                            aria-controls="perfil" 
-                            aria-selected="true">
-                                Meu Perfil
-                        </button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link text-success" 
-                            id="endrecos-tab" 
-                            data-bs-toggle="tab" 
-                            data-bs-target="#endrecos" 
-                            type="button" 
-                            role="tab" 
-                            aria-controls="endrecos"
-                            aria-selected="false">
-                                Meus Endereços
-                        </button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button 
-                            class="nav-link text-success" 
-                            id="pedidos-tab" 
-                            data-bs-toggle="tab" 
-                            data-bs-target="#pedidos" 
-                            type="button" 
-                            role="tab" 
-                            aria-controls="pedidos" 
-                            aria-selected="false">
-                                Meus Pedidos
-                        </button>
-                    </li>
-
-
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div 
-                        class="tab-pane fade show active" 
-                        id="perfil" 
-                        role="tabpanel" 
-                        aria-labelledby="home-tab">
-                            
-                        <h2 class="pt-1 pb-1 text-success">Meus Dados Pessoais</h2>
-
-                        <hr class="bg-success">
-                        <form 
-                            class="row g-3 pb-4 needs-validation" 
-                            th:object="${usuario}" 
-                            method="POST"
-                        >
-                            <div class="col-12">
-                                <label 
-                                    for="inputNome" 
-                                    class="form-label text-success">
-                                    Seu nome
-                                </label>
-
-                                <input 
-                                    type="text" 
-                                    class="form-control border border-success" 
-                                    id="inputNome"
-                                    th:field="*{nome}"
-                                    th:errorclass="is-invalid"
-                                    placeholder="Insira seu nome"
-                                    required
-                                >
-
-                                <div
-                                    class="invalid-feedback"
-                                    th:if="${#fields.hasErrors('nome')}"
-                                    th:errors="*{nome}"
-                                >Erros nome
-                                </div>
-                            </div>
-
-
-                            <div class="col-12">
-                                <label 
-                                    for="inputEmail" 
-                                    class="form-label text-success">
-                                    Seu E-mail
-                                </label>
-
-                                <input
-                                    type="email" 
-                                    class="form-control border border-success" 
-                                    id="inputEmail"
-                                    th:field="*{email}"
-                                    th:errorclass="is-invalid"
-                                    placeholder="Insira seu email"
-                                    required
-                                >
-
-                                <div
-                                    class="invalid-feedback"
-                                    th:if="${#fields.hasErrors('email')}"
-                                    th:errors="*{email}"
-                                >Erros email
-                                </div>
-                            </div>
-                            
-                            <button 
-                                th:formaction="@{/usuario_update/{id}(id=${usuario.id})}" 
-                                class="btn btn-lg btn-outline-success w-25 mx-auto" 
-                                type="submit"
-                            >
-                                Salvar Dados
-                            </button>
-
-                            <button 
-                                class="btn btn-lg btn-outline-dark w-25 mx-auto" 
-                                type="reset"
-                            >
-                                Limpar Campos
-                            </button>
-                        </form>
+                <div class="col-2">
+                    <!--
+    
+                        <a href="#" class="pull-right">
+                    </a>
+                    -->
                     
-                        <hr class="bg-success">
-
-                    </div>
-
-                    <div
-                        class="tab-pane fade" 
-                        id="endrecos"
-                        role="tabpanel" 
-                        aria-labelledby="endrecos-tab">
-                        
-                        <h2 class="pt-1 pb-1 text-success">Meus Endereços Cadastrados</h2>
-                        <hr>
-                        
-                        <div class="row row-cols-2 row-cols-sm-3 justify-content-center">
-                            <div class="card col m-1 text-white bg-success" th:each="endereco : ${enderecos}" style="width: 16rem;">
-                                <div class="card-body">
-                                    <strong>
-                                        <p class="card-text" th:text="'Rua: ' + ${endereco.rua} + ' nº ' + ${endereco.numero}"></p>
-                                    </strong>
-                                    <br>
-                                    <strong>
-                                        <p class="card-text" th:text="'Bairro: ' + ${endereco.bairro}">Bairro 1</p>
-                                    </strong>
-                                    <br>
-                                    <strong>
-                                        <p class="card-text" th:text="'Cidade: ' + ${endereco.cidade} + ' - ' + ${endereco.UF}"></p>
-                                    </strong>
-                                    <br>
-                                    <strong>
-                                        <p class="card-text" th:text="'CEP: ' + ${endereco.CEP}"></p>
-                                    </strong>
-                                    <br>
-                                    <strong>
-                                        <p class="card-subtitle mb-2">Complemento:</p>
-                                    </strong>
-                                    <p class="card-text" th:text="${endereco.complemento}"></p>
-                                    <br>
-
-                                    <div class="card-footer bg-transparent border-success text-center">
-                                        
-                                        <a 
-                                            href="#"
-                                            th:href="@{/endereco_form/{id}(id=${endereco.id})}"
-                                            class="btn btn-outline-light">
-                                            Editar
-                                    </a>
+    
+                    <form class="pull-right" action="#" method="GET">
+                        <button 
+                            type="submit"
+                            class="btn btn-outline-success"
+                            th:formaction="@{/inicio}"
+                        >
+                            <img th:src="@{/images/logo.png}" width="52" height="52">
+                        </button>
+                    </form>
+                </div>
+                
+            </div>
+            <div class="row">
+    
+                <div class="col-md-3 info mr-4 mb-4"><!--left col-->
+                    
+                    <!--
+                            class="profile-picture rounded-circle mb-2"
+                        <h1 
+                            th:text="${usuario.nome[0]}" 
+                            class="position-absolute top-50 start-50 translate-middle text-dark">
+                        </h1>
+                            <img style="border-radius: 50%;"
+                            src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" 
+                            class="img-fluid img-thumbnail"
+                            alt="avatar">
+                        -->
+    
+                        <p class="fs-6">
+                            Esta é sua página de perfil! Ela está disposta em 3 abas: uma para vizualizar e
+                            atualizar seus dados, outra para seus endereços cadastrados e, na última, você pode
+                            ver seus pedidos finalizados.
+                        </p>
+                        <p class="fs-6">
+                            Na aba dos endereços, você pode vizualizar todos seus endereços cadastrados com as opções 
+                            de adicionar um novo e de editar os já existentes. Ao atualizar, será aberta uma nova aba
+                            no seu navegador (cuidado com as entradas nos campos de texto!).
+                        </p>
+                        <p class="fs-6">
+                            Na aba dos seus pedidos finalizados, você pode consultar os dados dos seus pedidos já encerrados
+                            e vizualizar os livros selecionados, o endereço selecionado, o total pago, etc...
+                        </p>
+                    
+                    
+                </div><!--/col-3-->
+    
+                <div class="col-md-9">
+                    
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button 
+                                class="nav-link text-success active" 
+                                id="perfil-tab" 
+                                data-bs-toggle="tab" 
+                                data-bs-target="#perfil" 
+                                type="button" 
+                                role="tab" 
+                                aria-controls="perfil" 
+                                aria-selected="true">
+                                    Meu Perfil
+                            </button>
+                        </li>
+    
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-success" 
+                                id="endrecos-tab" 
+                                data-bs-toggle="tab" 
+                                data-bs-target="#endrecos" 
+                                type="button" 
+                                role="tab" 
+                                aria-controls="endrecos"
+                                aria-selected="false">
+                                    Meus Endereços
+                            </button>
+                        </li>
+    
+                        <li class="nav-item" role="presentation">
+                            <button 
+                                class="nav-link text-success" 
+                                id="pedidos-tab" 
+                                data-bs-toggle="tab" 
+                                data-bs-target="#pedidos" 
+                                type="button" 
+                                role="tab" 
+                                aria-controls="pedidos" 
+                                aria-selected="false">
+                                    Meus Pedidos
+                            </button>
+                        </li>
+    
+    
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div 
+                            class="tab-pane fade show active" 
+                            id="perfil" 
+                            role="tabpanel" 
+                            aria-labelledby="home-tab">
+                                
+                            <h2 class="pt-1 pb-1 text-success">Meus Dados Pessoais</h2>
+    
+                            
+                            <form 
+                                class="row g-3 pb-4 needs-validation" 
+                                th:object="${usuario}" 
+                                method="POST"
+                            >
+                                <div class="col-12">
+                                    <label 
+                                        for="inputNome" 
+                                        class="form-label text-success">
+                                        Seu nome
+                                    </label>
+    
+                                    <input 
+                                        type="text" 
+                                        class="form-control border border-success" 
+                                        id="inputNome"
+                                        th:field="*{nome}"
+                                        th:errorclass="is-invalid"
+                                        placeholder="Insira seu nome"
+                                        required
+                                    >
+    
+                                    <div
+                                        class="invalid-feedback"
+                                        th:if="${#fields.hasErrors('nome')}"
+                                        th:errors="*{nome}"
+                                    >Erros nome
                                     </div>
                                 </div>
-
-                            </div>
-                            
-                        </div>
-
-                        <div class="text-center">
-                            <a
-                                href="#"
-                                th:href="@{/endereco_form/{id}(id=0)}" 
-                                class=" mt-2 btn btn-outline-success">
-                                Adicionar
-                        </a>
-                        </div>
-
-                    </div>
-
-                    <!--
-
-                        <div 
-                            class="tab-pane fade" 
-                            id="pedidos" 
-                            role="tabpanel" 
-                            aria-labelledby="contact-tab">
-                                
-                            <h2 class="pt-1 pb-1 text-success">Meus Pedidos</h2>
-                            <hr>
     
-                            <div class="list-group mb-3">
-                                <div class="list-group-item list-group-item-action pb-3 border-success" aria-current="true">
+    
+                                <div class="col-12">
+                                    <label 
+                                        for="inputEmail" 
+                                        class="form-label text-success">
+                                        Seu E-mail
+                                    </label>
+    
+                                    <input
+                                        type="email" 
+                                        class="form-control border border-success" 
+                                        id="inputEmail"
+                                        th:field="*{email}"
+                                        th:errorclass="is-invalid"
+                                        placeholder="Insira seu email"
+                                        required
+                                    >
+    
+                                    <div
+                                        class="invalid-feedback"
+                                        th:if="${#fields.hasErrors('email')}"
+                                        th:errors="*{email}"
+                                    >Erros email
+                                    </div>
+                                </div>
+                                
+                                <button 
+                                    th:formaction="@{/usuario_update/{id}(id=${usuario.id})}" 
+                                    class="btn btn-lg btn-outline-success w-25 mx-auto" 
+                                    type="submit"
+                                >
+                                    Salvar Dados
+                                </button>
+    
+                                <a
+                                    href="#"
+                                    class="btn btn-lg btn-outline-dark w-25 mx-auto"
+                                    onclick="limparCampos()"
+                                >
+                                    Limpar Campos
+                                </a>
+                            </form>
+                        </div>
+    
+                        <div
+                            class="tab-pane fade" 
+                            id="endrecos"
+                            role="tabpanel" 
+                            aria-labelledby="endrecos-tab">
+                            
+                            <h2 class="pt-1 pb-1 text-success">Meus Endereços Cadastrados</h2>
+                            <hr>
+                            
+                            <div class="row row-cols-2 row-cols-sm-3 justify-content-center">
+                                <div class="card col m-1 text-white bg-success" th:each="endereco : ${enderecos}" style="width: 16rem;">
+                                    <div class="card-body">
+                                        <strong>
+                                            <p class="card-text" th:text="'Rua: ' + ${endereco.rua} + ' nº ' + ${endereco.numero}"></p>
+                                        </strong>
+                                        <br>
+                                        <strong>
+                                            <p class="card-text" th:text="'Bairro: ' + ${endereco.bairro}">Bairro 1</p>
+                                        </strong>
+                                        <br>
+                                        <strong>
+                                            <p class="card-text" th:text="'Cidade: ' + ${endereco.cidade} + ' - ' + ${endereco.UF}"></p>
+                                        </strong>
+                                        <br>
+                                        <strong>
+                                            <p class="card-text" th:text="'CEP: ' + ${endereco.CEP}"></p>
+                                        </strong>
+                                        <br>
+                                        <strong>
+                                            <p class="card-subtitle mb-2">Complemento:</p>
+                                        </strong>
+                                        <p class="card-text" th:text="${endereco.complemento}"></p>
+                                        <br>
+    
+                                        <div class="card-footer bg-transparent border-success text-center">
+                                            
+                                            <a 
+                                                href="#"
+                                                th:href="@{/endereco_form/{id}(id=${endereco.id})}"
+                                                class="btn btn-outline-light">
+                                                Editar
+                                        </a>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                
+                            </div>
+    
+                            <div class="text-center">
+                                <a
+                                    href="#"
+                                    th:href="@{/endereco_form/{id}(id=0)}" 
+                                    class=" mt-2 btn btn-outline-success">
+                                    Adicionar
+                            </a>
+                            </div>
+    
+                        </div>
+    
+                        <!--
+    
+                            <div 
+                                class="tab-pane fade" 
+                                id="pedidos" 
+                                role="tabpanel" 
+                                aria-labelledby="contact-tab">
+                                    
+                                <h2 class="pt-1 pb-1 text-success">Meus Pedidos</h2>
+                                <hr>
         
-                                    <div class="row" th:each="pedido : ${pedidos}">
-                                        <div class="col-sm-12 col-md-8 g-1 mt-2">
-                                            <section class="sessaoDadosItensPedido">
-                                                <div class="dadosItemPedido text-success" th:each="itemPedido : ${pedido.itensPedidos}">
-                                                    <div class="d-flex justify-content-start align-itens-center">
-                                                        <h5 class="mb-2 text-success">Livro:  </h5>
-                                                        <h5 class="mb-2 text-success" th:text="${itemPedido.livro.titulo}"></h5>
+                                <div class="list-group mb-3">
+                                    <div class="list-group-item list-group-item-action pb-3 border-success" aria-current="true">
+            
+                                        <div class="row" th:each="pedido : ${pedidos}">
+                                            <div class="col-sm-12 col-md-8 g-1 mt-2">
+                                                <section class="sessaoDadosItensPedido">
+                                                    <div class="dadosItemPedido text-success" th:each="itemPedido : ${pedido.itensPedidos}">
+                                                        <div class="d-flex justify-content-start align-itens-center">
+                                                            <h5 class="mb-2 text-success">Livro:  </h5>
+                                                            <h5 class="mb-2 text-success" th:text="${itemPedido.livro.titulo}"></h5>
+                                                        </div>
+                                                        
+                                                        <div class="d-flex justify-content-start align-itens-center">
+                                                            <h6 class="mt-3 text-success">Quantidade:  </h6>
+                                                            <h6 class="mt-3 text-success" th:text="${itemPedido.quantidade}"></h6>
+                                                        </div>
+                                                        <br>
                                                     </div>
-                                                    
-                                                    <div class="d-flex justify-content-start align-itens-center">
-                                                        <h6 class="mt-3 text-success">Quantidade:  </h6>
-                                                        <h6 class="mt-3 text-success" th:text="${itemPedido.quantidade}"></h6>
-                                                    </div>
-                                                    <br>
-                                                </div>
+                                                </section>
+                                            </div>
+            
+                                            <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
+                                                <button class="btn btn-outline-danger" onclick="excluirItemPedido(0)">
+                                                    Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="">
+                                                </button>
+                                            </div>
+        
+                                            <section class="sessaoDadosAdicionais">
+                                                <ul class="list-group text-white">
+                                                     <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                                        <div class="ms-2 me-auto">
+                                                        <div class="d-flex justify-content-start align-itens-center">
+                                                            <div class="fw-bold">Endereço selecionado  </div>
+                                                            <h6 th:text="${pedido.endereco.rua} + ' nº ' +  ${pedido.endereco.numero}"></h6>
+                                                        </div>
+                                                        </div>
+                                                    </li>
+        
+                                                    <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                                      <div class="ms-2 me-auto">
+                                                        <div class="d-flex justify-content-start align-itens-center">
+                                                            <div class="fw-bold">Quantidade total de livros  </div>
+                                                            <h6 th:text="${pedido.qntdItens}"></h6>
+                                                        </div>
+                                                      </div>
+                                                    </li>
+        
+                                                    <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                                      <div class="ms-2 me-auto">
+                                                          <div class="d-flex justify-content-start align-itens-center">
+                                                              <div class="fw-bold">Status do Pedido  </div>
+                                                              <h6 th:text="${pedido.statusPedido}"></h6>
+                                                          </div>
+                                                      </div>
+                                                    </li>
+        
+                                                    <li class="list-group-item d-flex justify-content-between bg-success">
+                                                        <div class="ms-2 me-auto">
+                                                            <div class="d-flex justify-content-start align-itens-center">
+                                                                <div class="fw-bold">Valor total  </div>
+                                                                <h6 th:text="${pedido.valorItensTotal}"></h6>
+                                                            </div>
+                                                        </div>
+                                                      </li>
+                                                  </ul>
                                             </section>
                                         </div>
-        
-                                        <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
-                                            <button class="btn btn-outline-danger" onclick="excluirItemPedido(0)">
-                                                Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="">
-                                            </button>
-                                        </div>
-    
-                                        <section class="sessaoDadosAdicionais">
-                                            <ul class="list-group text-white">
-                                                 <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                                    <div class="ms-2 me-auto">
-                                                    <div class="d-flex justify-content-start align-itens-center">
-                                                        <div class="fw-bold">Endereço selecionado  </div>
-                                                        <h6 th:text="${pedido.endereco.rua} + ' nº ' +  ${pedido.endereco.numero}"></h6>
-                                                    </div>
-                                                    </div>
-                                                </li>
-    
-                                                <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                                  <div class="ms-2 me-auto">
-                                                    <div class="d-flex justify-content-start align-itens-center">
-                                                        <div class="fw-bold">Quantidade total de livros  </div>
-                                                        <h6 th:text="${pedido.qntdItens}"></h6>
-                                                    </div>
-                                                  </div>
-                                                </li>
-    
-                                                <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                                  <div class="ms-2 me-auto">
-                                                      <div class="d-flex justify-content-start align-itens-center">
-                                                          <div class="fw-bold">Status do Pedido  </div>
-                                                          <h6 th:text="${pedido.statusPedido}"></h6>
-                                                      </div>
-                                                  </div>
-                                                </li>
-    
-                                                <li class="list-group-item d-flex justify-content-between bg-success">
-                                                    <div class="ms-2 me-auto">
-                                                        <div class="d-flex justify-content-start align-itens-center">
-                                                            <div class="fw-bold">Valor total  </div>
-                                                            <h6 th:text="${pedido.valorItensTotal}"></h6>
-                                                        </div>
-                                                    </div>
-                                                  </li>
-                                              </ul>
-                                        </section>
                                     </div>
                                 </div>
+        
                             </div>
+                        -->
+                    </div>
     
-                        </div>
-                    -->
-                </div>
-
-            </div><!--/col-9-->
-            
-        </div><!--/row-->
-    </div>
-    <hr class="bg-success">
+                </div><!--/col-9-->
+                
+            </div><!--/row-->
+        </div>
+    </main>
 
     <footer th:replace="~{fragmentosadm :: footer}"></footer>
+
+    <script>
+        function limparCampos() {
+            var inputNome = document.getElementById('inputNome');
+            inputNome.value = '';
+
+            var inputEmail = document.getElementById('inputEmail');
+            inputEmail.value = '';            
+        }
+    </script>
+
 </body>
 </html>

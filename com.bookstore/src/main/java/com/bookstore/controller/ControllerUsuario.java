@@ -54,6 +54,11 @@ public class ControllerUsuario {
 		} 
 		return "user/profile";
 	}
+	
+	@GetMapping("/voltar")
+	public String voltarParaTelaPerfil() {
+		return "redirect:/perfil/" + idUsuario;
+	}
 	 
 	@PostMapping("/usuario_update/{id}")
 	public String atualizarUsuario(@Valid @ModelAttribute Usuario usuario, BindingResult result, @PathVariable("id") Long id) {
