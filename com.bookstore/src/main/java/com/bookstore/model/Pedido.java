@@ -138,7 +138,7 @@ public class Pedido {
 		
 		for(ItemPedido itemPedido: itensPedidos) {
 			
-			if(itemPedido.getLivro().getISBN() == isbn) {
+			if(itemPedido.getLivro().getIsbn() == isbn) {
 				valorIndividual = itemPedido.getLivro().getTitulo() +" :"+ itemPedido.getValorIndividual();
 				break;
 			}
@@ -156,7 +156,7 @@ public class Pedido {
 		
 		for(ItemPedido itemPedido: itensPedidos) {
 			
-			if(itemPedido.getLivro().getISBN() == isbn) {
+			if(itemPedido.getLivro().getIsbn() == isbn) {
 				return itemPedido;
 			}
 		}

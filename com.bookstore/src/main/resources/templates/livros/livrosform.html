@@ -3,16 +3,18 @@
 <head th:replace="~{fragmentos :: head('CRUD Livros')}"></head>
 <body>
     <main>
-        <form action="#" th:object="${livro}" method="POST">
+        <form action="#" th:object="${livro}" method="POST" class="w-50 me-auto ms-auto">
+
+            <label for="inputImagem" class="form-label">Imagem</label>
+            <input type="file" class="form-control" id="inputImagem" name="fileImagem" accept="image/png, image/jpeg, image/jpg" required>
 
             <label for="inputtitulo" class="form-label">Título</label>
             <input type="text" class="form-control border border-success " id="inputtitulo" th:field="*{titulo}" required>
             
+            <label for="inputisbn" class="form-label">ISBN</label>
+            <input type="number" class="form-control border border-success" id="inputisbn" 
+            th:field="*{isbn}" min="1" required>
             
-            <label for="inputdescricao" class="form-label">Descrição</label>
-            <textarea class="form-control border border-success" aria-label="With textarea" id="inputdescricao" th:field="*{descricao}" required></textarea>
-            
-
             <label for="inputedicao" class="form-label">Edição</label>
             <input type="number" class="form-control border border-success" id="inputedicao" 
             th:field="*{edicao}" min="1" required>
@@ -21,19 +23,227 @@
             <input type="number" class="form-control border border-success" id="inputanopublicacao" 
             th:field="*{anoPublicacao}"  min="1" required>
 
-            <br>
+            <label for="inputpreco" class="form-label">Preço</label>
+            <input type="text" class="form-control border border-success" id="inputpreco" 
+            th:field="*{preco}"  min="1" required>
+
+            <label for="inputdescricao" class="form-label">Descrição</label>
+            <textarea class="form-control border border-success" aria-label="With textarea" id="inputdescricao" th:field="*{descricao}" required></textarea>
+ 
+            <div class="accordion border border-success mt-2" id="accordionAutores">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAutores" aria-expanded="false" aria-controls="collapseAutores">
+                          Autores
+                        </button>
+                    </h2>
+                    <div id="collapseAutores" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionAutores">
+                        <div class="accordion-body border border-success">
+                            <div class="list-group" th:each="autor : *{autores}">
+                                <h6 class="list-group-item list-group-item-action"th:id="${autor.ID}" th:text="${autor.nome}"></h6>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-outline-success mt-2" data-bs-toggle="modal" data-bs-target="#modalListarAutores">
+                Adiconar autor
+            </button>
+
+            <div class="modal" id="modalListarAutores">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="bg-success m-3 pb-3 rounded ms-auto me-auto">
+                                <div class="text-center text-white pt-2 mb-2">Autores</div>
+                                <div class=" ms-3 me-3 modal-dialog-scrollable rounded">
+                                    <div class="list-group" th:each="autor : ${autores}">
+                                        <button type="submit" class="list-group-item list-group-item-action" 
+                                        th:formaction="@{/livroformupdateautores/{id}(id=${autor.ID})}" th:text="${autor.nome}"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-outline-success ms-auto me-auto" data-bs-toggle="modal" data-bs-target="#modalAdicionarAutor">Novo autor</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion border border-success mt-2" id="accordionCategorias">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategorias" aria-expanded="false" aria-controls="collapseCategorias">
+                          Categorias
+                        </button>
+                    </h2>
+                    <div id="collapseCategorias" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionAutores">
+                        <div class="accordion-body border border-success">
+                            <div class="list-group" th:each="categoria : *{categorias}">
+                                <h6 class="list-group-item list-group-item-action"th:id="${categoria.id}" th:text="${categoria.nome}"></h6>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-outline-success mt-2" data-bs-toggle="modal" data-bs-target="#modalListarCategorias"> 
+                Adiconar categoria
+            </button>
+
+            <div class="modal" id="modalListarCategorias">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="bg-success m-3 pb-3 rounded ms-auto me-auto">
+                                <div class="text-center text-white pt-2 mb-2">Categorias</div>
+                                <div class=" ms-3 me-3 modal-dialog-scrollable rounded">
+                                    <div class="list-group" th:each="categoria : ${categorias}">
+                                        <button type="submit" class="list-group-item list-group-item-action" 
+                                        th:formaction="@{/livroformupdatecategorias/{id}(id=${categoria.id})}" th:text="${categoria.nome}">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-outline-success ms-auto me-auto" data-bs-toggle="modal" data-bs-target="#modalAdicionarCategoria">Nova Categoria</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <label for="selecionareditoras" class="form-label">Editora</label>
+            <div class="row border border-success rounded ms-1 me-1 p-2">
+                <select id="selecionareditoras" class="form-select col me-2" th:field="*{editora.id}" required>
+                    <option th:each="editora : ${editoras}" th:value="${editora.id}" th:text="${editora.nome}"></option>
+                </select>
+                <button type="button" class="btn btn-outline-success mt-2 col" data-bs-toggle="modal" data-bs-target="#modalAdicionarEditora">
+                    Nova editora
+                </button>
+            </div>
+
+            <label for="inputQuantidadeEmEstoque" class="form-label">Quantidade em estoque</label>
+            <input type="number" class="form-control border border-success" id="inputQuantidadeEmEstoque" 
+            th:field="*{quantidadeEmEstoque}" min="0" required>
+
+            
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "*{titulo} != '' ? true">
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "${isAdicionar} != 0 ? true"
+                th:formaction="@{/livroformadd}">
                     Adicionar
                 </button>
-                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "*{titulo} == '' ? true">
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "${isAdicionar} == 0 ? true">
                     Atualizar
                 </button>
-                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "*{titulo} == '' ? true">
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "${isAdicionar} == 0 ? true">
                     Remover
                 </button>
             </div>
         </form>
+        
+        <div class="modal" id="modalAdicionarAutor">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                        <form action="#" th:object="${autor}" class="text-center" method="POST">
+                            <label for="inputnomeautor" class="form-label">Nome do Autor</label>
+                            <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomeautor"  th:field="*{nome}" required> 
+                            
+                            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar"
+                            th:formaction="@{/livroformautoradd}">
+                                Adicionar
+                            </button>
+                            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalAdicionarCategoria">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                        <form action="#" th:object="${categoria}" class="text-center" method="POST">
+                            <label for="inputnomecategoria" class="form-label">Nome da Categoria</label>
+                            <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomecategoria"  th:field="*{nome}" required> 
+                            
+                            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" 
+                            th:formaction="@{/livroformcategoriaadd}">
+                                Adicionar
+                            </button>
+                            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalAdicionarEditora">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                        <form action="#" th:object="${editora}" class="text-center" method="POST">
+                            <label for="inputnomeeditora" class="form-label">Nome da Editora</label>
+                            <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomeeditora"  th:field="*{nome}" required> 
+
+                            <label for="inputcidadeeditora" class="form-label">Cidade da Editora</label>
+                            <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputcidadeeditora"  th:field="*{cidade}" required> 
+
+                            <br>
+
+                            <button type="submit" class="btn btn-outline-success me-1" id="btnadicionar" 
+                            th:formaction="@{/livroformeditoraadd}">
+                                Adicionar
+                            </button>
+                            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 </body>
 </html>

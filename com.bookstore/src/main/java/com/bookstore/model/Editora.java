@@ -28,8 +28,7 @@ public class Editora {
 	@Column(name = "CIDADE")
 	private String cidade;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "EDITORA_FK")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "editora")
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
 	
 	public Editora() {

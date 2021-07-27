@@ -85,7 +85,7 @@ public class FacadeLivros {
 	 */
 	public Livro recuperarLivroNulo() {
 		
-		return new Livro(0L, "", "", BigDecimal.ZERO, 1, 1, 0);
+		return new Livro(0L, "", "", new BigDecimal(0.00), 1, 1, 0);
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class FacadeLivros {
 		
 		Livro livroUpdate = recuperarLivro(id);
 		
-		livroUpdate.setISBN(livroDto.getISBN());
+		livroUpdate.setIsbn(livroDto.getIsbn());
 		livroUpdate.setImagemCapa(livroDto.getImagemCapa());
 		livroUpdate.setTitulo(livroDto.getTitulo());;
 		livroUpdate.setDescricao(livroDto.getDescricao());

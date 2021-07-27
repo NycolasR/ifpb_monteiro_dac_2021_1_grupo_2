@@ -61,15 +61,16 @@ public class FacadeEditoras {
 	 * @param nome Nome da Editora
 	 * @param cidade Cidade da Editora
 	 * @return O registro de Editora pronto
+	 * @throws Exception 
 	 */
-	public Editora criarEditora(Editora editora) {
+	public Editora criarEditora(Editora editora) throws Exception {
 //		Editora editora = new Editora();
 //		editora.setNome(nome);
 //		editora.setCidade(cidade);
 		
 		editoraService.salvarEditora(editora);
 		
-		return editoraService.recuperarPeloId(editora.getId()).get();
+		return recuperarEditora(editora.getId());
 	}
 	
 	/**

@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -64,6 +65,10 @@ public class Livro {
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros")
 	private Set<Autor> autores = new LinkedHashSet<Autor>();
+	
+	@ManyToOne
+	@JoinColumn(name = "EDITORA_FK")
+	private Editora editora;
 
 	public Livro(
 			Long isbn,
@@ -94,10 +99,10 @@ public class Livro {
 		this.id = id;
 	}
 
-	public Long getISBN() {
+	public Long getIsbn() {
 		return isbn;
 	}
-	public void setISBN(Long iSBN) {
+	public void setIsbn(Long iSBN) {
 		isbn = iSBN;
 	}
 
@@ -175,13 +180,21 @@ public class Livro {
 	public void setAutores(Set<Autor> autores) {
 		this.autores = autores;
 	}
-	
+			
 	public Integer getQuantidadeEmEstoque() {
 		return quantidadeEmEstoque;
 	}
 
 	public void setQuantidadeEmEstoque(Integer quantidadeEmEstoque) {
 		this.quantidadeEmEstoque = quantidadeEmEstoque;
+	}
+
+	public Editora getEditora() {
+		return editora;
+	}
+
+	public void setEditora(Editora editora) {
+		this.editora = editora;
 	}
 
 	public boolean equals(Livro livro) {
