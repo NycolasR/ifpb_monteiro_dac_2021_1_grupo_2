@@ -2,11 +2,13 @@ package com.bookstore.facades;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bookstore.model.Autor;
+import com.bookstore.model.Livro;
 import com.bookstore.service.AutorService;
 
 
@@ -96,6 +98,19 @@ public class FacadeAutor {
 		Autor autorUpdate = recuperarAutor(id);
 		
 		autorUpdate.setNome(autorDto.getNome());
+		
+		if(autorDto.getLivros().size() > 0) {
+			autorUpdate.setLivros(autorDto.getLivros());
+		}
 		autorService.atualizarAutor(autorUpdate);
+	}
+	
+	public void salvarLivroAosAutores(Set<Autor> autores, Livro livro) throws Exception{
+		
+		for(Autor autor : autores) {
+			
+			autor.adicionarLivro(livro);
+			atualizarAutor(autor, autor.getID());
+		}
 	}
 }
