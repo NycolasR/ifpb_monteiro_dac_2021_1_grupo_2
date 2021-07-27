@@ -40,7 +40,7 @@ public class FacadeEnderecos {
 			String uf,
 			String cidade,
 			String complemento,
-			Integer cep) {
+			Long cep) {
 		
 		Endereco novoEndereco = new Endereco();
 		novoEndereco.setRua(rua);

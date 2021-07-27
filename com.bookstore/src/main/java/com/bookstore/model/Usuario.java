@@ -15,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 /**
  * 
@@ -31,20 +35,23 @@ public class Usuario {
 	@Column(name = "ID")
 	private Long id;
 	
+	@Size(min = 3, max = 60, message = "O nome deve conter algo entre 3 e 60 caracteres.")
 	@Column(name = "NOME")
 	private String nome;
 	
-//	@Email
+	@Email(message = "Você deve informar um email com formato válido.")
 	@Column(name = "EMAIL")
 	private String email;
 	
+	@Size(min = 6, max = 8, message = "A senha deve conter algo entre 6 e 8 caracteres.")
 	@Column(name = "SENHA")
 	private String senha;
 	
+	@NotNull(message = "Você deve informar se o usuário é um administrador ou não.")
 	@Column(name = "ADMINISTRADOR")
 	private boolean isAdmin;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USUARIO_FK", nullable = false)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
@@ -140,6 +147,4 @@ public class Usuario {
 			+ "\n	administrador: " + isAdmin 
 			+ "\n}";
 	}
-	
-	
 }
