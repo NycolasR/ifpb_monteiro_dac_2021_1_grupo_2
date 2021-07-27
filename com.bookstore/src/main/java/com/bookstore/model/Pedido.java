@@ -35,7 +35,7 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Long ID;
+	private Long id;
 	
 	@ManyToOne
 	private Usuario usuario;
@@ -201,11 +201,11 @@ public class Pedido {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Long getID() {
-		return ID;
+	public Long getId() {
+		return id;
 	}
-	public void setID(Long iD) {
-		ID = iD;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public Date getDataCriacao() {
 		return dataCriacao;
@@ -252,7 +252,7 @@ public class Pedido {
 	
 	@Override
 	public String toString() {
-		return "Dados do Pedido " + ID + ": "
+		return "Dados do Pedido " + id + ": "
 				+ "\n	Nome Cliente: " + "aqui vai o nome do usuario"
 				+ "\n	Quantidade de Itens: " + qntdItens
 				+ "\n	Preço Total: R$" + valorItensTotal
@@ -261,6 +261,6 @@ public class Pedido {
 	}
 	
 	public boolean equals(Pedido pedido) {
-		return pedido.getID().equals(ID);
+		return pedido.getId().equals(id);
 	}
 }

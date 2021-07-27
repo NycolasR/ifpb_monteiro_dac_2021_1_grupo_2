@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bookstore.facades.FacadeEnderecos;
+import com.bookstore.facades.FacadePedido;
 import com.bookstore.model.Endereco;
 import com.bookstore.model.Pedido;
 import com.bookstore.model.Usuario;
@@ -25,6 +26,9 @@ public class ControllerUsuario {
 	
 	@Autowired
 	private FacadeEnderecos facadeEnderecos;
+	
+	@Autowired 
+	private FacadePedido facadePedidos; 
 	
 	@Autowired
 	private UsuarioService usuarioService;
@@ -142,7 +146,19 @@ public class ControllerUsuario {
 	public String removerEndereco(@PathVariable("id") Long id) {
 		
 		try {
-			facadeEnderecos.removerAutor(id);
+			facadeEnderecos.removerEndereco(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/perfil/" + idUsuario;
+	}
+	
+	@PostMapping("/pedido_remove/{id}")
+	public String removerPedido(@PathVariable("id") Long id) {
+		
+		try {
+			facadePedidos.removerPedido(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

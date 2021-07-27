@@ -268,76 +268,91 @@
                             <h2 class="pt-1 pb-1 text-success">Meus Pedidos</h2>
                             <hr>
     
-                            <div class="list-group mb-3">
-                                <div class="list-group-item list-group-item-action pb-3 border-success" aria-current="true">
+                            <div class="mb-3">
+                                <div class="pb-3 mr-3" aria-current="true">
         
-                                    <div class="row" th:each="pedido : ${pedidos}">
-                                        <div class="col-sm-12 col-md-8 g-1 mt-2">
-                                            <section class="sessaoDadosItensPedido">
-                                                <div class="dadosItemPedido text-success" th:each="itemPedido : ${pedido.itensPedidos}">
-                                                    <div class="d-flex justify-content-start align-itens-center">
-                                                        <h5 class="mb-2 text-success">Livro:  </h5>
-                                                        <h5 class="mb-2 text-success" th:text="${itemPedido.livro.titulo}"></h5>
+                                    <div class="row " th:each="pedido : ${pedidos}">
+                                        <div class="row border border-success rounded mb-4 pb-3">
+
+                                            <div class="col-sm-12 col-md-8 g-1 mt-2">
+                                                <section class="sessaoDadosItensPedido">
+                                                    <div class="dadosItemPedido text-success" th:each="itemPedido : ${pedido.itensPedidos}">
+                                                        <div class="d-flex justify-content-start align-itens-center">
+                                                            <h5 class="mb-2 text-success">Livro:  </h5>
+                                                            <h5 class="mb-2 text-success" th:text="${itemPedido.livro.titulo}"></h5>
+                                                        </div>
+                                                        
+                                                        <div class="d-flex justify-content-start align-itens-center">
+                                                            <h6 class="mt-3 text-success">Quantidade:  </h6>
+                                                            <h6 class="mt-3 text-success" th:text="' ' + ${itemPedido.quantidade}"></h6>
+                                                        </div>
+                                                        <br>
                                                     </div>
-                                                    
-                                                    <div class="d-flex justify-content-start align-itens-center">
-                                                        <h6 class="mt-3 text-success">Quantidade:  </h6>
-                                                        <h6 class="mt-3 text-success" th:text="' ' + ${itemPedido.quantidade}"></h6>
-                                                    </div>
-                                                    <br>
-                                                </div>
+                                                </section>
+                                            </div>
+    
+                                            <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center">
+                                                <form 
+                                                    action="#" 
+                                                    th:object="${pedido}" 
+                                                    class="needs-validation" 
+                                                    method="POST"
+                                                >
+                                                    <button 
+                                                        type="submit" 
+                                                        class="btn btn-outline-danger mx-auto" id="btnremover"
+                                                        th:formaction="@{/pedido_remove/{id}(id=*{id})}">
+                                                        Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="Cancelar">
+                                                    </button>
+                                                </form>
+    
+                                            </div>
+        
+                                            <section class="sessaoDadosAdicionais">
+                                                <ul class="list-group text-white">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                                        <div class="ms-2 me-auto">
+                                                            <div class="d-flex justify-content-start align-itens-center">
+                                                                <div class="fw-bold">
+                                                                    <h6 th:text="'Endereço selecionado: ' + ${pedido.localDeEntrega.rua} + ' nº ' +  ${pedido.localDeEntrega.numero}"></h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+        
+                                                    <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                                        <div class="ms-2 me-auto">
+                                                            <div class="d-flex justify-content-start align-itens-center">
+                                                                <div class="fw-bold">
+                                                                    <h6 th:text="'Quantidade total de livros: ' + ${pedido.qntdItens}"></h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+        
+                                                    <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                                        <div class="ms-2 me-auto">
+                                                            <div class="d-flex justify-content-start align-itens-center">
+                                                                <div class="fw-bold">
+                                                                    <h6 th:text="'Status do Pedido: ' + ${pedido.statusPedido}"></h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+        
+                                                    <li class="list-group-item d-flex justify-content-between bg-success">
+                                                        <div class="ms-2 me-auto">
+                                                            <div class="d-flex justify-content-start align-itens-center">
+                                                                <div class="fw-bold">
+                                                                    <h6 th:text="'Valor total: R$' + ${pedido.valorItensTotal}"></h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </section>
                                         </div>
 
-                                        <div class="col-sm-12 col-md-4 d-flex align-items-center justify-content-center navbar">
-                                            <button class="btn btn-outline-danger" onclick="excluirItemPedido(0)">
-                                                Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="">
-                                            </button>
-                                        </div>
-    
-                                        <section class="sessaoDadosAdicionais">
-                                            <ul class="list-group text-white">
-                                                <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                                    <div class="ms-2 me-auto">
-                                                        <div class="d-flex justify-content-start align-itens-center">
-                                                            <div class="fw-bold">
-                                                                <h6 th:text="'Endereço selecionado: ' + ${pedido.localDeEntrega.rua} + ' nº ' +  ${pedido.localDeEntrega.numero}"></h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-    
-                                                <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                                    <div class="ms-2 me-auto">
-                                                        <div class="d-flex justify-content-start align-itens-center">
-                                                            <div class="fw-bold">
-                                                                <h6 th:text="'Quantidade total de livros: ' + ${pedido.qntdItens}"></h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-    
-                                                <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
-                                                    <div class="ms-2 me-auto">
-                                                        <div class="d-flex justify-content-start align-itens-center">
-                                                            <div class="fw-bold">
-                                                                <h6 th:text="'Status do Pedido: ' + ${pedido.statusPedido}"></h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-    
-                                                <li class="list-group-item d-flex justify-content-between bg-success">
-                                                    <div class="ms-2 me-auto">
-                                                        <div class="d-flex justify-content-start align-itens-center">
-                                                            <div class="fw-bold">
-                                                                <h6 th:text="'Valor total: R$' + ${pedido.valorItensTotal}"></h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </section>
                                     </div>
                                 </div>
                             </div>
