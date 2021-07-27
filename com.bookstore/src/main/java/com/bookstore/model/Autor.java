@@ -57,6 +57,10 @@ public class Autor {
 	public void setLivros(Set<Livro> livros) {
 		this.livros = livros;
 	}
+	
+	public void addLivro(Livro livro) {
+		livros.add(livro);
+	}
 
 	public String getNome() {
 		return nome;
