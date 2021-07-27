@@ -48,7 +48,7 @@ public class ControllerUsuario {
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("enderecos", enderecos);
 			model.addAttribute("pedidos", pedidos);
-			
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -152,10 +152,7 @@ public class ControllerUsuario {
 	
 	/*
 	  oef
-	 
-
 	 *
-
 	 * 
 	 * 
 	 */

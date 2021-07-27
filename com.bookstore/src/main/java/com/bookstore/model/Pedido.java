@@ -51,7 +51,6 @@ public class Pedido {
 	@Column(name = "QUANTIDADE_ITENS")
 	private Integer qntdItens;
 	
-//	@Digits(integer=5, fraction=2)
 	@Column(name = "VALOR_ITENS_TOTAL", columnDefinition = "DECIMAL(7,2)")
 	private BigDecimal valorItensTotal;
 	
