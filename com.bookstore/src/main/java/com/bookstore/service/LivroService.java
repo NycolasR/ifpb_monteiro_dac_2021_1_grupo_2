@@ -98,6 +98,7 @@ public class LivroService {
 		if(deletado.isPresent()) { // Verifica se há um objeto no Optional
 			livroRepository.delete(deletado.get());
 			livroRepository.deletarLivroAutor(id);
+			livroRepository.deletarLivroCategoria(id);
 		}
 	}
 	
