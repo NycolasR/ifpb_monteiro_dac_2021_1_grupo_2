@@ -5,11 +5,16 @@
     <main>
         <form action="#" th:object="${livro}" method="POST" class="w-50 me-auto ms-auto">
 
-            <label for="inputImagem" class="form-label">Imagem</label>
-            <input type="file" class="form-control" id="inputImagem" name="fileImagem" accept="image/png, image/jpeg, image/jpg" required>
+            <img th:if="${isAdicionar} != 0" th:src="@{*{urlImagemCapa}}" alt="" width="400" height="500">
+            
+            <br>
 
             <label for="inputtitulo" class="form-label">Título</label>
             <input type="text" class="form-control border border-success " id="inputtitulo" th:field="*{titulo}" required>
+
+            <label for="inputUrlImagem" class="form-label">Imagem(url)</label>
+            <input type="url" class="form-control border border-success" id="inputUrlImagem" pattern="https?://.*"
+            th:field="*{urlImagemCapa}" placeholder="url da imagem na web" required>
             
             <label for="inputisbn" class="form-label">ISBN</label>
             <input type="number" class="form-control border border-success" id="inputisbn" 
@@ -110,14 +115,23 @@
                             <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
                             </button>
                         </div>
-                        <div class="modal-body ">
+                        <div class="modal-body">
                             <div class="bg-success m-3 pb-3 rounded ms-auto me-auto">
                                 <div class="text-center text-white pt-2 mb-2">Categorias</div>
                                 <div class=" ms-3 me-3 modal-dialog-scrollable rounded">
-                                    <div class="list-group" th:each="categoria : ${categorias}">
-                                        <button type="submit" class="list-group-item list-group-item-action" 
-                                        th:formaction="@{/livroformupdatecategorias/{id}(id=${categoria.id})}" th:text="${categoria.nome}">
-                                        </button>
+                                    <div class="card mt-1" th:each="categoria : ${categorias}">
+                                        <div class="card-body p-0">
+                                            <button type="submit" class="list-group-item list-group-item-action border-0" 
+                                            th:formaction="@{/livroformupdatecategorias/{id}(id=${categoria.id})}" th:text="${categoria.nome}">
+                                            </button>
+                                        </div>
+                                        <div class="card-footer border-0 text-end">
+                                            <button type="submit" class="btn-outline-success rounded" 
+                                            th:formaction="@{/livroformcategoriaremove/{id}(id=${categoria.id})}">
+                                                Remover
+                                            </button>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -149,16 +163,19 @@
             <input type="number" class="form-control border border-success" id="inputQuantidadeEmEstoque" 
             th:field="*{quantidadeEmEstoque}" min="0" required>
 
+            <br>
             
             <div class="text-center">
                 <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "${isAdicionar} != 0 ? true"
                 th:formaction="@{/livroformadd}">
                     Adicionar
                 </button>
-                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "${isAdicionar} == 0 ? true">
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "${isAdicionar} == 0 ? true"
+                th:formaction="@{/livroformupdate}">
                     Atualizar
                 </button>
-                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "${isAdicionar} == 0 ? true">
+                <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "${isAdicionar} == 0 ? true"
+                th:formaction="@{/livroformremove}">
                     Remover
                 </button>
             </div>
@@ -175,8 +192,10 @@
                         <form action="#" th:object="${autor}" class="text-center" method="POST">
                             <label for="inputnomeautor" class="form-label">Nome do Autor</label>
                             <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomeautor"  th:field="*{nome}" required> 
+
+                            <br>
                             
-                            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar"
+                            <button type="submit" class="btn btn-outline-success me-1" id="btnadicionar"
                             th:formaction="@{/livroformautoradd}">
                                 Adicionar
                             </button>
@@ -201,7 +220,9 @@
                             <label for="inputnomecategoria" class="form-label">Nome da Categoria</label>
                             <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomecategoria"  th:field="*{nome}" required> 
                             
-                            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" 
+                            <br>
+
+                            <button type="submit" class="btn btn-outline-success me-1" id="btnadicionar" 
                             th:formaction="@{/livroformcategoriaadd}">
                                 Adicionar
                             </button>
