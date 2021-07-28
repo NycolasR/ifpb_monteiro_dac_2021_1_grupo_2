@@ -43,9 +43,8 @@ public class Livro {
 	@Column(name = "PRECO")
 	private BigDecimal preco;
 
-	@Lob
-	@Column(name="IMAGEM_CAPA", columnDefinition="mediumblob")
-	private byte[] imagemCapa;
+	@Column(name="IMAGEM_CAPA")
+	private String urlImagemCapa;
 
 	@Column(name = "EDICAO")
 	private Integer edicao;
@@ -59,8 +58,7 @@ public class Livro {
 //	@Column(name = "CATEGORIA", length = 30)
 //	@JoinTable(name = "TB_CATEGORIA")
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "LIVRO_FK")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros")
 	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros")
@@ -119,26 +117,14 @@ public class Livro {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public byte[] getImagemCapa() {
-		return imagemCapa;
-	}
-	public void setImagemCapa(byte[] imagemCapa) {
-		this.imagemCapa = imagemCapa;
-	}
 	
-	public void setImageFile(File imgFile) {
-		byte[] img = new byte[(int) imgFile.length()];
+	
+	public String getUrlImagemCapa() {
+		return urlImagemCapa;
+	}
 
-		try {
-			FileInputStream fileInputStream = new FileInputStream(imgFile);
-			fileInputStream.read(img);
-			fileInputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		setImagemCapa(img);
+	public void setUrlImagemCapa(String urlImagemCapa) {
+		this.urlImagemCapa = urlImagemCapa;
 	}
 
 	public Integer getEdicao() {

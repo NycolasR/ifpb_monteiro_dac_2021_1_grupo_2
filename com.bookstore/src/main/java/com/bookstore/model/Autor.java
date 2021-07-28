@@ -40,7 +40,11 @@ public class Autor {
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
 	
 	public void adicionarLivro(Livro livro) {
-		livros.add(livro);
+		
+		if(!livros.contains(livro)) {
+			livros.add(livro);
+		}
+		
 	}
 
 	public Autor(String nome) {

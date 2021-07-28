@@ -1,10 +1,17 @@
 package com.bookstore.model;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,6 +30,12 @@ public class Categoria {
 	
 	@Column(name = "NOME")
 	private String nome;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable( name = "TB_LIVRO_CATEGORIA",
+			   joinColumns = @JoinColumn(name = "FK_CATEGORIA"), 
+			   inverseJoinColumns = @JoinColumn(name = "FK_LIVRO"))
+	private Set<Livro> livros = new LinkedHashSet<Livro>();
 
 	public Categoria(String nome) {
 		this.nome = nome;
@@ -48,6 +61,22 @@ public class Categoria {
 		this.nome = nome;
 	}
 	
+	public Set<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(Set<Livro> livros) {
+		this.livros = livros;
+	}
+	
+	public void adicionarLivro(Livro livro) {
+		
+		if(!livros.contains(livro)) {
+			livros.add(livro);
+		}
+				
+	}
+
 	public boolean equals(Categoria categoria) {
 		if (this == categoria)
 			return true;
