@@ -2,11 +2,13 @@ package com.bookstore.facades;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bookstore.model.Categoria;
+import com.bookstore.model.Livro;
 import com.bookstore.service.CategoriaService;
 
 @Component
@@ -45,6 +47,20 @@ public class FacadeCategoria {
 	public void removerCategoria(Long id) throws Exception{
 		recuperarCategoria(id);
 		categoriaService.deletarPeloId(id);
+	}
+	
+	public void salvarLivroAsCategorias(Set<Categoria> categorias, Livro livro) throws Exception {
+		
+		for(Categoria categoria : categorias) {
+			
+			categoria.adicionarLivro(livro);
+			
+			Categoria categoriaUpdate = recuperarCategoria(categoria.getId());
+			categoriaUpdate.setLivros(categoria.getLivros());
+			
+			categoriaService.salvarCategoria(categoriaUpdate);
+			
+		}
 	}
 	
 	

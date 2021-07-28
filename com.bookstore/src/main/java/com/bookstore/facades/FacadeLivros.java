@@ -109,7 +109,7 @@ public class FacadeLivros {
 		Livro livroUpdate = recuperarLivro(id);
 		
 		livroUpdate.setIsbn(livroDto.getIsbn());
-		livroUpdate.setImagemCapa(livroDto.getImagemCapa());
+		livroUpdate.setUrlImagemCapa(livroDto.getUrlImagemCapa());
 		livroUpdate.setTitulo(livroDto.getTitulo());;
 		livroUpdate.setDescricao(livroDto.getDescricao());
 		livroUpdate.setPreco(livroDto.getPreco());
