@@ -41,6 +41,7 @@ public class ControllerCrudEditoras {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
 		}
 
 		return "editoras/editorasform";

@@ -30,8 +30,7 @@ public class ControllerCrudAutores {
 		
 		try {
 			
-			if(id > 0) {//os ids cadastrados no banco são maiores que 0
-				 
+			if(id > 0) {//os ids cadastrados no banco são maiores que 0				
 				model.addAttribute("autor", facadeAutor.recuperarAutor(id));
 			}else {
 				model.addAttribute("autor", facadeAutor.recuperarAutorNulo());
@@ -39,8 +38,10 @@ public class ControllerCrudAutores {
 				
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("autor", facadeAutor.recuperarAutorNulo());
+			
 		}
-		
+				
 		return "autores/autoresform";
 	}
 	
