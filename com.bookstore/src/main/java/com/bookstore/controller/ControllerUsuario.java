@@ -154,22 +154,18 @@ public class ControllerUsuario {
 		return "redirect:/perfil/" + idUsuario;
 	}
 	
-	@PostMapping("/pedido_remove/{id}")
-	public String removerPedido(@PathVariable("id") Long id) {
-		
+	@PostMapping("/pedido_cancelar/{id}")
+	public String cancelarPedido(@PathVariable("id") Long id) {
+		Pedido pedido;
 		try {
-			facadePedidos.removerPedido(id);
+			pedido = facadePedidos.recuperarPedido(id);
+			pedido.setStatusPedido("CANCELADO");
+			
+			facadePedidos.atualizarPedido(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return "redirect:/perfil/" + idUsuario;
 	}
-	
-	/*
-	  oef
-	 *
-	 * 
-	 * 
-	 */
 }
