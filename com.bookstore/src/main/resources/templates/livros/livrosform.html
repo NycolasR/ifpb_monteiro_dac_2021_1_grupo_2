@@ -3,9 +3,14 @@
 <head th:replace="~{fragmentos :: head('CRUD Livros')}"></head>
 <body>
     <main>
-        <form action="#" th:object="${livro}" method="POST" class="w-50 me-auto ms-auto">
+        <form action="#" th:object="${livro}" method="POST" class="w-50 me-auto ms-auto mt-5 mb-5">
 
-            <img th:if="${isAdicionar} != 0" th:src="@{*{urlImagemCapa}}" alt="" width="400" height="500">
+            <div class="text-center">
+                <label for="capaLivro" class="form-label">Capa do livro</label>
+                <br>
+                <img th:if="${isAdicionar} != 0" th:src="@{*{urlImagemCapa}}" alt="" width="300" height="400" 
+                class="img-fluid mt-1 mb-1 border border-success p-2" id="capaLivro">
+            </div>
             
             <br>
 
@@ -16,45 +21,96 @@
             <input type="url" class="form-control border border-success" id="inputUrlImagem" pattern="https?://.*"
             th:field="*{urlImagemCapa}" placeholder="url da imagem na web" required>
             
-            <label for="inputisbn" class="form-label">ISBN</label>
-            <input type="number" class="form-control border border-success" id="inputisbn" 
-            th:field="*{isbn}" min="1" required>
+            <div class="row">
+
+                <div class="col-12 col-md-6">
+                    <label for="inputisbn" class="form-label">ISBN</label>
+                    <input type="number" class="form-control border border-success" id="inputisbn" 
+                    th:field="*{isbn}" min="1" required>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputedicao" class="form-label">Edição</label>
+                    <input type="number" class="form-control border border-success" id="inputedicao" 
+                    th:field="*{edicao}" min="1" required>
+                </div>
+
+            </div>
             
-            <label for="inputedicao" class="form-label">Edição</label>
-            <input type="number" class="form-control border border-success" id="inputedicao" 
-            th:field="*{edicao}" min="1" required>
+            <div class="row">
 
-            <label for="inputanopublicacao" class="form-label">Ano de Publicação</label>
-            <input type="number" class="form-control border border-success" id="inputanopublicacao" 
-            th:field="*{anoPublicacao}"  min="1" required>
+                <div class="col-12 col-md-4">
+                    <label for="inputanopublicacao" class="form-label">Ano de Publicação</label>
+                    <input type="number" class="form-control border border-success" id="inputanopublicacao" 
+                    th:field="*{anoPublicacao}"  min="1" required>
+                </div>
 
-            <label for="inputpreco" class="form-label">Preço</label>
-            <input type="text" class="form-control border border-success" id="inputpreco" 
-            th:field="*{preco}"  min="1" required>
+                <div class="col-12 col-md-4">
+                    <label for="inputpreco" class="form-label">Preço</label>
+                    <input type="text" class="form-control border border-success" id="inputpreco" 
+                    th:field="*{preco}"  min="1" required>
+                </div>
 
+                <div class="col-12 col-md-4">
+                    <label for="inputQuantidadeEmEstoque" class="form-label">Quantidade em estoque</label>
+                    <input type="number" class="form-control border border-success" id="inputQuantidadeEmEstoque" 
+                    th:field="*{quantidadeEmEstoque}" min="0" required>
+                </div>
+
+            </div>
+ 
             <label for="inputdescricao" class="form-label">Descrição</label>
             <textarea class="form-control border border-success" aria-label="With textarea" id="inputdescricao" th:field="*{descricao}" required></textarea>
  
-            <div class="accordion border border-success mt-2" id="accordionAutores">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAutores" aria-expanded="false" aria-controls="collapseAutores">
-                          Autores
-                        </button>
-                    </h2>
-                    <div id="collapseAutores" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionAutores">
-                        <div class="accordion-body border border-success">
-                            <div class="list-group" th:each="autor : *{autores}">
-                                <h6 class="list-group-item list-group-item-action"th:id="${autor.ID}" th:text="${autor.nome}"></h6>
-                            </div>
-                        </div>
-                      </div>
-                </div>
-            </div>
+            <div class="row">
 
-            <button type="button" class="btn btn-outline-success mt-2" data-bs-toggle="modal" data-bs-target="#modalListarAutores">
-                Adiconar autor
-            </button>
+                <div class="col">
+                    <div class="accordion border border-success mt-2" id="accordionAutores">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAutores" aria-expanded="false" aria-controls="collapseAutores">
+                                  Autores
+                                </button>
+                            </h2>
+                            <div id="collapseAutores" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionAutores">
+                                <div class="accordion-body border border-success m-2 rounded">
+                                    <div class="list-group" th:each="autor : *{autores}">
+                                        <h6 class="list-group-item list-group-item-action border border-success rounded"th:id="${autor.ID}" th:text="${autor.nome}"></h6>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+        
+                    <button type="button" class="btn btn-outline-success mt-2" data-bs-toggle="modal" data-bs-target="#modalListarAutores">
+                        Adiconar autor
+                    </button>
+                </div>
+
+                <div class="col">
+                    <div class="accordion border border-success mt-2" id="accordionCategorias">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategorias" aria-expanded="false" aria-controls="collapseCategorias">
+                                  Categorias
+                                </button>
+                            </h2>
+                            <div id="collapseCategorias" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionAutores">
+                                <div class="accordion-body border border-success m-2 rounded">
+                                    <div class="list-group" th:each="categoria : *{categorias}">
+                                        <h6 class="list-group-item list-group-item-action border border-success rounded"th:id="${categoria.id}" th:text="${categoria.nome}"></h6>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+        
+                    <button type="button" class="btn btn-outline-success mt-2" data-bs-toggle="modal" data-bs-target="#modalListarCategorias"> 
+                        Adiconar categoria
+                    </button>
+                </div>
+
+            </div>
 
             <div class="modal" id="modalListarAutores">
                 <div class="modal-dialog">
@@ -86,27 +142,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="accordion border border-success mt-2" id="accordionCategorias">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategorias" aria-expanded="false" aria-controls="collapseCategorias">
-                          Categorias
-                        </button>
-                    </h2>
-                    <div id="collapseCategorias" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionAutores">
-                        <div class="accordion-body border border-success">
-                            <div class="list-group" th:each="categoria : *{categorias}">
-                                <h6 class="list-group-item list-group-item-action"th:id="${categoria.id}" th:text="${categoria.nome}"></h6>
-                            </div>
-                        </div>
-                      </div>
-                </div>
-            </div>
-
-            <button type="button" class="btn btn-outline-success mt-2" data-bs-toggle="modal" data-bs-target="#modalListarCategorias"> 
-                Adiconar categoria
-            </button>
 
             <div class="modal" id="modalListarCategorias">
                 <div class="modal-dialog">
@@ -158,10 +193,6 @@
                     Nova editora
                 </button>
             </div>
-
-            <label for="inputQuantidadeEmEstoque" class="form-label">Quantidade em estoque</label>
-            <input type="number" class="form-control border border-success" id="inputQuantidadeEmEstoque" 
-            th:field="*{quantidadeEmEstoque}" min="0" required>
 
             <br>
             

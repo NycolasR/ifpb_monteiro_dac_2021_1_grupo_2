@@ -215,6 +215,7 @@ public class ControllerCrudLivros {
 		livro.setCategorias(categoriasParaSalvar);
 		
 		try {
+			
 			facadeLivros.atualizarLivro(livro, idInformado);
 			facadeAutor.salvarLivroAosAutores(autoresParaSalvar, facadeLivros.recuperarLivro(idInformado));
 			facadeCategoria.salvarLivroAsCategorias(categoriasParaSalvar, facadeLivros.recuperarLivro(idInformado));
