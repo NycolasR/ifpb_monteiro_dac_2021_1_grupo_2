@@ -8,7 +8,6 @@ public class ControllerAdministracao {
 
 	@GetMapping("/administracao")
 	public String recuperarAdministracao() {
-		
 		return "administracao/administracao";
 	}
 }

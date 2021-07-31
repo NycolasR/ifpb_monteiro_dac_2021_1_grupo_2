@@ -34,10 +34,12 @@ public class FacadeUsuarios {
 		usuarioTemp.setNome(nome);
 		usuarioTemp.setEmail(email);
 		usuarioTemp.setSenha(senha);
-		usuarioTemp.setAdmin(false);
-		if(usuarioService.quantidadeDeUsuariosCadastrados() == 0) {
-			usuarioTemp.setAdmin(true);
-		}
+		
+		
+//		usuarioTemp.setAdmin(false);
+//		if(usuarioService.quantidadeDeUsuariosCadastrados() == 0) {
+//			usuarioTemp.setAdmin(true);
+//		}
 		
 		usuarioService.salvar(usuarioTemp);
 		return usuarioService.recuperarPeloEmail(email);
