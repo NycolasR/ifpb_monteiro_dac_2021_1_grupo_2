@@ -96,7 +96,7 @@ public class FacadeAutor {
 	public void atualizarAutor(Autor autorDto, Long id) throws Exception {
 		
 		Autor autorUpdate = recuperarAutor(id);
-		
+				
 		autorUpdate.setNome(autorDto.getNome());
 		
 		if(autorDto.getLivros().size() > 0) {
