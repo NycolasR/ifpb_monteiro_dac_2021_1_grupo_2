@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TB_EDITORA")
@@ -22,9 +24,13 @@ public class Editora {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+	@NotBlank(message = "Digite o nome da editora")
+	@Size(min = 2, message = "O nome deve conter no mínimo {min} caracteres")
 	@Column(name = "NOME")
 	private String nome;
 	
+	@NotBlank(message = "Digite o nome da cidade da editora")
+	@Size(min = 2, message = "O nome deve conter no mínimo {min} caracteres")
 	@Column(name = "CIDADE")
 	private String cidade;
 	
