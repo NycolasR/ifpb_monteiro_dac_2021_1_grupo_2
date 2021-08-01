@@ -27,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		System.out.println("Senha 3: " + new BCryptPasswordEncoder().encode("senha3"));
 //		System.out.println("Senha 4: " + new BCryptPasswordEncoder().encode("senha4"));
 //		System.out.println("Senha 5: " + new BCryptPasswordEncoder().encode("senha5"));
-//
 //	}
 
 	
@@ -35,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.GET, "/perfil/{id}").hasAuthority("CLIENT")
-			.antMatchers(HttpMethod.POST, "/pedido_cancelar/{id}").hasAuthority("CLIENT")
 			.antMatchers(HttpMethod.GET, "/endereco_form/{id}").hasAuthority("CLIENT")
 			.antMatchers(HttpMethod.GET, "/administracao").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/autor").hasAuthority("ADMIN")
@@ -48,7 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/inicio").permitAll()
 			.anyRequest().permitAll()
 			.and()
-			.formLogin();
+			.formLogin()
+			.defaultSuccessUrl("/inicio", true)
+			.and()
+			.csrf().disable()
+			.logout().logoutSuccessUrl("/inicio");
 	}
 	
 	@Override

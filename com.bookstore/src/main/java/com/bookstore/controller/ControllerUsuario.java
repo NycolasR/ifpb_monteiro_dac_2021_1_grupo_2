@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.bookstore.facades.FacadeEnderecos;
-import com.bookstore.facades.FacadePedido;
 import com.bookstore.model.Endereco;
 import com.bookstore.model.Pedido;
 import com.bookstore.model.Usuario;
@@ -25,16 +23,8 @@ import com.bookstore.service.UsuarioService;
 public class ControllerUsuario {
 	
 	@Autowired
-	private FacadeEnderecos facadeEnderecos;
-	
-	@Autowired 
-	private FacadePedido facadePedidos; 
-	
-	@Autowired
 	private UsuarioService usuarioService;
-	
-	private Long idUsuario;
-	
+
 	@GetMapping("/perfil/{id}")
 	public String recuperarPaginaPerfil(@PathVariable("id") Long id, Model model) {
 	
@@ -47,8 +37,6 @@ public class ControllerUsuario {
 			enderecos = usuario.getEnderecos();
 			pedidos = usuario.getPedidos();
 			
-			this.idUsuario = id;
-			
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("enderecos", enderecos);
 			model.addAttribute("pedidos", pedidos);
@@ -59,11 +47,6 @@ public class ControllerUsuario {
 		return "user/profile";
 	}
 	
-	@GetMapping("/voltar")
-	public String voltarParaTelaPerfil() {
-		return "redirect:/perfil/" + idUsuario;
-	}
-	 
 	@PostMapping("/usuario_update/{id}")
 	public String atualizarUsuario(@Valid @ModelAttribute Usuario usuario, BindingResult result, @PathVariable("id") Long id) {
 		
@@ -84,88 +67,5 @@ public class ControllerUsuario {
 		}
 		
 		return "redirect:/perfil/" + id;
-	}
-	
-	
-	@GetMapping("/endereco_form/{id}")
-	public String resgatarFormulario(@PathVariable("id") Long id, Model model) {
-		
-		try {
-			if(id > 0) {//os ids cadastrados no banco são maiores que 0
-				model.addAttribute("endereco", facadeEnderecos.recuperarEndereco(id));
-			} else {
-				model.addAttribute("endereco", facadeEnderecos.recuperarEnderecoNulo());
-			}
-				
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "enderecos/enderecos_form";
-	}
-	
-	@PostMapping("/endereco_form_add")
-	public String criarEndereco(@Valid @ModelAttribute Endereco endereco, BindingResult result){
-		
-		if(result.hasErrors()) {
-			return "enderecos/enderecos_form";
-		}
-		
-		Usuario usuario;
-		try {
-			usuario = usuarioService.recuperarPeloId(idUsuario);
-			usuario.addEndereco(endereco);
-			
-			facadeEnderecos.criarEndereco(endereco);
-			
-			usuarioService.atualizar(usuario);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "redirect:/perfil/" + idUsuario;
-	}
-	
-	@PostMapping("/endereco_form_update/{id}")
-	public String atualizarEndereco(@Valid @ModelAttribute Endereco endereco, BindingResult result, @PathVariable("id") Long id) {
-		
-		if(result.hasErrors()) {
-			return "enderecos/enderecos_form";
-		}
-		
-		try {
-			facadeEnderecos.atualizarEndereco(endereco, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "redirect:/perfil/" + idUsuario;
-	}
-	
-	@PostMapping("/endereco_form_remove/{id}")
-	public String removerEndereco(@PathVariable("id") Long id) {
-		
-		try {
-			facadeEnderecos.removerEndereco(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "redirect:/perfil/" + idUsuario;
-	}
-	
-	@PostMapping("/pedido_cancelar/{id}")
-	public String cancelarPedido(@PathVariable("id") Long id) {
-		Pedido pedido;
-		try {
-			pedido = facadePedidos.recuperarPedido(id);
-			pedido.setStatusPedido("CANCELADO");
-			
-			facadePedidos.atualizarPedido(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "redirect:/perfil/" + idUsuario;
 	}
 }

@@ -34,6 +34,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "TB_USUARIO")
 public class Usuario implements UserDetails {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 97970437639126611L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
@@ -57,12 +62,12 @@ public class Usuario implements UserDetails {
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable( name = "TB_USUARIO_PERFIL",
-	   joinColumns = @JoinColumn(name = "FK_USUARIO"), 
+	   joinColumns = @JoinColumn(name = "FK_USUARIO"),
 	   inverseJoinColumns = @JoinColumn(name = "FK_PERFIL"))
 	private List<Perfil> perfis = new ArrayList<Perfil>();
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "USUARIO_FK", nullable = false)
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "USUARIO_FK")
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "usuario")

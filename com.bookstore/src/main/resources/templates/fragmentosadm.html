@@ -16,13 +16,11 @@
                     <h3 class="fw-bold d-inline-block">Livraria Turing</h3>
                     <h5 th:text="${nomepagina}">Administração</h5>
                 </a>
-                <form action="#">
-                    <button 
-                        class="btn btn-outline-dark "
-                        type="submit">
-                        Sair
-                    </button>
-                </form>
+                <a 
+                    class="btn btn-outline-dark "
+                    th:href="@{/logout}">
+                    Sair
+                </a>
             </div>
         </nav>
         <ul class="nav nav-fill">

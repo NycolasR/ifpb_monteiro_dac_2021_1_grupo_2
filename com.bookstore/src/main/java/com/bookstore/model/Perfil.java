@@ -22,7 +22,9 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 @Table(name = "TB_PERFIL")
 public class Perfil implements GrantedAuthority {
-	
+
+	private static final long serialVersionUID = -7008932640209485151L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

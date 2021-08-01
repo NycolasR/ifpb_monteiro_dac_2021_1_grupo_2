@@ -31,12 +31,23 @@
                 </button>
 
                 <div id="navbarExpand" class="collapse navbar-collapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="!isAuthenticated()">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><h6>Entrar</h6></a>
+                            <a class="nav-link" href="/login"><h6>Entrar</h6></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><h6>Criar Conta</h6></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                            <a class="nav-link" th:href="@{/administracao}"><h6>Painel do Administrador</h6></a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAuthority('CLIENT')">
+                            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/perfil/{id}(id=${usuario.id})}"><h6>Meu perfil</h6></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"><h6>Sair</h6></a>
                         </li>
                     </ul>
 
