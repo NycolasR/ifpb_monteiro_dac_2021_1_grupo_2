@@ -141,7 +141,7 @@
                             
                             <form 
                                 class="row g-3 pb-4 needs-validation" 
-                                th:object="${usuario}" 
+                                th:object="${usuario}"
                                 method="POST"
                             >
                                 <div class="col-12">
@@ -165,7 +165,8 @@
                                         class="invalid-feedback"
                                         th:if="${#fields.hasErrors('nome')}"
                                         th:errors="*{nome}"
-                                    >Erros nome
+                                    >
+                                        Erros nome
                                     </div>
                                 </div>
     
@@ -191,7 +192,8 @@
                                         class="invalid-feedback"
                                         th:if="${#fields.hasErrors('email')}"
                                         th:errors="*{email}"
-                                    >Erros email
+                                    >
+                                        Erros email
                                     </div>
                                 </div>
                                 

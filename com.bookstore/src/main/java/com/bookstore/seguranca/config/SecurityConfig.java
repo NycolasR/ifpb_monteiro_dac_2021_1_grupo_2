@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/livro").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/livroform/{id}").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/inicio").permitAll()
+			.antMatchers(HttpMethod.GET, "/cadastre-se").permitAll()
 			.anyRequest().permitAll()
 			.and()
 			
