@@ -1,5 +1,6 @@
 package com.bookstore.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,17 @@ public class LivroService {
 	 * Método usado para salvar no banco de dados um novo registro de Livro
 	 * @param livro Objeto que se deseja salvar no banco de dados.
 	 */
-	public void salvarLivro(Livro livro) {
+	public void salvarLivro(Livro livro) throws Exception{
+		
+		if(livro.getAnoPublicacao() > LocalDate.now().getYear()) {
+			throw new Exception("Insira um ano válido");
+		}
+		
+		if(livro.getAutores().size() == 0 || livro.getCategorias().size() == 0) {
+			
+			throw new Exception("Escolha autor(es) e categoria(s)");
+		}
+		
 		livroRepository.save(livro);
 	}
 	
@@ -107,8 +118,9 @@ public class LivroService {
 	 * Tem o comportamento igual ao metodo salvarLivro(Livro livro), mas foi criado
 	 * para maior coesão e acessibilidade nesta classe de CRUD. 
 	 * @param livro Livro que se deseja atualizar no banco de dados.
+	 * @throws Exception 
 	 */
-	public void atualizarLivro(Livro livro) {
+	public void atualizarLivro(Livro livro) throws Exception {
 		salvarLivro(livro);
 	}
 	

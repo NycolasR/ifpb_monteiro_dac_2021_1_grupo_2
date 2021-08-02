@@ -29,8 +29,9 @@ public class FacadeLivros {
 	 * Método usado para criar um livro 
 	 * @param livro livro a ser adicionado ao banco
 	 * @return O registro de Livro pronto
+	 * @throws Exception 
 	 */
-	public Long criarLivro(Livro livro) {
+	public Long criarLivro(Livro livro) throws Exception {
 		
 //		Livro livro = new Livro(isbn, titulo, descricao, preco, edicao, anoPublicacao, qntdEstoque);
 		livroService.salvarLivro(livro);
@@ -85,7 +86,7 @@ public class FacadeLivros {
 	 */
 	public Livro recuperarLivroNulo() {
 		
-		return new Livro(0L, "", "", new BigDecimal(0.00), 1, 1, 0);
+		return new Livro("", "", "", new BigDecimal(0.00), 1, 1, 0);
 	}
 	
 	/**
