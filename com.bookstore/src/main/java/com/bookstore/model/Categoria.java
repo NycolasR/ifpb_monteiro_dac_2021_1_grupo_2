@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * 
@@ -28,6 +30,8 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank(message = "Digite o nome da categoria")
+	@Size(min = 2, message = "O nome deve conter no mínimo {min} caracteres")
 	@Column(name = "NOME")
 	private String nome;
 	
