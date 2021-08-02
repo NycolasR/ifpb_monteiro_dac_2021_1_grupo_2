@@ -3,69 +3,80 @@
 <head th:replace="~{fragmentos :: head('CRUD Livros')}"></head>
 <body>
     <main>
+
+        <div th:if="${excecao} != '' " class="alert alert-danger w-50 ms-auto me-auto mt-1" role="alert" th:text="${excecao}" ></div>
+
         <form action="#" th:object="${livro}" method="POST" class="w-50 me-auto ms-auto mt-5 mb-5">
 
-            <div class="text-center">
+            <div th:if="${isAdicionar} != 0" class="text-center">
                 <label for="capaLivro" class="form-label">Capa do livro</label>
                 <br>
-                <img th:if="${isAdicionar} != 0" th:src="@{*{urlImagemCapa}}" alt="" width="300" height="400" 
+                <img th:src="@{*{urlImagemCapa}}" alt="" width="300" height="400" 
                 class="img-fluid mt-1 mb-1 border border-success p-2" id="capaLivro">
             </div>
             
             <br>
 
             <label for="inputtitulo" class="form-label">Título</label>
-            <input type="text" class="form-control border border-success " id="inputtitulo" th:field="*{titulo}" required>
+            <input type="text" class="form-control border border-success " id="inputtitulo" th:field="*{titulo}" th:errorclass="is-invalid" required>
+            <div class="invalid-feedback"th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Erros titulo</div>
 
-            <label for="inputUrlImagem" class="form-label">Imagem(url)</label>
+            <label for="inputUrlImagem" class="form-label mt-1">Imagem(url)</label>
             <input type="url" class="form-control border border-success" id="inputUrlImagem" pattern="https?://.*"
-            th:field="*{urlImagemCapa}" placeholder="url da imagem na web" required>
+            th:field="*{urlImagemCapa}" placeholder="url da imagem na web" th:errorclass="is-invalid" required>
+            <div class="invalid-feedback"th:if="${#fields.hasErrors('urlImagemCapa')}" th:errors="*{urlImagemCapa}">Erros url</div>
             
-            <div class="row">
+            <div class="row mt-1">
 
                 <div class="col-12 col-md-6">
                     <label for="inputisbn" class="form-label">ISBN</label>
-                    <input type="number" class="form-control border border-success" id="inputisbn" 
-                    th:field="*{isbn}" min="1" required>
+                    <input type="text" class="form-control border border-success" id="inputisbn" 
+                    th:field="*{isbn}" th:errorclass="is-invalid" required>
+                    <div class="invalid-feedback"th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Erros isbn</div>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label for="inputedicao" class="form-label">Edição</label>
                     <input type="number" class="form-control border border-success" id="inputedicao" 
-                    th:field="*{edicao}" min="1" required>
+                    th:field="*{edicao}" min="1" th:errorclass="is-invalid" required>
+                    <div class="invalid-feedback"th:if="${#fields.hasErrors('edicao')}" th:errors="*{edicao}">Erros edicao</div>
                 </div>
 
             </div>
             
-            <div class="row">
+            <div class="row mt-1">
 
                 <div class="col-12 col-md-4">
                     <label for="inputanopublicacao" class="form-label">Ano de Publicação</label>
                     <input type="number" class="form-control border border-success" id="inputanopublicacao" 
-                    th:field="*{anoPublicacao}"  min="1" required>
+                    th:field="*{anoPublicacao}"  min="1" th:errorclass="is-invalid" required>
+                    <div class="invalid-feedback"th:if="${#fields.hasErrors('anoPublicacao')}" th:errors="*{anoPublicacao}">Erros ano</div>
                 </div>
 
                 <div class="col-12 col-md-4">
                     <label for="inputpreco" class="form-label">Preço</label>
                     <input type="text" class="form-control border border-success" id="inputpreco" 
-                    th:field="*{preco}"  min="1" required>
+                    th:field="*{preco}"  min="1" th:errorclass="is-invalid" required>
+                    <div class="invalid-feedback"th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}">Erros preco</div>
                 </div>
 
                 <div class="col-12 col-md-4">
                     <label for="inputQuantidadeEmEstoque" class="form-label">Quantidade em estoque</label>
                     <input type="number" class="form-control border border-success" id="inputQuantidadeEmEstoque" 
-                    th:field="*{quantidadeEmEstoque}" min="0" required>
+                    th:field="*{quantidadeEmEstoque}" min="0" th:errorclass="is-invalid" required>
+                    <div class="invalid-feedback"th:if="${#fields.hasErrors('quantidadeEmEstoque')}" th:errors="*{quantidadeEmEstoque}">Erros quantidadeEmEstoque</div>
                 </div>
 
             </div>
  
-            <label for="inputdescricao" class="form-label">Descrição</label>
-            <textarea class="form-control border border-success" aria-label="With textarea" id="inputdescricao" th:field="*{descricao}" required></textarea>
- 
-            <div class="row">
+            <label for="inputdescricao" class="form-label mt-1">Descrição</label>
+            <textarea class="form-control border border-success" aria-label="With textarea" id="inputdescricao" th:field="*{descricao}" th:errorclass="is-invalid" required></textarea>
+            <div class="invalid-feedback"th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}">Erros descricao</div>
+
+            <div class="row mt-1">
 
                 <div class="col">
-                    <div class="accordion border border-success mt-2" id="accordionAutores">
+                    <div class="accordion border border-success mt-2" id="accordionAutores" >
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAutores" aria-expanded="false" aria-controls="collapseAutores">
@@ -88,7 +99,7 @@
                 </div>
 
                 <div class="col">
-                    <div class="accordion border border-success mt-2" id="accordionCategorias">
+                    <div class="accordion border border-success mt-2" id="accordionCategorias" >
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategorias" aria-expanded="false" aria-controls="collapseCategorias">
@@ -97,14 +108,14 @@
                             </h2>
                             <div id="collapseCategorias" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionAutores">
                                 <div class="accordion-body border border-success m-2 rounded">
-                                    <div class="list-group" th:each="categoria : *{categorias}">
+                                    <div class="list-group" th:each="categoria : *{categorias}" >
                                         <h6 class="list-group-item list-group-item-action border border-success rounded"th:id="${categoria.id}" th:text="${categoria.nome}"></h6>
                                     </div>
                                 </div>
                               </div>
                         </div>
                     </div>
-        
+                    
                     <button type="button" class="btn btn-outline-success mt-2" data-bs-toggle="modal" data-bs-target="#modalListarCategorias"> 
                         Adiconar categoria
                     </button>
@@ -184,11 +195,12 @@
                 </div>
             </div>
 
-            <label for="selecionareditoras" class="form-label">Editora</label>
+            <label for="selecionareditoras" class="form-label mt-1">Editora</label>
             <div class="row border border-success rounded ms-1 me-1 p-2">
-                <select id="selecionareditoras" class="form-select col me-2" th:field="*{editora.id}" required>
+                <select id="selecionareditoras" class="form-select col me-2" th:field="*{editora.id}" th:errorclass="is-invalid" required>
                     <option th:each="editora : ${editoras}" th:value="${editora.id}" th:text="${editora.nome}"></option>
                 </select>
+                <div class="invalid-feedback"th:if="${#fields.hasErrors('editora')}" th:errors="*{editora}">Erros autores</div>
                 <button type="button" class="btn btn-outline-success mt-2 col" data-bs-toggle="modal" data-bs-target="#modalAdicionarEditora">
                     Nova editora
                 </button>
