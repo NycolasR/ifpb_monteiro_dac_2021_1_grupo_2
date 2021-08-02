@@ -5,10 +5,12 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.imageio.stream.FileImageInputStream;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +46,7 @@ public class ControllerCrudLivros {
 
 	private Livro livroListas;
 	private Long idInformado;
+	private String excecao = "";
 
 	@GetMapping("/livro")
 	public String recuperarLivros(Model model) {
@@ -70,6 +73,8 @@ public class ControllerCrudLivros {
 				livro = facadeLivros.recuperarLivro(id);
 				livroListas = livro;
 				idInformado = id;
+				excecao = "";
+				
 				
 			} else {
 				
@@ -77,7 +82,10 @@ public class ControllerCrudLivros {
 				livro = facadeLivros.recuperarLivroNulo();
 				livroListas = livro;
 				idInformado = id;
+				excecao = "";
 			}
+			
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,6 +94,8 @@ public class ControllerCrudLivros {
 			livro = facadeLivros.recuperarLivroNulo();
 			livroListas = livro;
 			idInformado = id;
+			excecao = e.getMessage();
+			
 		}
 		
 		autoresParaSalvar = livro.getAutores();
@@ -99,6 +109,7 @@ public class ControllerCrudLivros {
 		model.addAttribute("editoras", facadeEditoras.recuperarEditoras());
 		model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
 		model.addAttribute("isAdicionar", idInformado);
+		model.addAttribute("excecao",excecao);
 
 		return "livros/livrosform";
 	}
@@ -188,13 +199,25 @@ public class ControllerCrudLivros {
 	}
 	
 	@PostMapping("/livroformadd")
-	public String criarLivro(@ModelAttribute Livro livro) {
+	public String criarLivro(@Valid @ModelAttribute Livro livro, BindingResult result, Model model) {
 				
 		try {
 			
 			livro.setEditora(facadeEditoras.recuperarEditora(livro.getEditora().getId()));
 			livro.setAutores(autoresParaSalvar);
 			livro.setCategorias(categoriasParaSalvar);
+			
+			if (result.hasErrors()) {
+				model.addAttribute("autores", facadeAutor.recuperarAutores());
+				model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
+				model.addAttribute("categorias", facadeCategoria.recuperarCategorias());
+				model.addAttribute("categoria", facadeCategoria.recuperarCategoriaNula());
+				model.addAttribute("editoras", facadeEditoras.recuperarEditoras());
+				model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
+				model.addAttribute("isAdicionar", 0);
+				model.addAttribute("excecao",excecao);
+				return "livros/livrosform";
+			}
 			
 			Long id = facadeLivros.criarLivro(livro);
 			
@@ -203,16 +226,30 @@ public class ControllerCrudLivros {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			livroListas = livro;
+			excecao = e.getMessage();
+			return"redirect:/livroform/-1";
 		}
 		
 		return "redirect:/livro";
 	}
 	
 	@PostMapping("/livroformupdate")
-	public String atualizarLivro(@ModelAttribute Livro livro) {
+	public String atualizarLivro(@Valid @ModelAttribute Livro livro, BindingResult result, Model model) {
 		
 		livro.setAutores(autoresParaSalvar);
 		livro.setCategorias(categoriasParaSalvar);
+		
+		if (result.hasErrors()) {
+			model.addAttribute("autores", facadeAutor.recuperarAutores());
+			model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
+			model.addAttribute("categorias", facadeCategoria.recuperarCategorias());
+			model.addAttribute("categoria", facadeCategoria.recuperarCategoriaNula());
+			model.addAttribute("editoras", facadeEditoras.recuperarEditoras());
+			model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
+			model.addAttribute("excecao",excecao);
+			return "livros/livrosform";
+		}
 		
 		try {
 			
@@ -222,6 +259,9 @@ public class ControllerCrudLivros {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			livroListas = livro;
+			excecao = e.getMessage();
+			return"redirect:/livroform/-1";
 		}
 		
 		
@@ -229,12 +269,14 @@ public class ControllerCrudLivros {
 	}
 	
 	@PostMapping("/livroformremove")
-	public String removerLivro() {
+	public String removerLivro(Model model) {
 		
 		try {
 			facadeLivros.deletarLivro(idInformado);
 		} catch (Exception e) {
 			e.printStackTrace();
+			excecao = e.getMessage();
+			return"redirect:/livroform/-1";
 		}
 		
 		return "redirect:/livro";

@@ -63,6 +63,7 @@ public class ControllerCrudAutores {
 				
 		if(result.hasErrors()) {
 			model.addAttribute("isAdicionar", 0);
+			model.addAttribute("excecao","");
 			return "autores/autoresform";
 		}
 		
@@ -76,9 +77,10 @@ public class ControllerCrudAutores {
 	}
 	
 	@PostMapping("/autorformupdate")
-	public String atualizarAutor(@Valid @ModelAttribute Autor autor, BindingResult result) {
+	public String atualizarAutor(@Valid @ModelAttribute Autor autor, BindingResult result, Model model) {
 		
 		if(result.hasErrors()) {
+			model.addAttribute("excecao","");
 			return "autores/autoresform";
 		}
 		
