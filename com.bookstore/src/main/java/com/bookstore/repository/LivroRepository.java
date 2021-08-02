@@ -31,6 +31,12 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 	@Query(value = "delete from tb_livro_autor where fk_livro = :id", nativeQuery = true)
 	public void deletarLivroAutor(@Param ("id") Long id);
 	
+	//Essa query realiza a remoção de uma instância na tabela Livro_Categoria
+	@Transactional
+	@Modifying
+	@Query(value = "delete from tb_livro_categoria where fk_livro = :id", nativeQuery = true)
+	public void deletarLivroCategoria(@Param ("id") Long id);
+	
 	//Essa query realiza a remoção de todas as instâncias na tabela Livro_Autor
 	@Transactional
 	@Modifying

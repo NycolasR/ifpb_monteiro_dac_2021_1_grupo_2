@@ -1,8 +1,11 @@
 package com.bookstore.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,8 @@ public class ControllerCrudEditoras {
 
 	@Autowired
 	private FacadeEditoras facadeEditoras;
+	
+	private Long idFornecido;
 
 	@GetMapping("/editora")
 	public String recuperarEditoras(Model model) {
@@ -33,22 +38,36 @@ public class ControllerCrudEditoras {
 			if (id > 0) {// os ids cadastrados no banco são maiores que 0
 
 				model.addAttribute("editora", facadeEditoras.recuperarEditora(id));
+				idFornecido = id;
 
 			} else {
 
 				model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
+				idFornecido = id;
 			}
+			
+			model.addAttribute("excecao","");
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
+			model.addAttribute("excecao",e.getMessage());
 		}
+		
+		model.addAttribute("isAdicionar", idFornecido);
 
 		return "editoras/editorasform";
 	}
 
 	@PostMapping("/editoraformadd")
-	public String criarEditora(@ModelAttribute Editora editora) {
+	public String criarEditora(@Valid @ModelAttribute Editora editora, BindingResult result, Model model) {
 
+		if(result.hasErrors()) {
+			model.addAttribute("isAdicionar", 0);
+			model.addAttribute("excecao","");
+			return "editoras/editorasform";
+		}
+		
 		try {
 			facadeEditoras.criarEditora(editora);
 		} catch (Exception e) {
@@ -58,25 +77,32 @@ public class ControllerCrudEditoras {
 		return "redirect:/editora";
 	}
 
-	@PostMapping("/editoraformupdate/{id}")
-	public String atualizarEditora(@ModelAttribute Editora editoraDto, @PathVariable("id") Long id) {
+	@PostMapping("/editoraformupdate")
+	public String atualizarEditora(@Valid @ModelAttribute Editora editoraDto, BindingResult result, Model model) {
 
+		if(result.hasErrors()) {
+			model.addAttribute("excecao","");
+			return "editoras/editorasform";
+		}
+		
 		try {
-			facadeEditoras.atualizarEditora(editoraDto, id);
+			facadeEditoras.atualizarEditora(editoraDto, idFornecido);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "redirect:/editoraform/"+idFornecido;
 		}
 
 		return "redirect:/editora";
 	}
 
-	@PostMapping("/editoraformremove/{id}")
-	public String removerEditora(@PathVariable("id") Long id) {
+	@PostMapping("/editoraformremove")
+	public String removerEditora() {
 
 		try {
-			facadeEditoras.removerEditora(id);
+			facadeEditoras.removerEditora(idFornecido);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "redirect:/editoraform/"+idFornecido;
 		}
 
 		return "redirect:/editora";

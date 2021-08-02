@@ -3,20 +3,23 @@
 <head th:replace="~{fragmentos :: head('CRUD Autores')}"></head>
 <body>
     <main>
-        <form action="#" th:object="${autor}" class="text-center" method="POST">
+        <div th:if="${excecao} != '' " class="alert alert-danger w-50 ms-auto me-auto mt-1" role="alert" th:text="${excecao}" ></div>
+
+        <form action="#" th:object="${autor}" class="text-center needs-validation" method="POST">
             <label for="inputnomeautor" class="form-label">Nome do Autor</label>
-            <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomeautor" th:field="*{nome}" required>
+            <input type="text" class="form-control border border-success w-50 ms-auto me-auto" id="inputnomeautor" th:field="*{nome}" th:errorclass="is-invalid" required>
+            <div class="invalid-feedback"th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Erros nome</div>
             <br>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "*{nome} != '' ? true" 
+            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnadicionar" th:hidden = "${isAdicionar} != 0 ? true" 
             th:formaction="@{/autorformadd}">
                 Adicionar
             </button>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "*{nome} == '' ? true" 
-            th:formaction="@{/autorformupdate/{id}(id=*{ID})}">
+            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnatualizar" th:hidden = "${isAdicionar} == 0 ? true" 
+            th:formaction="@{/autorformupdate}">
                 Atualizar
             </button>
-            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "*{nome} == '' ? true" 
-            th:formaction="@{/autorformremove/{id}(id=*{ID})}">
+            <button type="submit" class="btn btn-outline-success me-1 ms-1 mb-1" id="btnremover" th:hidden = "${isAdicionar} == 0 ? true" 
+            th:formaction="@{/autorformremove}">
                 Remover
             </button>
         </form>

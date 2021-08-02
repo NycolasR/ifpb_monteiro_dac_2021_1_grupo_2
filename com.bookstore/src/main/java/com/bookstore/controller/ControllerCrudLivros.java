@@ -1,15 +1,16 @@
 package com.bookstore.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
+
+import javax.imageio.stream.FileImageInputStream;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,7 @@ public class ControllerCrudLivros {
 
 	private Livro livroListas;
 	private Long idInformado;
+	private String excecao = "";
 
 	@GetMapping("/livro")
 	public String recuperarLivros(Model model) {
@@ -71,6 +73,8 @@ public class ControllerCrudLivros {
 				livro = facadeLivros.recuperarLivro(id);
 				livroListas = livro;
 				idInformado = id;
+				excecao = "";
+				
 				
 			} else {
 				
@@ -78,24 +82,34 @@ public class ControllerCrudLivros {
 				livro = facadeLivros.recuperarLivroNulo();
 				livroListas = livro;
 				idInformado = id;
+				excecao = "";
 			}
-
-			autoresParaSalvar = livro.getAutores();
-			categoriasParaSalvar = livro.getCategorias();
 			
 			
-			model.addAttribute("livro", livro);
-			model.addAttribute("autores", facadeAutor.recuperarAutores());
-			model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
-			model.addAttribute("categorias", facadeCategoria.recuperarCategorias());
-			model.addAttribute("categoria", facadeCategoria.recuperarCategoriaNula());
-			model.addAttribute("editoras", facadeEditoras.recuperarEditoras());
-			model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
-			model.addAttribute("isAdicionar", idInformado);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			autoresParaSalvar = null;
+			livro = facadeLivros.recuperarLivroNulo();
+			livroListas = livro;
+			idInformado = id;
+			excecao = e.getMessage();
+			
 		}
+		
+		autoresParaSalvar = livro.getAutores();
+		categoriasParaSalvar = livro.getCategorias();
+		
+		model.addAttribute("livro", livro);
+		model.addAttribute("autores", facadeAutor.recuperarAutores());
+		model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
+		model.addAttribute("categorias", facadeCategoria.recuperarCategorias());
+		model.addAttribute("categoria", facadeCategoria.recuperarCategoriaNula());
+		model.addAttribute("editoras", facadeEditoras.recuperarEditoras());
+		model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
+		model.addAttribute("isAdicionar", idInformado);
+		model.addAttribute("excecao",excecao);
 
 		return "livros/livrosform";
 	}
@@ -160,6 +174,18 @@ public class ControllerCrudLivros {
 		return "redirect:/livroform/-1";
 	}
 	
+	@PostMapping("/livroformcategoriaremove/{id}")
+	public String deletarCategoria(@PathVariable("id") Long id) {
+		
+		try {
+			facadeCategoria.removerCategoria(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/livroform/-1";
+	}
+	
 	@PostMapping("/livroformeditoraadd")
 	public String criarEditora(@ModelAttribute Editora editora) {
 		
@@ -173,22 +199,84 @@ public class ControllerCrudLivros {
 	}
 	
 	@PostMapping("/livroformadd")
-	public String criarLivro(@ModelAttribute Livro livro, @RequestParam("fileImagem") String file) {
+	public String criarLivro(@Valid @ModelAttribute Livro livro, BindingResult result, Model model) {
 				
 		try {
 			
 			livro.setEditora(facadeEditoras.recuperarEditora(livro.getEditora().getId()));
-			
-			livro.setImageFile(new File("C:\\Users\\Gabriel\\Documents\\"+file));
 			livro.setAutores(autoresParaSalvar);
 			livro.setCategorias(categoriasParaSalvar);
+			
+			if (result.hasErrors()) {
+				model.addAttribute("autores", facadeAutor.recuperarAutores());
+				model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
+				model.addAttribute("categorias", facadeCategoria.recuperarCategorias());
+				model.addAttribute("categoria", facadeCategoria.recuperarCategoriaNula());
+				model.addAttribute("editoras", facadeEditoras.recuperarEditoras());
+				model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
+				model.addAttribute("isAdicionar", 0);
+				model.addAttribute("excecao",excecao);
+				return "livros/livrosform";
+			}
 			
 			Long id = facadeLivros.criarLivro(livro);
 			
 			facadeAutor.salvarLivroAosAutores(autoresParaSalvar, facadeLivros.recuperarLivro(id));
+			facadeCategoria.salvarLivroAsCategorias(categoriasParaSalvar, facadeLivros.recuperarLivro(id));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			livroListas = livro;
+			excecao = e.getMessage();
+			return"redirect:/livroform/-1";
+		}
+		
+		return "redirect:/livro";
+	}
+	
+	@PostMapping("/livroformupdate")
+	public String atualizarLivro(@Valid @ModelAttribute Livro livro, BindingResult result, Model model) {
+		
+		livro.setAutores(autoresParaSalvar);
+		livro.setCategorias(categoriasParaSalvar);
+		
+		if (result.hasErrors()) {
+			model.addAttribute("autores", facadeAutor.recuperarAutores());
+			model.addAttribute("autor",facadeAutor.recuperarAutorNulo());
+			model.addAttribute("categorias", facadeCategoria.recuperarCategorias());
+			model.addAttribute("categoria", facadeCategoria.recuperarCategoriaNula());
+			model.addAttribute("editoras", facadeEditoras.recuperarEditoras());
+			model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
+			model.addAttribute("excecao",excecao);
+			return "livros/livrosform";
+		}
+		
+		try {
+			
+			facadeLivros.atualizarLivro(livro, idInformado);
+			facadeAutor.salvarLivroAosAutores(autoresParaSalvar, facadeLivros.recuperarLivro(idInformado));
+			facadeCategoria.salvarLivroAsCategorias(categoriasParaSalvar, facadeLivros.recuperarLivro(idInformado));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			livroListas = livro;
+			excecao = e.getMessage();
+			return"redirect:/livroform/-1";
+		}
+		
+		
+		return "redirect:/livro";
+	}
+	
+	@PostMapping("/livroformremove")
+	public String removerLivro(Model model) {
+		
+		try {
+			facadeLivros.deletarLivro(idInformado);
+		} catch (Exception e) {
+			e.printStackTrace();
+			excecao = e.getMessage();
+			return"redirect:/livroform/-1";
 		}
 		
 		return "redirect:/livro";

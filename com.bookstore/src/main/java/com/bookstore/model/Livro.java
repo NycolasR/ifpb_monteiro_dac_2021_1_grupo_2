@@ -1,12 +1,9 @@
 package com.bookstore.model;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,11 +11,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.ISBN;
+import org.hibernate.validator.constraints.ISBN.Type;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Table(name = "TB_LIVRO")
@@ -28,28 +33,43 @@ public class Livro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "Insira a quantidade desse livro no estoque")
+	@PositiveOrZero(message = "Insira apenas números positivos")
 	@Column(name = "QNTD_ESTOQUE")
 	private Integer quantidadeEmEstoque;
 	
+	@ISBN(type = Type.ISBN_13, message = "Informe um ISBN válido")
+	@NotBlank(message = "Digite o ISBN")
 	@Column(name = "ISBN")
-	private Long isbn;
+	private String isbn;
 
+	@NotBlank(message = "Digite o título do livro")
+	@Size(min = 2, message = "O título deve conter no mínimo {min} caracteres")
 	@Column(name = "TITULO")
 	private String titulo;
 
-	@Column(name = "DESCRICAO")
+	@NotBlank(message = "Descreva algo sobre o livro")
+	@Size(min = 5, message = "A descrição deve conter no mínimo {min} caracteres")
+	@Column(name = "DESCRICAO", columnDefinition = "LONGTEXT")
 	private String descricao;
 
+	@NotNull(message = "Insira o preço")
+	@Positive(message = "O preço deve ser maior que zero")
 	@Column(name = "PRECO")
 	private BigDecimal preco;
 
-	@Lob
-	@Column(name="IMAGEM_CAPA", columnDefinition="mediumblob")
-	private byte[] imagemCapa;
+	@NotBlank(message = "Adicione a URL da imagem da capa do livro")
+	@URL(message = "Insira uma url correta")
+	@Column(name="IMAGEM_CAPA")
+	private String urlImagemCapa;
 
+	@NotNull(message = "Insira a edição")
+	@Positive(message = "A edição deve ser maior que zero")
 	@Column(name = "EDICAO")
 	private Integer edicao;
-
+	
+	@NotNull(message = "Insira o ano de publicação")
+	@Min(value = 1000, message = "Insira um ano de publicação válido")
 	@Column(name = "ANO_PUBLICACAO")
 	private Integer anoPublicacao;
 	
@@ -59,19 +79,19 @@ public class Livro {
 //	@Column(name = "CATEGORIA", length = 30)
 //	@JoinTable(name = "TB_CATEGORIA")
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "LIVRO_FK")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros")
 	private Set<Categoria> categorias = new LinkedHashSet<Categoria>();
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "livros")
 	private Set<Autor> autores = new LinkedHashSet<Autor>();
 	
+	@NotNull(message = "Escolha uma editora")
 	@ManyToOne
 	@JoinColumn(name = "EDITORA_FK")
 	private Editora editora;
 
 	public Livro(
-			Long isbn,
+			String isbn,
 			String titulo,
 			String descricao,
 			BigDecimal preco,
@@ -99,10 +119,10 @@ public class Livro {
 		this.id = id;
 	}
 
-	public Long getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
-	public void setIsbn(Long iSBN) {
+	public void setIsbn(String iSBN) {
 		isbn = iSBN;
 	}
 
@@ -119,26 +139,14 @@ public class Livro {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public byte[] getImagemCapa() {
-		return imagemCapa;
-	}
-	public void setImagemCapa(byte[] imagemCapa) {
-		this.imagemCapa = imagemCapa;
-	}
 	
-	public void setImageFile(File imgFile) {
-		byte[] img = new byte[(int) imgFile.length()];
+	
+	public String getUrlImagemCapa() {
+		return urlImagemCapa;
+	}
 
-		try {
-			FileInputStream fileInputStream = new FileInputStream(imgFile);
-			fileInputStream.read(img);
-			fileInputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		setImagemCapa(img);
+	public void setUrlImagemCapa(String urlImagemCapa) {
+		this.urlImagemCapa = urlImagemCapa;
 	}
 
 	public Integer getEdicao() {

@@ -65,7 +65,7 @@ public class CategoriaService {
 		Optional<Categoria> deletado = recuperarPeloId(id);
 		
 		if(deletado.isPresent()) { // Verifica se há um objeto no Optional
-			categoriaRepository.delete(deletado.get());
+			categoriaRepository.deletarCategoria(deletado.get().getId());
 		}
 	}
 	

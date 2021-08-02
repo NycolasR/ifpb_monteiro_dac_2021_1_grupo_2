@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * 
@@ -30,6 +32,8 @@ public class Autor {
 	@Column(name = "ID")
 	private Long ID;
 	
+	@NotBlank(message = "Digite o nome do autor")
+	@Size(min = 3, message = "O nome deve conter no mínimo {min} caracteres")
 	@Column(name = "NOME")
 	private String nome;
 	
@@ -40,7 +44,11 @@ public class Autor {
 	private Set<Livro> livros = new LinkedHashSet<Livro>();
 	
 	public void adicionarLivro(Livro livro) {
-		livros.add(livro);
+		
+		if(!livros.contains(livro)) {
+			livros.add(livro);
+		}
+		
 	}
 
 	public Autor(String nome) {
