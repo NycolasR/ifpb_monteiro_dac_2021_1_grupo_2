@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ControllerTelaErro {
+public class ControllerLogin {
 
-	@GetMapping("/error")
-	public String retornarPaginaErro() {
-		
-		return "error";
+	@GetMapping("/login")
+	public String resgatarPaginaLogin() {
+		return "login/login";
 	}
+
 }

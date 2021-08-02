@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+			.antMatchers("/resources/**", "/webjars/**").permitAll()
 			.antMatchers(HttpMethod.GET, "/perfil/{id}").hasAuthority("CLIENT")
 			.antMatchers(HttpMethod.GET, "/endereco_form/{id}").hasAuthority("CLIENT")
 			.antMatchers(HttpMethod.GET, "/administracao").hasAuthority("ADMIN")
@@ -46,8 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/inicio").permitAll()
 			.anyRequest().permitAll()
 			.and()
+			
 			.formLogin()
+			.loginPage("/login")
+			.permitAll()
 			.defaultSuccessUrl("/inicio", true)
+//			.and()
+//			.rememberMe()
+			
 			.and()
 			.csrf().disable()
 			.logout().logoutSuccessUrl("/inicio");
