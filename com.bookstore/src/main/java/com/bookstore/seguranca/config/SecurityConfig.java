@@ -28,7 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		System.out.println("Senha 4: " + new BCryptPasswordEncoder().encode("senha4"));
 //		System.out.println("Senha 5: " + new BCryptPasswordEncoder().encode("senha5"));
 //	}
-
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -36,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/resources/**", "/webjars/**").permitAll()
 			.antMatchers(HttpMethod.GET, "/perfil/{id}").hasAuthority("CLIENT")
 			.antMatchers(HttpMethod.GET, "/endereco_form/{id}").hasAuthority("CLIENT")
-			.antMatchers(HttpMethod.GET, "/administracao").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.GET, "/administracao/*").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/autor").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/autorform/{id}").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/editora").hasAuthority("ADMIN")

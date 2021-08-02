@@ -5,23 +5,23 @@
 		- Categorias
 		
 - Login e Cadastro
-	- Tela de Login
+	- Tela de Login (FEITO)
 	- Tela de cadastro
 
-- CRUD
-	- CRUD de Livros
-		- Create
-		- Read
-		- Read All
-		- Update
-		- Delete
+- CRUD (FEITO)
+	- CRUD de Livros (FEITO)
+		- Create (FEITO)
+		- Read (FEITO)
+		- Read All (FEITO)
+		- Update (FEITO)
+		- Delete (FEITO)
 	
-	- CRUD de Editora
-		- Create
-		- Read
-		- Read All
-		- Update
-		- Delete
+	- CRUD de Editora (FEITO)
+		- Create (FEITO)
+		- Read (FEITO)
+		- Read All (FEITO)
+		- Update (FEITO)
+		- Delete (FEITO)
 	
 	- CRUD de Autores (FEITO)
 		- Create (FEITO)
@@ -30,23 +30,23 @@
 		- Update (FEITO)
 		- Delete (FEITO)
 	
-	- CRUD de FormaPagamento
-		- Select (btn habilitar)
-		- Read All (lista)
-		- Delete (btn desabilitar)
+	- CRUD de FormaPagamento (FEITO)
+		- Select (btn habilitar) (FEITO)
+		- Read All (lista) (FEITO)
+		- Delete (btn desabilitar) (FEITO)
 
 - USUÁRIO COMUM
-	- Tela de Perfil
-		- CRUD de endereços
-			- Create
-			- Read
-			- Read All
-			- Update
-			- Delete
+	- Tela de Perfil (FEITO)
+		- CRUD de endereços (FEITO)
+			- Create (FEITO)
+			- Read (FEITO)
+			- Read All (FEITO)
+			- Update (FEITO)
+			- Delete (FEITO)
 			
-		- Próprio CRUD
-			- Read
-			- Update
+		- Próprio CRUD (FEITO)
+			- Read (FEITO)
+			- Update (FEITO)
 			
 		- Carrinho de Compras (pedido não finalizado)
 			- Add item
@@ -55,9 +55,9 @@
 			- Editar quantidade de itens
 			- Delete (um item)
 			
-		- Meus Pedidos
-			- Read All
-			- Delete
+		- Meus Pedidos  (FEITO)
+			- Read All (FEITO)
+			- Cancel (FEITO)
 
 - Extras
 	- Promoção
