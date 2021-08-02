@@ -1,6 +1,7 @@
 package com.bookstore.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,12 +14,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 
@@ -28,8 +32,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "TB_USUARIO")
-public class Usuario {
+public class Usuario implements UserDetails {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 97970437639126611L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
@@ -44,15 +53,21 @@ public class Usuario {
 	private String email;
 	
 	@Size(min = 6, max = 8, message = "A senha deve conter algo entre 6 e 8 caracteres.")
-	@Column(name = "SENHA")
+	@Column(name = "SENHA", columnDefinition = "TEXT")
 	private String senha;
 	
-	@NotNull(message = "Você deve informar se o usuário é um administrador ou não.")
-	@Column(name = "ADMINISTRADOR")
-	private boolean isAdmin;
+//	@NotNull(message = "Você deve informar se o usuário é um administrador ou não.")
+//	@Column(name = "ADMINISTRADOR")
+//	private boolean isAdmin;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "USUARIO_FK", nullable = false)
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable( name = "TB_USUARIO_PERFIL",
+	   joinColumns = @JoinColumn(name = "FK_USUARIO"),
+	   inverseJoinColumns = @JoinColumn(name = "FK_PERFIL"))
+	private List<Perfil> perfis = new ArrayList<Perfil>();
+	
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "USUARIO_FK")
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "usuario")
@@ -90,12 +105,20 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public boolean isAdmin() {
-		return isAdmin;
+//	public boolean isAdmin() {
+//		return isAdmin;
+//	}
+//
+//	public void setAdmin(boolean isAdmin) {
+//		this.isAdmin = isAdmin;
+//	}
+	
+	public List<Perfil> getPerfis() {
+		return perfis;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
 	}
 
 	public List<Endereco> getEnderecos() {
@@ -144,7 +167,42 @@ public class Usuario {
 			+ "\n	nome: " + nome 
 			+ "\n	email: " + email 
 			+ "\n	senha: " + senha 
-			+ "\n	administrador: " + isAdmin 
+//			+ "\n	administrador: " + isAdmin 
 			+ "\n}";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() { // Permissões desse usuário
+		return this.perfis;
+	}
+
+	@Override
+	public String getPassword() {
+		return senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true; // Impedindo que as contas expirem
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true; // Impedindo que as contas sejam bloqueadas 
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true; // Impedindo que as credenciais expirem
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true; // Mantendo as contas habilitadas
 	}
 }

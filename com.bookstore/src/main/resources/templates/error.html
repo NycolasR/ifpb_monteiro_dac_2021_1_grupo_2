@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="~{fragmentos :: head('Meu perfil')}"></head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+            <div class="container">
+
+                <a class="navbar-brand" href="#">
+					<img th:src="@{/images/logo.png}"  width="52" height="52" alt="">
+                    <h3 class="fw-bold d-inline-block">Livraria Turing</h3>
+                    <h5>Aconteceu um erro!</h5>
+                </a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/inicio}"><h6>Tela Inicial</h6></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row container mt-4 w-75 mx-auto border border-danger rounded">
+            <div class="col-12 text-center">
+                <h3 class="fw-bold my-3 text-danger">Oops!</h3>
+            </div>
+    
+            <div class="col-12 ">
+                <p>
+                    Lamentamos informar, mas parece que ocorreu um erro!
+                    Tente recarregar a página ou volte mais tarde. Desculpe o transtorno!
+                    <br>Você pode retornar à página principal clicando <a class="btn btn-outline-success" th:href="@{/inicio}">aqui!</a>
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+
+<footer th:replace="~{fragmentosadm :: footer}"></footer>
+</html>

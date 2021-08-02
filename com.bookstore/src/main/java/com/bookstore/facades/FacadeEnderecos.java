@@ -99,7 +99,7 @@ public class FacadeEnderecos {
 		enderecoService.atualizarEndereco(enderecoUpdate);
 	}
 	
-	public void removerAutor(Long id) throws Exception{
+	public void removerEndereco(Long id) throws Exception{
 		recuperarEndereco(id);
 		enderecoService.deletarEndereco(id);
 	}

@@ -39,9 +39,6 @@ public class FacadePedido {
 	private FacadeFormaPagamento facadeFormaPagamento;
 
 	@Autowired
-	private FacadeUsuarios facadeUsuarios;
-
-	@Autowired
 	private ItemPedidoService itemPedidoService;
 
 	@Autowired
@@ -129,6 +126,11 @@ public class FacadePedido {
 			pedidoService.atualizarPedido(pedido);
 		}
 
+	}
+	
+	public void atualizarPedido(Long id) throws Exception {
+		Pedido pedido = recuperarPedido(id);
+		pedidoService.atualizarPedido(pedido);
 	}
 
 	/**

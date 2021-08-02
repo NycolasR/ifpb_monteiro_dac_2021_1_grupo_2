@@ -9,6 +9,6 @@ public class ControllerTelaErro {
 	@GetMapping("/error")
 	public String retornarPaginaErro() {
 		
-		return "error/error";
+		return "error";
 	}
 }
