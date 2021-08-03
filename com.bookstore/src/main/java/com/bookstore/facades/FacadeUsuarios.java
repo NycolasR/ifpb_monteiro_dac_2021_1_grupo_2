@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bookstore.model.Endereco;
+import com.bookstore.model.Perfil;
 import com.bookstore.model.Usuario;
 import com.bookstore.service.UsuarioService;
 
@@ -29,20 +30,25 @@ public class FacadeUsuarios {
 	 * @return Um objeto(Usuario)
 	 * @throws Exception Caso já exista um usuario cadastrado com este endereço de email.
 	 */
-	public Usuario cadastrarUsuario(String nome, String email, String senha) throws Exception {
+	public Usuario cadastrarUsuario(
+			String nome, 
+			String email, 
+			String senha) throws Exception {
+		
+		if(estaPresenteNoBd(email))
+			throw new Exception("Não pode haver mais de um email cadastrado no sistema.");
+		
+		Perfil perfil = new Perfil();
+		perfil.setNomePerfil("CLIENT");
+		
 		Usuario usuarioTemp = new Usuario();
 		usuarioTemp.setNome(nome);
 		usuarioTemp.setEmail(email);
 		usuarioTemp.setSenha(senha);
-		
-		
-//		usuarioTemp.setAdmin(false);
-//		if(usuarioService.quantidadeDeUsuariosCadastrados() == 0) {
-//			usuarioTemp.setAdmin(true);
-//		}
+		usuarioTemp.addPerfil(perfil);
 		
 		usuarioService.salvar(usuarioTemp);
-		return usuarioService.recuperarPeloEmail(email);
+		return usuarioService.recuperarPeloId(usuarioTemp.getId());
 	}
 	
 	/**
@@ -72,11 +78,8 @@ public class FacadeUsuarios {
 	 * @param email Email a ser verificado.
 	 * @return Um valor booleano, se existe ou não um usuario cadastrado com o endereço de email.
 	 */
-	public boolean verificarExistencia(String email) {
+	public boolean estaPresenteNoBd(String email) {
 		return usuarioService.verificarExistencia(email);
 	}
-	
-	
-	
 }
  

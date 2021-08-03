@@ -29,6 +29,13 @@
                 th:object="${usuario}" 
                 method="POST"
             >
+            <div
+                th:if="${excecao} != '' "
+                class="col-12 alert alert-danger w-75 mx-auto text-center text-bould border border-danger" 
+                role="alert" 
+                th:text="${excecao}"
+            ></div>
+
                 <div class="col-12 col-sm-6">
                     <label 
                         for="inputEmail" 
@@ -38,7 +45,7 @@
 
                     <input
                         type="email" 
-                        class="form-control" 
+                        class="form-control border border-success" 
                         id="inputEmail"
                         th:field="*{email}"
                         th:errorclass="is-invalid"
@@ -68,13 +75,17 @@
 
                     <input 
                         type="text" 
-                        class="form-control" 
+                        class="form-control border border-success" 
                         id="inputNome"
                         th:field="*{nome}"
                         th:errorclass="is-invalid"
                         placeholder="Insira seu nome"
                         required
                     >
+
+                    <div class="valid-feedback">
+                        Este nome parece OK!
+                    </div>
 
                     <div
                         class="invalid-feedback"
@@ -93,11 +104,11 @@
                     </label>
                     <input 
                         type="password" 
-                        class="form-control" 
+                        class="form-control border border-success" 
                         id="inputSenha"
                         th:field="*{senha}"
                         th:errorclass="is-invalid"
-                        placeholder="Insira sua senha"
+                        placeholder="No mínimo 8 dígitos!"
                         required
                         onkeyup="compararSenhas();"
                     >
@@ -105,8 +116,13 @@
                     <div class="valid-feedback">
                         As senhas estão iguais.
                     </div>
-                    <div class="invalid-feedback">
-                        As senhas devem ser iguais.
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('senha')}"
+                        th:errors="*{senha}"
+                    >
+                        Erros senha
                     </div>
                 </div>
 
@@ -119,7 +135,7 @@
 
                     <input 
                         type="password" 
-                        class="form-control" 
+                        class="form-control border border-success" 
                         id="inputConfirmarSenha"
                         placeholder="Insira a mesma senha"
                         onkeyup="compararSenhas();"
@@ -129,15 +145,19 @@
                     <div class="valid-feedback">
                         As senhas estão iguais.
                     </div>
-                    <div class="invalid-feedback">
-                        As senhas devem ser iguais.
+
+                    <div 
+                        id="avisoSenhas" 
+                        class="form-text text-danger"
+                    >
+                        Para criar a conta, informe senhas idênticas.
                     </div>
                 </div>
 
                 <button 
                     id="btnCriarConta" 
                     class="btn btn-outline-success mt-4 mb-3 w-25 mx-auto"
-                    th:formaction="@{/cadastro}"
+                    th:formaction="@{/usuario_create}"
                     type="submit"
                     disabled
                 >
@@ -145,8 +165,7 @@
                 </button>
 
                 <a 
-                    class="btn btn-outline-danger mt-4 mb-3 w-25 mx-auto" 
-                    type="button"
+                    class="btn btn-outline-danger mt-4 mb-3 w-25 mx-auto"
                     th:href="@{/inicio}"
                 >
                     Cancelar
@@ -169,18 +188,12 @@
                 if(senha1 !== senha2) {
                     inputSenha.classList.remove("is-valid");
                     inputConfirmarSenha.classList.remove("is-valid");
-    
-                    inputSenha.classList.add("is-invalid");
-                    inputConfirmarSenha.classList.add("is-invalid");
-                    
+
                     btnCriarConta.disabled = true;
                 } else {
                     inputSenha.classList.add("is-valid");
                     inputConfirmarSenha.classList.add("is-valid");
-    
-                    inputSenha.classList.remove("is-invalid");
-                    inputConfirmarSenha.classList.remove("is-invalid");
-    
+
                     btnCriarConta.disabled = false;
                 }
             } else {
@@ -190,9 +203,6 @@
         }
 
         function removerClasses(input1, input2) {
-            inputSenha.classList.remove("is-invalid");
-            inputConfirmarSenha.classList.remove("is-invalid");
-
             inputSenha.classList.remove("is-valid");
             inputConfirmarSenha.classList.remove("is-valid");
         }

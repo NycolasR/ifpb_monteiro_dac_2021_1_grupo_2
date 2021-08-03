@@ -89,7 +89,7 @@ public class ControllerCrudEditoras {
 			facadeEditoras.atualizarEditora(editoraDto, idFornecido);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/editoraform/"+idFornecido;
+			return "redirect:/editoraform/" + idFornecido;
 		}
 
 		return "redirect:/editora";

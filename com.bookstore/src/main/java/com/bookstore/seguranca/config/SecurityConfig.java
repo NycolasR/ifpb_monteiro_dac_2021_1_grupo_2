@@ -20,20 +20,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AutenticacaoService autenticacaoService;
 	
-//	/** Para facilitar a geração de senha encriptada */
+	/** Para facilitar a geração de senha encriptada */
 //	public static void main(String[] args) {
-//		System.out.println("Senha 1: " + new BCryptPasswordEncoder().encode("senha1"));
-//		System.out.println("Senha 2: " + new BCryptPasswordEncoder().encode("senha2"));
-//		System.out.println("Senha 3: " + new BCryptPasswordEncoder().encode("senha3"));
-//		System.out.println("Senha 4: " + new BCryptPasswordEncoder().encode("senha4"));
-//		System.out.println("Senha 5: " + new BCryptPasswordEncoder().encode("senha5"));
+//		System.out.println("Senha 1: " + new BCryptPasswordEncoder().encode("123456789"));
+//		System.out.println("Senha 2: " + new BCryptPasswordEncoder().encode("senha234"));
+//		System.out.println("Senha 3: " + new BCryptPasswordEncoder().encode("senha345"));
+//		System.out.println("Senha 4: " + new BCryptPasswordEncoder().encode("senha456"));
+//		System.out.println("Senha 5: " + new BCryptPasswordEncoder().encode("senha567"));
 //	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/resources/**", "/webjars/**").permitAll()
-			.antMatchers(HttpMethod.GET, "/perfil/{id}").hasAuthority("CLIENT")
+			.antMatchers(HttpMethod.GET, "/perfil").hasAuthority("CLIENT")
 			.antMatchers(HttpMethod.GET, "/endereco_form/{id}").hasAuthority("CLIENT")
 			.antMatchers(HttpMethod.GET, "/administracao/*").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/autor").hasAuthority("ADMIN")

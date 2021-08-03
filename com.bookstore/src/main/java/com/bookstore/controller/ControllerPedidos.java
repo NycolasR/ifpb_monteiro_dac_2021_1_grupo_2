@@ -17,7 +17,7 @@ public class ControllerPedidos {
 	private FacadePedido facadePedidos; 
 
 	@PostMapping("/pedido_cancelar/{id}")
-	public String cancelarPedido(@PathVariable("id") Long id, @AuthenticationPrincipal Usuario usuario) {
+	public String cancelarPedido(@PathVariable("id") Long id) {
 		Pedido pedido;
 		try {
 			pedido = facadePedidos.recuperarPedido(id);
@@ -28,7 +28,7 @@ public class ControllerPedidos {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/perfil/" + usuario.getId();
+		return "redirect:/perfil";
 	}
 	
 }
