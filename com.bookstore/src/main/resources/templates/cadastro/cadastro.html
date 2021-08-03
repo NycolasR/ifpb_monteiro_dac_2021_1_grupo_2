@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <head th:replace="~{fragmentos :: head('Crie sua Conta!')}"></head>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+            <div class="container">
+
+                <a class="navbar-brand" href="#">
+					<img th:src="@{/images/logo.png}"  width="52" height="52" alt="">
+                    <h3 class="fw-bold d-inline-block">Livraria Turing</h3>
+                    <h5>Página de Cadastro</h5>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="container mt-4 w-75">
+            <h4 class="fw-bold mb-5">
+                Insira seus dados para criar uma nova conta!
+            </h4>
+
+            <form 
+                class="row g-3 pb-4 border border-success rounded needs-validation"
+                th:object="${usuario}" 
+                method="POST"
+            >
+            <div
+                th:if="${excecao} != '' "
+                class="col-12 alert alert-danger w-75 mx-auto text-center text-bould border border-danger" 
+                role="alert" 
+                th:text="${excecao}"
+            ></div>
+
+                <div class="col-12 col-sm-6">
+                    <label 
+                        for="inputEmail" 
+                        class="form-label">
+                        Seu E-mail
+                    </label>
+
+                    <input
+                        type="email" 
+                        class="form-control border border-success" 
+                        id="inputEmail"
+                        th:field="*{email}"
+                        th:errorclass="is-invalid"
+                        placeholder="exemplo@exemplo.com"
+                        required
+                    >
+
+                    <div class="valid-feedback">
+                        Este e-mail parece OK!
+                    </div>
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}"
+                    >
+                        Erros email
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label 
+                        for="inputNome" 
+                        class="form-label">
+                        Seu nome
+                    </label>
+
+                    <input 
+                        type="text" 
+                        class="form-control border border-success" 
+                        id="inputNome"
+                        th:field="*{nome}"
+                        th:errorclass="is-invalid"
+                        placeholder="Insira seu nome"
+                        required
+                    >
+
+                    <div class="valid-feedback">
+                        Este nome parece OK!
+                    </div>
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('nome')}"
+                        th:errors="*{nome}"
+                    >
+                        Erros nome
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label 
+                        for="inputSenha" 
+                        class="form-label">
+                        Sua Senha
+                    </label>
+                    <input 
+                        type="password" 
+                        class="form-control border border-success" 
+                        id="inputSenha"
+                        th:field="*{senha}"
+                        th:errorclass="is-invalid"
+                        placeholder="No mínimo 8 dígitos!"
+                        required
+                        onkeyup="compararSenhas();"
+                    >
+
+                    <div class="valid-feedback">
+                        As senhas estão iguais.
+                    </div>
+
+                    <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('senha')}"
+                        th:errors="*{senha}"
+                    >
+                        Erros senha
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label 
+                        for="inputConfirmarSenha" 
+                        class="form-label">
+                        Confirme sua Senha
+                    </label>
+
+                    <input 
+                        type="password" 
+                        class="form-control border border-success" 
+                        id="inputConfirmarSenha"
+                        placeholder="Insira a mesma senha"
+                        onkeyup="compararSenhas();"
+                        required
+                    >
+
+                    <div class="valid-feedback">
+                        As senhas estão iguais.
+                    </div>
+
+                    <div 
+                        id="avisoSenhas" 
+                        class="form-text text-danger"
+                    >
+                        Para criar a conta, informe senhas idênticas.
+                    </div>
+                </div>
+
+                <button 
+                    id="btnCriarConta" 
+                    class="btn btn-outline-success mt-4 mb-3 w-25 mx-auto"
+                    th:formaction="@{/usuario_create}"
+                    type="submit"
+                    disabled
+                >
+                    Criar Conta
+                </button>
+
+                <a 
+                    class="btn btn-outline-danger mt-4 mb-3 w-25 mx-auto"
+                    th:href="@{/inicio}"
+                >
+                    Cancelar
+                </a>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function compararSenhas() {
+            var inputSenha = document.getElementById("inputSenha");
+            var senha1 = inputSenha.value;
+            
+            var inputConfirmarSenha = document.getElementById("inputConfirmarSenha");
+            var senha2 = inputConfirmarSenha.value;
+            
+            var btnCriarConta = document.getElementById("btnCriarConta");
+
+            if(senha1 != '' || senha2 != '') {
+                if(senha1 !== senha2) {
+                    inputSenha.classList.remove("is-valid");
+                    inputConfirmarSenha.classList.remove("is-valid");
+
+                    btnCriarConta.disabled = true;
+                } else {
+                    inputSenha.classList.add("is-valid");
+                    inputConfirmarSenha.classList.add("is-valid");
+
+                    btnCriarConta.disabled = false;
+                }
+            } else {
+                removerClasses(inputSenha, inputConfirmarSenha);
+            }
+
+        }
+
+        function removerClasses(input1, input2) {
+            inputSenha.classList.remove("is-valid");
+            inputConfirmarSenha.classList.remove("is-valid");
+        }
+    </script>
+
+    <footer th:replace="~{fragmentosadm :: footer}"></footer>
+</body>
+</html>

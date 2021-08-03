@@ -52,7 +52,7 @@ public class Usuario implements UserDetails {
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@Size(min = 6, max = 8, message = "A senha deve conter algo entre 6 e 8 caracteres.")
+	@Size(min = 8, message = "A senha deve ter, no mínimo, 8 caracteres.")
 	@Column(name = "SENHA", columnDefinition = "TEXT")
 	private String senha;
 	
@@ -60,7 +60,7 @@ public class Usuario implements UserDetails {
 //	@Column(name = "ADMINISTRADOR")
 //	private boolean isAdmin;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable( name = "TB_USUARIO_PERFIL",
 	   joinColumns = @JoinColumn(name = "FK_USUARIO"),
 	   inverseJoinColumns = @JoinColumn(name = "FK_PERFIL"))
@@ -119,6 +119,10 @@ public class Usuario implements UserDetails {
 
 	public void setPerfis(List<Perfil> perfis) {
 		this.perfis = perfis;
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		this.perfis.add(perfil);
 	}
 
 	public List<Endereco> getEnderecos() {

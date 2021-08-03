@@ -27,8 +27,8 @@ public class ControllerCrudEnderecos {
 	private FacadeEnderecos facadeEnderecos;
 
 	@GetMapping("/voltar")
-	public String voltarParaTelaPerfil(@AuthenticationPrincipal Usuario usuario) {
-		return "redirect:/perfil/" + usuario.getId();
+	public String voltarParaTelaPerfil() {
+		return "redirect:/perfil";
 	}
 
 	@GetMapping("/endereco_form/{id}")
@@ -66,14 +66,13 @@ public class ControllerCrudEnderecos {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/perfil/" + usuario.getId();
+		return "redirect:/perfil";
 	}
 	
 	@PostMapping("/endereco_form_update/{id}")
 	public String atualizarEndereco(
 			@Valid @ModelAttribute Endereco endereco, 
-			BindingResult result, @PathVariable("id") Long id,
-			@AuthenticationPrincipal Usuario usuario) {
+			BindingResult result, @PathVariable("id") Long id) {
 		
 		if(result.hasErrors()) {
 			return "enderecos/enderecos_form";
@@ -85,13 +84,12 @@ public class ControllerCrudEnderecos {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/perfil/" + usuario.getId();
+		return "redirect:/perfil";
 	}
 	
 	@PostMapping("/endereco_form_remove/{id}")
 	public String removerEndereco(
-			@PathVariable("id") Long id, 
-			@AuthenticationPrincipal Usuario usuario) {
+			@PathVariable("id") Long id) {
 		
 		try {
 			facadeEnderecos.removerEndereco(id);
@@ -99,7 +97,7 @@ public class ControllerCrudEnderecos {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/perfil/" + usuario.getId();
+		return "redirect:/perfil";
 	}
 	
 }

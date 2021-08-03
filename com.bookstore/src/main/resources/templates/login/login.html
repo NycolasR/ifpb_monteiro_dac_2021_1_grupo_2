@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <head th:replace="~{fragmentos :: head('Meu perfil')}"></head>
+    <head th:replace="~{fragmentos :: head('Fazer Login')}"></head>
 </head>
 <body>
     <header>
@@ -62,8 +62,19 @@
                     </div>
                 -->
                 
-                <button type="submit" class="btn btn-success btn-block mx-auto w-25">Entrar</button>
-                <button class="btn btn-outline-success btn-block mx-auto w-25">Criar Conta</button>
+                <button 
+                    type="submit" 
+                    class="btn btn-success btn-block mx-auto w-25"
+                >
+                    Entrar
+                </button>
+
+                <a 
+                    class="btn btn-outline-success btn-block mx-auto w-25"
+                    th:href="@{/cadastro}"
+                >
+                    Criar Conta
+                </a>
 
             </form>
         </div>
