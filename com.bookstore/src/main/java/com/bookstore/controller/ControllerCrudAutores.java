@@ -50,6 +50,7 @@ public class ControllerCrudAutores {
 			e.printStackTrace();
 			model.addAttribute("autor", facadeAutor.recuperarAutorNulo());
 			model.addAttribute("excecao",e.getMessage());
+			idFornecido = 0L;
 			
 		}
 		
@@ -103,6 +104,12 @@ public class ControllerCrudAutores {
 			e.printStackTrace();
 			return "redirect:/autorform/"+idFornecido;
 		}
+		
+		return "redirect:/autor";
+	}
+	
+	@GetMapping("/voltar_autor")
+	public String voltarParaTelaLivros() {
 		
 		return "redirect:/autor";
 	}
