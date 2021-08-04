@@ -36,16 +36,16 @@
         </div>
         
         <!--a div abaixo é utilizada para numeracao das páginas-->
-        <div class="mt-5 mb-3">
+        <div class="mt-5 mb-3" th:if="${fim} != null">
             <ul class="pagination pagination-sm justify-content-center">
                 <li class="page-item border border-success rounded-start">
-                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina/{id}(id=1)}">Inicio</a>
+                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina_livro/{id}(id=1)}">Inicio</a>
                 </li>
                 <li class="page-item border border-success" th:each="numero : ${numeracao}">
-                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina/{id}(id=${numero})}" th:text="${numero}"></a>
+                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina_livro/{id}(id=${numero})}" th:text="${numero}"></a>
                 </li>
                 <li class="page-item border border-success rounded-end">
-                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina/{id}(id=${fim})}">Fim</a>
+                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina_livro/{id}(id=${fim})}">Fim</a>
                 </li>
             </ul>
         </div>

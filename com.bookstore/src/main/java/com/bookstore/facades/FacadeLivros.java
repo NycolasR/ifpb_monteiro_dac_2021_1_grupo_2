@@ -55,13 +55,14 @@ public class FacadeLivros {
 	}
 
 	/**
-	 * Nyk depois escreve aqui o que esse método faz
-	 * @param campoOrdenacao
-	 * @param sortDirection
-	 * @param numeroPagina
-	 * @param inEstoque
-	 * @return
-	 * @throws Exception
+	 * Método que retorna uma página contendo 9 instâncias de livros
+	 * @param campoOrdenacao String que especifica a partir de qual atributo de Livro
+	 * a página será ordenada.
+	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
+	 * @param numeroPagina Número da página que se deseja obter os registros
+	 * @param inEstoque Boolean que especifica se a busca deve ser realizada apenas entre os livros em estoque ou em geral.
+	 * @return Uma página com os livros ordenados da forma especificada.
+	 * @throws Exception lança excecao caso a pagina não contenha nenhum livro
 	 */
 	public Page<Livro> paginarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, boolean inEstoque) throws Exception{
 		Page<Livro> pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);

@@ -298,7 +298,7 @@ public class ControllerCrudLivros {
 		return "redirect:/livro";
 	}
 	
-	@GetMapping("/ecolher_pagina/{id}")
+	@GetMapping("/ecolher_pagina_livro/{id}")
 	public String escolherPagina(@PathVariable Integer id) {
 		
 		pagina = id;

@@ -1,10 +1,13 @@
 package com.bookstore.facades;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.bookstore.model.Autor;
@@ -69,6 +72,24 @@ public class FacadeAutor {
 	}
 	
 	/**
+	 * Método que retorna uma página contendo 9 instâncias de autores
+	 * @param campoOrdenacao String que especifica a partir de qual atributo de autor
+	 * a página será ordenada.
+	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
+	 * @param numeroPagina Número da página que se deseja obter os registros
+	 * @return Uma página com os autores ordenados da forma especificada.
+	 * @throws Exception lança excecao caso a pagina não contenha nenhum autor
+	 */
+	public Page<Autor> paginarAutores(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina) throws Exception{
+		
+		Page<Autor> pagTemp = autorService.listarAutores(campoOrdenacao, sortDirection, numeroPagina);
+		if(!pagTemp.isEmpty()) {
+			return pagTemp;			
+		}
+		throw new Exception("Nenhum Autor cadastrado");
+	}
+	
+	/**
 	 * Método responsável por recuperar os autores cadastrados no banco
 	 * @return retorna a lista de autores cadastrados no banco
 	 */
@@ -105,6 +126,12 @@ public class FacadeAutor {
 		autorService.atualizarAutor(autorUpdate);
 	}
 	
+	/**
+	 * Método utilizado para adicionar um livro aos autores do mesmo
+	 * @param autores Set de autores para adicionar o livro
+	 * @param livro Livro a ser adicionado aos autores
+	 * @throws Exception lança excecao caso algum autor nao esteja cadastrado no banco de dados
+	 */
 	public void salvarLivroAosAutores(Set<Autor> autores, Livro livro) throws Exception{
 		
 		for(Autor autor : autores) {
@@ -112,5 +139,32 @@ public class FacadeAutor {
 			autor.adicionarLivro(livro);
 			atualizarAutor(autor, autor.getID());
 		}
+	}
+	
+	/**
+	 * Método responsável por ciar a numeração da navegação entre as paginações 
+	 * @param quantidadePaginas quantidade de páginas que existe 
+	 * @param pagina pagina escolhida/clicada pelo usuario
+	 * @return retorna um arrayList de Inteiros para gerar a nova paginação
+	 */
+	public List<Integer> criarPaginacao(Integer quantidadePaginas, Integer pagina) {
+				
+		List<Integer> paginas = new ArrayList<Integer>();
+		
+		if(pagina > 1) {
+			paginas.add(pagina-1);
+		}
+		
+		for(int i = pagina; i <= quantidadePaginas; i++) {
+						
+			paginas.add(i);
+			
+			if(paginas.size() == 5) {
+				i = quantidadePaginas+1;
+			}
+		}
+		
+		return paginas;
+		
 	}
 }
