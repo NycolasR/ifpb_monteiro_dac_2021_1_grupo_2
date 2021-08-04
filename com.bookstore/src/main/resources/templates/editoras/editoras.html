@@ -3,18 +3,24 @@
 <head th:replace="~{fragmentos :: head('CRUD Editoras')}"></head>
 <body>
     <header th:replace="~{fragmentosadm :: header('Editoras')}"></header>
-    <main class="ms-3 me-3 border border-3 border-success rounded">  
-
+    <main>
         <!--Essa div está relacionada ao listamento das editoras-->
-        <div class="bg-success m-3 pb-3 rounded w-50 ms-auto me-auto" >
-            <div class="text-center text-white pt-2 mb-2">Editoras</div>
-            <div class=" ms-3 me-3 navbar-nav-scroll rounded">
-                <div class="list-group" th:each="editora : ${editoras}">
-                    <a  href="#" th:href="@{/editoraform/{id}(id=${editora.id})}" class="list-group-item list-group-item-action" th:text="${editora.nome}"></a>
+        <div class="container">
+            <h3 class="text-center pt-2 mb-2 fw-bold mb-5">Editoras</h3>
+
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                <div class="col" th:each="editora : ${editoras}">
+                    <div class="card border border-success rounded">
+                        <a  href="#" th:href="@{/editoraform/{id}(id=${editora.id})}" class="text-dark text-decoration-none">
+                            <div class="card-body" th:text="${editora.nome}"></div>
+                        </a>
+                        
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
+        
         <!--Essa div está relacionada ao botão de adicionar-->
         <div class=" m-3 p-1 rounded text-center">
             <a href="#" th:href="@{/editoraform/{id}(id=0)}"><button type="button" class="btn btn-outline-success" >ADICIONAR</button></a>

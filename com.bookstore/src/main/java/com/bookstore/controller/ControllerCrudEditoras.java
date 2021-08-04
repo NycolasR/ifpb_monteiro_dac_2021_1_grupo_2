@@ -52,6 +52,7 @@ public class ControllerCrudEditoras {
 			e.printStackTrace();
 			model.addAttribute("editora", facadeEditoras.recuperarEditoraNula());
 			model.addAttribute("excecao",e.getMessage());
+			idFornecido = 0L;
 		}
 		
 		model.addAttribute("isAdicionar", idFornecido);
@@ -105,6 +106,12 @@ public class ControllerCrudEditoras {
 			return "redirect:/editoraform/"+idFornecido;
 		}
 
+		return "redirect:/editora";
+	}
+	
+	@GetMapping("/voltar_editora")
+	public String voltarParaTelaLivros() {
+		
 		return "redirect:/editora";
 	}
 

@@ -35,7 +35,7 @@ public class FacadeEditoras {
 		if(optional.isPresent())
 			return optional.get();
 		
-		throw new Exception("[ERRO] Editora não encontrada na base de dados.");
+		throw new Exception("Editora não encontrado na base de dados, retorne a página de administração");
 	}
 	
 	/**

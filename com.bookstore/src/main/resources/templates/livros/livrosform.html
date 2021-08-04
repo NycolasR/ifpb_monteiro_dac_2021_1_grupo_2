@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head th:replace="~{fragmentos :: head('CRUD Livros')}"></head>
 <body>
+    <header th:replace="~{fragmentos_forms :: header('/voltar_livro','Livros')}"></header>
     <main>
 
         <div th:if="${excecao} != '' " class="alert alert-danger w-50 ms-auto me-auto mt-1" role="alert" th:text="${excecao}" ></div>
@@ -307,7 +308,7 @@
                 </div>
             </div>
         </div>
-
     </main>
+    <footer th:replace="~{fragmentosadm :: footer}"></footer>
 </body>
 </html>

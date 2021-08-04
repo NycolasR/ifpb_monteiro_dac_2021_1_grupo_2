@@ -1,6 +1,7 @@
 package com.bookstore.facades;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,24 +51,25 @@ public class FacadeLivros {
 		if(optional.isPresent())
 			return optional.get();
 		
-		throw new Exception("[ERRO] Livro não encontrado na base de dados.");
+		throw new Exception("Livro não encontrado na base de dados, retorne a página de administração");
 	}
 
 	/**
-	 * Nyk depois escreve aqui o que esse método faz
-	 * @param campoOrdenacao
-	 * @param sortDirection
-	 * @param numeroPagina
-	 * @param inEstoque
-	 * @return
-	 * @throws Exception
+	 * Método que retorna uma página contendo 9 instâncias de livros
+	 * @param campoOrdenacao String que especifica a partir de qual atributo de Livro
+	 * a página será ordenada.
+	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
+	 * @param numeroPagina Número da página que se deseja obter os registros
+	 * @param inEstoque Boolean que especifica se a busca deve ser realizada apenas entre os livros em estoque ou em geral.
+	 * @return Uma página com os livros ordenados da forma especificada.
+	 * @throws Exception lança excecao caso a pagina não contenha nenhum livro
 	 */
 	public Page<Livro> paginarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, boolean inEstoque) throws Exception{
 		Page<Livro> pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);
 		if(!pagTemp.isEmpty()) {
 			return pagTemp;			
 		}
-		throw new Exception("[ERRO] Nenhum Livro cadastrado");
+		throw new Exception("Nenhum Livro cadastrado");
 	}
 	
 	/**
@@ -121,6 +123,33 @@ public class FacadeLivros {
 		livroUpdate.setQuantidadeEmEstoque(livroDto.getQuantidadeEmEstoque());
 		
 		livroService.atualizarLivro(livroUpdate);
+	}
+	
+	/**
+	 * Método responsável por ciar a numeração da navegação entre as paginações 
+	 * @param quantidadePaginas quantidade de páginas que existe 
+	 * @param pagina pagina escolhida/clicada pelo usuario
+	 * @return retorna um arrayList de Inteiros para gerar a nova paginação
+	 */
+	public List<Integer> criarPaginacao(Integer quantidadePaginas, Integer pagina) {
+				
+		List<Integer> paginas = new ArrayList<Integer>();
+		
+		if(pagina > 1) {
+			paginas.add(pagina-1);
+		}
+		
+		for(int i = pagina; i <= quantidadePaginas; i++) {
+						
+			paginas.add(i);
+			
+			if(paginas.size() == 5) {
+				i = quantidadePaginas+1;
+			}
+		}
+		
+		return paginas;
+		
 	}
 	
 	

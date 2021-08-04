@@ -60,7 +60,7 @@ public class LivroService {
 	 * @param campoOrdenacao String que especifica a partir de qual atributo de Livro
 	 * a página será ordenada.
 	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
-	 * @param numeroPagina Número da página que se deseja obter os registrs
+	 * @param numeroPagina Número da página que se deseja obter os registros
 	 * @param inEstoque Boolean que especifica se a busca deve ser realizada apenas entre os livros em estoque ou em geral.
 	 * @return Uma página com os livros ordenados da forma especificada.
 	 */
@@ -71,10 +71,10 @@ public class LivroService {
 		if(inEstoque) {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
 			// O metodo livrosEmEstoque retorna apenas os livros com estoque > 0.
-			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 5, sort));
+			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 9, sort));
 		}else {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
-			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 5, sort));
+			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 9, sort));
 		}
 		
 		return pagina;

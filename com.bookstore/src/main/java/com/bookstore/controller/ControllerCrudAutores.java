@@ -3,6 +3,8 @@ package com.bookstore.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,12 +23,22 @@ public class ControllerCrudAutores {
 	private FacadeAutor facadeAutor;
 	
 	private Long idFornecido;
+	private Integer pagina = 1;
 		
 
 	@GetMapping("/autor")
 	public String recuperarAutores(Model model) {
 		
-		model.addAttribute("autores", facadeAutor.recuperarAutores());
+		try {
+			Page<Autor> autores = facadeAutor.paginarAutores("nome", Direction.ASC, pagina);
+			
+			model.addAttribute("autores", autores);
+			model.addAttribute("numeracao", facadeAutor.criarPaginacao(autores.getTotalPages(), pagina));
+			model.addAttribute("fim", autores.getTotalPages());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return "autores/autores";
 	}
@@ -50,6 +62,7 @@ public class ControllerCrudAutores {
 			e.printStackTrace();
 			model.addAttribute("autor", facadeAutor.recuperarAutorNulo());
 			model.addAttribute("excecao",e.getMessage());
+			idFornecido = 0L;
 			
 		}
 		
@@ -103,6 +116,20 @@ public class ControllerCrudAutores {
 			e.printStackTrace();
 			return "redirect:/autorform/"+idFornecido;
 		}
+		
+		return "redirect:/autor";
+	}
+	
+	@GetMapping("/voltar_autor")
+	public String voltarParaTelaLivros() {
+		
+		return "redirect:/autor";
+	}
+	
+	@GetMapping("/ecolher_pagina_autor/{id}")
+	public String escolherPagina(@PathVariable Integer id) {
+		
+		pagina = id;
 		
 		return "redirect:/autor";
 	}
