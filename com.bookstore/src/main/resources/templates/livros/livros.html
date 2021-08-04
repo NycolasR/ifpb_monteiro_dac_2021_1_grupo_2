@@ -1,24 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head th:replace="~{fragmentos :: head('CRUD Livros')}"></head>
+<style>
+    .img-fit-contain{
+        width: 100%;
+        object-fit: contain;
+    }
+</style>
 <body>
 
     <header th:replace="~{fragmentosadm :: header('Livros')}"></header>
-    <main class="ms-3 me-3 border border-3 border-success rounded">  
-
+    <main>  
         <!--Essa div está relacionada ao listamento dos livros-->
-        <div class="bg-success m-3 pb-3 rounded w-50 ms-auto me-auto" >
-            <div class="text-center text-white pt-2 mb-2">Livros</div>
-            <div class=" ms-3 me-3 navbar-nav-scroll rounded">
-                <div class="list-group" th:each="livro : ${livros}">
-                    <a  href="#" th:href="@{/livroform/{id}(id=${livro.id})}" class="list-group-item list-group-item-action">
-                        <h5 th:text="${livro.titulo}"></h5>
-                        <div th:each="autor : ${livro.autores}">
-                            <h6 th:text="${autor.nome}"></h6>
+        <div class="container">
+            <h3 class="text-center pt-2 mb-2 fw-bold mb-5">Livros</h3>
+
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
+                <div class="col" th:each="livro : ${livros}">
+                    <div class="card border border-success rounded">
+                        <a  href="#" th:href="@{/livroform/{id}(id=${livro.id})}">
+                            <img th:src="@{${livro.urlImagemCapa}}" alt="" class="card-img-top img-fit-contain" height="225">
+                        </a>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title mb-3" th:text="${livro.titulo}"></h5>
+                            <div th:each="autor : ${livro.autores}">
+                                <h6 class="card-subtitle text-muted mb-2" th:text="${autor.nome}"></h6>
+                            </div>
+                            <h6 class="card-subtitle mb-2" th:text="${livro.editora.nome}"></h6>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
+
+        </div>
+        
+        <!--a div abaixo é utilizada para numeracao das páginas-->
+        <div class="mt-5 mb-3">
+            <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item border border-success rounded-start">
+                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina/{id}(id=1)}">Inicio</a>
+                </li>
+                <li class="page-item border border-success" th:each="numero : ${numeracao}">
+                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina/{id}(id=${numero})}" th:text="${numero}"></a>
+                </li>
+                <li class="page-item border border-success rounded-end">
+                    <a class="page-link text-success" href="#" th:href="@{/ecolher_pagina/{id}(id=${fim})}">Fim</a>
+                </li>
+            </ul>
         </div>
 
         <!--Essa div está relacionada ao botão de adicionar-->

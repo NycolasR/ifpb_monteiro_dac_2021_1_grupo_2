@@ -3,9 +3,9 @@
 <head th:replace="~{fragmentos :: head('CRUD Formas de Pagamento')}"></head>
 <body>
     <header th:replace="~{fragmentosadm :: header('Formas Pagamento')}"></header>
-    <main class="ms-3 me-3 border border-3 border-success rounded row"> 
+    <main class="ms-3 me-3 mt-3 row"> 
 
-        <div class="m-3 pb-3 rounded col" >
+        <div class="m-3 pb-3 border border-success rounded col" >
             <div class="text-center pt-2 mb-2">Formas de Pagamento </div>
             <div class=" ms-3 me-3 navbar-nav-scroll rounded">
                 <div class="card mb-1" th:each="tipoformapagamento : ${T(com.bookstore.model.TipoFormaPagamento).values()}">
