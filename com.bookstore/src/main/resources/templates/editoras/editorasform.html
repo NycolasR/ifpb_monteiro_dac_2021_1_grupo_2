@@ -2,7 +2,9 @@
 <html lang="pt-br">
     <head th:replace="~{fragmentos :: head('CRUD Editoras')}"></head>
     <body>
-        <main>
+        <header th:replace="~{fragmentos_forms :: header('/voltar_editora','Editoras')}"></header>
+        <main class="mt-5">
+
             <div th:if="${excecao} != '' " class="alert alert-danger w-50 ms-auto me-auto mt-1" role="alert" th:text="${excecao}" ></div>
 
             <form action="#" th:object="${editora}" class="text-center needs-validation" method="POST">
@@ -30,5 +32,6 @@
                 </button>
             </form>
         </main>
+        <footer th:replace="~{fragmentosadm :: footer}"></footer>
     </body>
 </html>
