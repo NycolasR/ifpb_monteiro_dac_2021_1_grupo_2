@@ -65,7 +65,7 @@ public class FacadeAutor {
 	    	return autor.get();
 	    }
 		
-		throw new Exception("[ERRO] Autor inexistente");
+		throw new Exception("Autor não encontrado na base de dados, retorne a página de administração");
 	}
 	
 	/**
