@@ -71,10 +71,10 @@ public class LivroService {
 		if(inEstoque) {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
 			// O metodo livrosEmEstoque retorna apenas os livros com estoque > 0.
-			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 5, sort));
+			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 1, sort));
 		}else {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
-			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 5, sort));
+			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 1, sort));
 		}
 		
 		return pagina;
