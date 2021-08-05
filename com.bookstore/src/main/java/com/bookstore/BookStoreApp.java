@@ -1,14 +1,8 @@
 package com.bookstore;
 
-import java.math.BigDecimal;
-import java.util.Scanner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-
-import com.bookstore.facades.FacadePedido;
 
 @SpringBootApplication
 public class BookStoreApp implements CommandLineRunner {

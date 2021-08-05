@@ -1,8 +1,6 @@
 package com.bookstore.facades;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import com.bookstore.model.RegistroVendas;
 import com.bookstore.service.ItemPedidoService;
 import com.bookstore.service.PedidoService;
 import com.bookstore.service.RegistroVendasService;
+
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
@@ -148,7 +147,7 @@ public class FacadePedido {
 
 		pedido.setFormaPagamento(formaPagamento);
 		pedido.setLocalDeEntrega(facadeEnderecos.recuperarEndereco(localDeEntrega));
-		pedido.setDataFechamento(Date.from(Instant.now()));
+		pedido.setDataFechamento(LocalDate.now());
 		pedido.setStatusPedido("Finalizado");
 		
 		registrarVendas(pedido);
@@ -207,5 +206,41 @@ public class FacadePedido {
 			throw new Exception("[ERRO] - Nenhum usuário cadastrado para o pedido");
 		}
 	}
+	
+	
+	public void cancelarPedido(Long id, String motivo) throws Exception {
+		// 1. Recuperar o pedido
+		Optional<Pedido> optional = pedidoService.recuperarPeloId(id);
+		Pedido pedido = null;
 
+		if(optional.isPresent())
+			pedido = optional.get();
+		else
+			throw new Exception("[ERRO] Pedido não encontrado na base de dados");
+
+		// 2. Verificar se pode ser cancelado (lim. 1 semana)
+		LocalDate dataPedido = pedido.getDataFechamento();
+		dataPedido = dataPedido.plusDays(7);
+		System.out.println(dataPedido);
+		
+		if(dataPedido.isBefore(LocalDate.now()))
+			throw new Exception("[ERRO] Não é possível cancelar pedidos depois de 7 dias de seu fechamento.");
+		else
+			System.out.println("PODE SER CANCELADO");
+
+		// 3. Restaurar os lvros no estoque
+		// 		3.1 Atualizar livros envolvidos
+		//		3.2 Remover itens pedidos do BD
+		
+		// 4. Alterar o status do pedido para CANCELADO
+		// e setar o motivo
+		
+//		REMOVER COMENTÁRIO DPS DOS TESTES
+//		pedido.setStatusPedido("CANCELADO");
+//		pedido.setMotivoCancelamento(motivo);
+		
+		// 5. Atualizar o pedido no bd
+//		pedidoService.atualizarPedido(pedido);
+	}
+	
 }

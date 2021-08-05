@@ -1,8 +1,7 @@
 package com.bookstore.model;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,8 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  * 
@@ -40,13 +38,13 @@ public class Pedido {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_CRIACAO")
-	private Date dataCriacao;
+	private LocalDate dataCriacao;
 	
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_FECHAMENTO")
-	private Date dataFechamento;
+	private LocalDate dataFechamento;
 	
 	@Column(name = "QUANTIDADE_ITENS")
 	private Integer qntdItens;
@@ -60,6 +58,10 @@ public class Pedido {
 	@ManyToOne
 	@JoinColumn(name = "ENDERECO_FK")
 	private Endereco localDeEntrega;
+	
+	@Size(min = 5, max = 30, message = "O motivo deve conter algo entre 5 e 30 caracteres.")
+	@Column(name = "MOTIVO_CANCELAMENTO")
+	private String motivoCancelamento;
 
 	@ManyToOne
 	@JoinColumn(name = "FORMA_PAGAMENTO_FK")
@@ -71,7 +73,7 @@ public class Pedido {
 	
 	public Pedido() {
 		
-		dataCriacao = Date.from(Instant.now());
+		dataCriacao = /*Date.from(Instant.now())*/ LocalDate.now();
 		statusPedido = "Não Finalizado";
 		qntdItens = 0;
 		valorItensTotal = new BigDecimal(0);
@@ -195,54 +197,63 @@ public class Pedido {
 	public void setLocalDeEntrega(Endereco localDeEntrega) {
 		this.localDeEntrega = localDeEntrega;
 	}
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getDataCriacao() {
+	
+	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
-	public void setDataCriacao(Date dataCriacao) {
+	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	public Date getDataFechamento() {
+	
+	public LocalDate getDataFechamento() {
 		return dataFechamento;
 	}
-	public void setDataFechamento(Date dataFechamento) {
+	public void setDataFechamento(LocalDate dataFechamento) {
 		this.dataFechamento = dataFechamento;
 	}
+	
 	public Integer getQntdItens() {
 		return qntdItens;
 	}
 	public void setQntdItens(Integer qntdItens) {
 		this.qntdItens = qntdItens;
 	}
+	
 	public BigDecimal getValorItensTotal() {
 		return valorItensTotal;
 	}
 	public void setValorItensTotal(BigDecimal valorItensTotal) {
 		this.valorItensTotal = valorItensTotal;
 	}
+	
 	public String getStatusPedido() {
 		return statusPedido;
 	}
 	public void setStatusPedido(String statusPedido) {
 		this.statusPedido = statusPedido;
 	}
+	
 	public FormaPagamento getFormaPagamento() {
 		return formaPagamento;
 	}
 	public void setFormaPagamento(FormaPagamento formaPagamento) {
 		this.formaPagamento = formaPagamento;
 	}
+	
 	public Set<ItemPedido> getItensPedidos() {
 		return itensPedidos;
 	}
@@ -250,6 +261,13 @@ public class Pedido {
 		this.itensPedidos = itensPedidos;
 	}
 	
+	public String getMotivoCancelamento() {
+		return motivoCancelamento;
+	}
+	public void setMotivoCancelamento(String motivoCancelamento) {
+		this.motivoCancelamento = motivoCancelamento;
+	}
+
 	@Override
 	public String toString() {
 		return "Dados do Pedido " + id + ": "

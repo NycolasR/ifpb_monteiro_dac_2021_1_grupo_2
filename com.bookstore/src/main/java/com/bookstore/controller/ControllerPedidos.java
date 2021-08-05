@@ -1,14 +1,17 @@
 package com.bookstore.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bookstore.facades.FacadePedido;
 import com.bookstore.model.Pedido;
-import com.bookstore.model.Usuario;
 
 @Controller
 public class ControllerPedidos {
@@ -17,18 +20,26 @@ public class ControllerPedidos {
 	private FacadePedido facadePedidos; 
 
 	@PostMapping("/pedido_cancelar/{id}")
-	public String cancelarPedido(@PathVariable("id") Long id) {
-		Pedido pedido;
+	public String cancelarPedido(
+			@Valid @ModelAttribute Pedido pedido, 
+			BindingResult result, 
+			@PathVariable("id") Long id,
+			Model model) {
+		
+		model.addAttribute("pedido", pedido);
+		
+		if(result.hasErrors()) {
+			return "cadastro/cadastro";
+		}
+		
 		try {
-			pedido = facadePedidos.recuperarPedido(id);
-			pedido.setStatusPedido("CANCELADO");
 			
-			facadePedidos.atualizarPedido(id);
+			facadePedidos.cancelarPedido(id, pedido.getMotivoCancelamento());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return "redirect:/perfil";
 	}
-	
 }

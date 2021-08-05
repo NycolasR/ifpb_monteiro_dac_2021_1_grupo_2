@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.bookstore.model.Autor;
-import com.bookstore.model.Livro;
 import com.bookstore.repository.AutorRepository;
+
 /**
  * 
  * @author NPG (nome dado a equipe que esta desenvolvendo esse sistema)
