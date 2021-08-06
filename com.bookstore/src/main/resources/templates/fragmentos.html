@@ -70,5 +70,59 @@
             </div>
         </nav>
     </header>
+
+    <section th:fragment="dados_adicionais_pedido(${pedido})" class="sessaoDadosAdicionais">
+        <ul class="list-group text-white">
+            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                <div class="ms-2 me-auto">
+                    <div class="d-flex justify-content-start align-itens-center">
+                        <div class="fw-bold">
+                            <h6 th:text="'Endereço selecionado: ' + ${pedido.localDeEntrega.rua} + ' nº ' +  ${pedido.localDeEntrega.numero}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                <div class="ms-2 me-auto">
+                    <div class="d-flex justify-content-start align-itens-center">
+                        <div class="fw-bold">
+                            <h6 th:text="'Quantidade total de livros: ' + ${pedido.qntdItens}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                <div class="ms-2 me-auto">
+                    <div class="d-flex justify-content-start align-itens-center">
+                        <div class="fw-bold">
+                            <h6 th:text="'Status do Pedido: ' + ${pedido.statusPedido}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between bg-success">
+                <div class="ms-2 me-auto">
+                    <div class="d-flex justify-content-start align-itens-center">
+                        <div class="fw-bold">
+                            <h6 th:text="'Fechado em: ' + ${pedido.dataFechamento}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between bg-success">
+                <div class="ms-2 me-auto">
+                    <div class="d-flex justify-content-start align-itens-center">
+                        <div class="fw-bold">
+                            <h6 th:text="'Valor total: R$' + ${pedido.valorItensTotal}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
 </body>
 </html>
