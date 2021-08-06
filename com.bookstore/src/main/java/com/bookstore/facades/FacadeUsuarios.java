@@ -33,13 +33,14 @@ public class FacadeUsuarios {
 	public Usuario cadastrarUsuario(
 			String nome, 
 			String email, 
-			String senha) throws Exception {
+			String senha,
+			boolean isAdmin) throws Exception {
 		
 		if(estaPresenteNoBd(email))
 			throw new Exception("Não pode haver mais de um email cadastrado no sistema.");
 		
 		Perfil perfil = new Perfil();
-		perfil.setNomePerfil("CLIENT");
+		perfil.setNomePerfil(isAdmin ? "ADMIN" : "CLIENT");
 		
 		Usuario usuarioTemp = new Usuario();
 		usuarioTemp.setNome(nome);
