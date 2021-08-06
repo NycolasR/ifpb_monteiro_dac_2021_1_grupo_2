@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="~{fragmentos :: head('Cancelar Pedido')}"></head>
+<body>
+    <header th:replace="~{fragmentos_forms :: header('/voltar','Cancelar Pedido')}"></header>
+
+    <main>
+        <div class="container mt-4 w-75">
+            <h4 class="fw-bold mb-2">
+                Aqui você pode cancelar seus pedidos!
+            </h4>
+            <div class="col-12 p-3 mx-auto w-75 mb-3 alert alert-warning text-center border border-warning">
+                <h5 class="text-dark">Cuidado!</h5> 
+                <p class="text-dark">
+                    Você não pode cancelar um pedido 7 dias após o fechamento do mesmo.
+                </p>
+            </div>
+
+            <form 
+                action="#" 
+                th:object="${pedido}" 
+                class="row g-3 pb-4 mt-3 border border-success rounded needs-validation" 
+                method="POST"
+            >
+                <div
+                    th:if="${excecao} != '' "
+                    class="alert alert-danger text-center border border-danger col-12 p-3 w-75 ms-auto me-auto mt-1"
+                    role="alert"
+                >
+                    <h5>Não foi possível cancelar o pedido.</h5>
+                    <p th:text="${excecao}"></p>
+                    <p>
+                        Você pode retornar ao seu perfil clicando
+                        <a th:href="@{/perfil}" class="btn btn-outline-dark">
+                            aqui.
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-12">
+
+                    <label 
+                        for="inputMotivoCancelamento" 
+                        class="form-label">
+                        Deseja cancelar? Informe o motivo:
+                    </label>
+    
+                    <input 
+                        type="text" 
+                        class="form-control border border-success" 
+                        id="inputMotivoCancelamento"
+                        th:field="*{motivoCancelamento}"
+                        th:errorclass="is-invalid"
+                        placeholder="de 5 a 30 caracteres!"
+                        required
+                    >
+                        <div
+                            class="invalid-feedback"
+                            th:if="${#fields.hasErrors('motivoCancelamento')}"
+                            th:errors="${pedido.motivoCancelamento}"
+                        >
+                            Erros motivo
+                        </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="mb-3">
+                        Dados do pedido:
+                    </label>
+
+                    <section class="sessaoDadosAdicionais">
+                        <ul class="list-group text-white">
+                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                <div class="ms-2 me-auto">
+                                    <div class="d-flex justify-content-start align-itens-center">
+                                        <div class="fw-bold">
+                                            <h6 th:text="'Endereço selecionado: ' + ${pedido.localDeEntrega.rua} + ' nº ' +  ${pedido.localDeEntrega.numero}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+    
+                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                <div class="ms-2 me-auto">
+                                    <div class="d-flex justify-content-start align-itens-center">
+                                        <div class="fw-bold">
+                                            <h6 th:text="'Quantidade total de livros: ' + ${pedido.qntdItens}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+    
+                            <li class="list-group-item d-flex justify-content-between align-items-start bg-success">
+                                <div class="ms-2 me-auto">
+                                    <div class="d-flex justify-content-start align-itens-center">
+                                        <div class="fw-bold">
+                                            <h6 th:text="'Status do Pedido: ' + ${pedido.statusPedido}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+    
+                            <li class="list-group-item d-flex justify-content-between bg-success">
+                                <div class="ms-2 me-auto">
+                                    <div class="d-flex justify-content-start align-itens-center">
+                                        <div class="fw-bold">
+                                            <h6 th:text="'Fechado em: ' + ${pedido.dataFechamento}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+    
+                            <li class="list-group-item d-flex justify-content-between bg-success">
+                                <div class="ms-2 me-auto">
+                                    <div class="d-flex justify-content-start align-itens-center">
+                                        <div class="fw-bold">
+                                            <h6 th:text="'Valor total: R$' + ${pedido.valorItensTotal}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+
+                <button 
+                    type="submit" 
+                    class="btn btn-outline-danger mx-auto w-25 mb-2" id="btnremover"
+                    th:formaction="@{/pedido_cancelar/{id}(id=*{id})}"
+                    th:hidden = "${pedido.statusPedido} == 'CANCELADO' ? true"
+                >
+                    Cancelar Pedido <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="Cancelar">
+                </button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{fragmentosadm :: footer}"></footer>
+</body>
+</html>

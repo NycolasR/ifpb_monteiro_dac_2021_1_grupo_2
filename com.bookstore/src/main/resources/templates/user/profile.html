@@ -322,15 +322,14 @@
                                                     th:object="${pedido}" 
                                                     class="needs-validation" 
                                                     method="POST"
-                                                >
-                                                    <button 
-                                                        type="submit" 
+                                                >   
+                                                    <a
                                                         class="btn btn-outline-danger mx-auto mb-2" id="btnremover"
-                                                        th:formaction="@{/pedido_cancelar/{id}(id=*{id})}"
+                                                        th:href="@{/pedido_cancelar/{id}(id=*{id})}"
                                                         th:hidden = "${pedido.statusPedido} == 'CANCELADO' ? true"
                                                     >
                                                         Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="Cancelar">
-                                                    </button>
+                                                    </a>
 
                                                     <button 
                                                         type="submit" 
@@ -372,6 +371,16 @@
                                                             <div class="d-flex justify-content-start align-itens-center">
                                                                 <div class="fw-bold">
                                                                     <h6 th:text="'Status do Pedido: ' + ${pedido.statusPedido}"></h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="list-group-item d-flex justify-content-between bg-success">
+                                                        <div class="ms-2 me-auto">
+                                                            <div class="d-flex justify-content-start align-itens-center">
+                                                                <div class="fw-bold">
+                                                                    <h6 th:text="'Fechado em: ' + ${pedido.dataFechamento}"></h6>
                                                                 </div>
                                                             </div>
                                                         </div>

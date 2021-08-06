@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookstore.facades.FacadeCategoria;
 import com.bookstore.facades.FacadeLivros;
-import com.bookstore.model.Categoria;
 import com.bookstore.model.Livro;
 import com.bookstore.model.Usuario;
 
