@@ -73,10 +73,10 @@ public class LivroService {
 		if(inEstoque) {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
 			// O metodo livrosEmEstoque retorna apenas os livros com estoque > 0.
-			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 1, sort));
+			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 9, sort));
 		}else {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
-			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 1, sort));
+			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 9, sort));
 		}
 		
 		return pagina;
@@ -90,7 +90,7 @@ public class LivroService {
 	 */
 	public Page<Livro> listarLivrosFiltrados(List<Integer> categorias, Integer numeroPagina){
 							
-		Page<Livro> pagina = livroRepository.filtrarPorCategoria(categorias, PageRequest.of(--numeroPagina, 1));
+		Page<Livro> pagina = livroRepository.filtrarPorCategoria(categorias, PageRequest.of(--numeroPagina, 9));
 		
 		return pagina;
 	}
@@ -102,7 +102,7 @@ public class LivroService {
 	 */
 	public Page<Livro> listarLivrosBuscados(String stringDeBusca, Integer numeroPagina){
 		
-		Page<Livro> pagina = livroRepository.buscarPorTitulo("%"+stringDeBusca+"%", PageRequest.of(--numeroPagina, 1));
+		Page<Livro> pagina = livroRepository.buscarPorTitulo("%"+stringDeBusca+"%", PageRequest.of(--numeroPagina, 9));
 		
 		return pagina;
 	}
