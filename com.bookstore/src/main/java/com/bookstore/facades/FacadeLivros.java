@@ -152,10 +152,11 @@ public class FacadeLivros {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
+	public boolean livroExisteNoBd(Long id) {
+		if(id == null)
+			return false;
+		
+		Optional<Livro> optional = livroService.recuperarPeloId(id);
+		return optional.isPresent();
+	}
 }

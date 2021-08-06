@@ -3,6 +3,8 @@ package com.bookstore.facades;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.bookstore.model.FormaPagamento;
@@ -224,23 +226,33 @@ public class FacadePedido {
 		System.out.println(dataPedido);
 		
 		if(dataPedido.isBefore(LocalDate.now()))
-			throw new Exception("[ERRO] Não é possível cancelar pedidos depois de 7 dias de seu fechamento.");
+			throw new Exception("Não é possível cancelar pedidos depois de 7 dias de seu fechamento.");
 		else
 			System.out.println("PODE SER CANCELADO");
 
 		// 3. Restaurar os lvros no estoque
-		// 		3.1 Atualizar livros envolvidos
-		//		3.2 Remover itens pedidos do BD
+		Set<ItemPedido> itensPedidos = pedido.getItensPedidos();
+		ItemPedido[] itensPedidosArr = (ItemPedido[]) itensPedidos.toArray(new ItemPedido[itensPedidos.size()]);
 		
-		// 4. Alterar o status do pedido para CANCELADO
-		// e setar o motivo
+		for(int i = 0; i < itensPedidosArr.length; i++) {
+			// 3.1 Atualizar livros envolvidos
+			Livro livro = itensPedidosArr[i].getLivro();
+			
+			
+			livro.setQuantidadeEmEstoque(livro.getQuantidadeEmEstoque() + itensPedidosArr[i].getQuantidade());
+			
+			System.out.println(livro);
+			
+			if(facadeLivros.livroExisteNoBd(livro.getId()))
+				facadeLivros.atualizarLivro(livro, livro.getId());
+		}
 		
-//		REMOVER COMENTÁRIO DPS DOS TESTES
-//		pedido.setStatusPedido("CANCELADO");
-//		pedido.setMotivoCancelamento(motivo);
+		// 4. Alterar o status do pedido para CANCELADO e setar o motivo
+		pedido.setStatusPedido("CANCELADO");
+		pedido.setMotivoCancelamento(motivo);
 		
 		// 5. Atualizar o pedido no bd
-//		pedidoService.atualizarPedido(pedido);
+		pedidoService.atualizarPedido(pedido);
 	}
 	
 }

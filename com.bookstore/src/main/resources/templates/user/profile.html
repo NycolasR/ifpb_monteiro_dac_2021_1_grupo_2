@@ -323,42 +323,13 @@
                                                     class="needs-validation" 
                                                     method="POST"
                                                 >   
-                                                    <label 
-                                                        for="inputMotivoCancelamento" 
-                                                        class="form-label text-success">
-                                                        Deseja cancelar? Informe o motivo:
-                                                    </label>
-                    
-                                                    <input 
-                                                        type="text" 
-                                                        class="form-control border border-danger" 
-                                                        id="inputMotivoCancelamento"
-                                                        th:field="*{id}"
-                                                        th:errorclass="is-invalid"
-                                                        placeholder="de 5 a 30 caracteres!"
-                                                        required
-                                                    >
-                                                        <!--
-                                                    
-
-                                                        
-                                                        <div
-                                                            class="invalid-feedback"
-                                                            th:if="${#fields.hasErrors('motivoCancelamento')}"
-                                                            th:errors="${pedido.motivoCancelamento}"
-                                                        >
-                                                            Erros motivo
-                                                        </div>
-                                                    -->
-
-                                                    <button 
-                                                        type="submit" 
+                                                    <a
                                                         class="btn btn-outline-danger mx-auto mb-2" id="btnremover"
-                                                        th:formaction="@{/pedido_cancelar/{id}(id=*{id})}"
+                                                        th:href="@{/pedido_cancelar/{id}(id=*{id})}"
                                                         th:hidden = "${pedido.statusPedido} == 'CANCELADO' ? true"
                                                     >
                                                         Cancelar <img th:src="@{/images/cancelar-50.png}" width="25" height="25" alt="Cancelar">
-                                                    </button>
+                                                    </a>
 
                                                     <button 
                                                         type="submit" 
