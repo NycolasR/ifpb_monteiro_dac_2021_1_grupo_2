@@ -68,7 +68,7 @@ public class ControllerUsuario {
 		String senhaEncriptada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 		
 		try {
-			facadeUsuarios.cadastrarUsuario(usuario.getNome(), usuario.getEmail(), senhaEncriptada);
+			facadeUsuarios.cadastrarUsuario(usuario.getNome(), usuario.getEmail(), senhaEncriptada, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
