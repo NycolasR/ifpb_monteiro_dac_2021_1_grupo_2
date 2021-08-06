@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.bookstore.model.Categoria;
 import com.bookstore.model.Livro;
 import com.bookstore.repository.LivroRepository;
 
@@ -71,11 +73,36 @@ public class LivroService {
 		if(inEstoque) {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
 			// O metodo livrosEmEstoque retorna apenas os livros com estoque > 0.
-			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 9, sort));
+			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 1, sort));
 		}else {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
-			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 9, sort));
+			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 1, sort));
 		}
+		
+		return pagina;
+	}
+	
+	/**
+	 * Método utilizado para paginar Livros filtrados pela categoria
+	 * @param categorias categorias para filtrar os livros
+	 * @param numeroPagina numero da pagina que se deseja obter
+	 * @return retorna uma pagina contendo algumas instâncias de livros filtrados por suas categorias
+	 */
+	public Page<Livro> listarLivrosFiltrados(List<Integer> categorias, Integer numeroPagina){
+							
+		Page<Livro> pagina = livroRepository.filtrarPorCategoria(categorias, PageRequest.of(--numeroPagina, 1));
+		
+		return pagina;
+	}
+	
+	/**
+	 * Método utilizado para paginar Livros buscados pelo titulo
+	 * @param stringDeBusca titulo do livro que se deseja buscar
+	 * @return retorna uma pagina contendo algumas instâncias de livros filtrados por um titulo (ou parte dele)
+	 */
+	public Page<Livro> listarLivrosBuscados(String stringDeBusca, Integer numeroPagina){
+		
+		Page<Livro> pagina = livroRepository.buscarPorTitulo("%"+stringDeBusca+"%", PageRequest.of(--numeroPagina, 1));
 		
 		return pagina;
 	}

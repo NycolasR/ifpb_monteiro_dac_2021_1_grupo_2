@@ -1,5 +1,7 @@
 package com.bookstore.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bookstore.model.Categoria;
 import com.bookstore.model.Livro;
 
 /**
@@ -37,6 +40,14 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 	@Query(value = "delete from tb_livro_categoria where fk_livro = :id", nativeQuery = true)
 	public void deletarLivroCategoria(@Param ("id") Long id);
 	
+	//Essa query faz uma consulta com uma filtragem
+	@Query(value = "select * from tb_livro join tb_livro_categoria on id = fk_livro where fk_categoria in (:categorias) group by id order by titulo", nativeQuery = true)
+	public Page<Livro> filtrarPorCategoria(@Param ("categorias") List<Integer> categorias, Pageable pageable);
+	
+	//Essa query faz uma busca pelo titulo
+	@Query(value = "select * from tb_livro where titulo like :texto order by titulo", nativeQuery = true)
+	public Page<Livro> buscarPorTitulo(@Param("texto") String texto, Pageable pageable);
+
 	//Essa query realiza a remoção de todas as instâncias na tabela Livro_Autor
 	@Transactional
 	@Modifying

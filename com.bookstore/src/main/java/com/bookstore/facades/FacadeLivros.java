@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import com.bookstore.model.Categoria;
 import com.bookstore.model.Livro;
 import com.bookstore.service.LivroService;
 
@@ -61,11 +62,28 @@ public class FacadeLivros {
 	 * @param sortDirection Direção da ordenação, que pode ser ascendente ou descendente.
 	 * @param numeroPagina Número da página que se deseja obter os registros
 	 * @param inEstoque Boolean que especifica se a busca deve ser realizada apenas entre os livros em estoque ou em geral.
+	 * @param categorias id das categorias para filtragem
+	 * @param stringDeBusca string de busca relaconada ao titulo do livro que se deseja buscar
 	 * @return Uma página com os livros ordenados da forma especificada.
 	 * @throws Exception lança excecao caso a pagina não contenha nenhum livro
 	 */
-	public Page<Livro> paginarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, boolean inEstoque) throws Exception{
-		Page<Livro> pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);
+	public Page<Livro> paginarLivros(String campoOrdenacao, Sort.Direction sortDirection, Integer numeroPagina, 
+			boolean inEstoque, List<Integer> categorias, String stringDeBusca) throws Exception{
+		
+		Page<Livro> pagTemp = null;
+		
+		if(!stringDeBusca.equals("")) {
+			
+			pagTemp = livroService.listarLivrosBuscados(stringDeBusca, numeroPagina);
+			
+		}else if(categorias != null && categorias.get(0) != 0) {
+			
+			pagTemp = livroService.listarLivrosFiltrados(categorias, numeroPagina);
+			
+		}else {
+			pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);
+		}
+
 		if(!pagTemp.isEmpty()) {
 			return pagTemp;			
 		}

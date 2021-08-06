@@ -53,7 +53,7 @@ public class ControllerCrudLivros {
 
 		try {
 			
-			Page<Livro> livros = facadeLivros.paginarLivros("titulo", Direction.ASC, pagina, false);
+			Page<Livro> livros = facadeLivros.paginarLivros("titulo", Direction.ASC, pagina, false, null, "");
 			
 			model.addAttribute("livros", livros);
 			model.addAttribute("numeracao", facadeLivros.criarPaginacao(livros.getTotalPages(), pagina));

@@ -51,13 +51,14 @@
                         </li>
                     </ul>
 
-                    <form class="d-flex" action="post">
+                    <form class="d-flex" action="#" th:action="@{/buscar_nome}" method="GET">
                         <input
                             class="form-control me-2"
                             type="search"
                             placeholder="Busque pelo título"
-                            name=""
-                            id="" />
+                            name="nome_livro"
+                            id=""
+                            required />
 
                         <button 
                             class="btn btn-outline-dark"
