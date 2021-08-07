@@ -57,6 +57,16 @@ public class LivroService {
 	}
 	
 	/**
+	 * Método que faz uma busca por vários livros através de uma lista de ids
+	 * @param ids lista de ids correspondente a livros 
+	 * @return retorna uma lista de livros
+	 */
+	public List<Livro> recuperarPorIds(List<Long> ids){
+		
+		return livroRepository.listarPorIds(ids);
+	}
+	
+	/**
 	 * Método usado para retornar registros de livros ordenados e paginados.
 	 * 5 registros por página.
 	 * @param campoOrdenacao String que especifica a partir de qual atributo de Livro
@@ -73,10 +83,10 @@ public class LivroService {
 		if(inEstoque) {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
 			// O metodo livrosEmEstoque retorna apenas os livros com estoque > 0.
-			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 9, sort));
+			pagina = livroRepository.livrosEmEstoque(PageRequest.of(--numeroPagina, 2, sort));
 		}else {
 			// Página especificada pelo numPagina com no máximo 5 livros e ordenador criado anteriormente.
-			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 9, sort));
+			pagina = livroRepository.findAll(PageRequest.of(--numeroPagina, 2, sort));
 		}
 		
 		return pagina;
@@ -90,7 +100,7 @@ public class LivroService {
 	 */
 	public Page<Livro> listarLivrosFiltrados(List<Integer> categorias, Integer numeroPagina){
 							
-		Page<Livro> pagina = livroRepository.filtrarPorCategoria(categorias, PageRequest.of(--numeroPagina, 9));
+		Page<Livro> pagina = livroRepository.filtrarPorCategoria(categorias, PageRequest.of(--numeroPagina, 2));
 		
 		return pagina;
 	}
@@ -102,7 +112,7 @@ public class LivroService {
 	 */
 	public Page<Livro> listarLivrosBuscados(String stringDeBusca, Integer numeroPagina){
 		
-		Page<Livro> pagina = livroRepository.buscarPorTitulo("%"+stringDeBusca+"%", PageRequest.of(--numeroPagina, 9));
+		Page<Livro> pagina = livroRepository.buscarPorTitulo("%"+stringDeBusca+"%", PageRequest.of(--numeroPagina, 2));
 		
 		return pagina;
 	}

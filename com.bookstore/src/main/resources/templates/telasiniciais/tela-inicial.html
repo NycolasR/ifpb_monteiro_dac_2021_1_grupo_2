@@ -8,7 +8,7 @@
     }
 </style>
 <body>
-    <header th:replace="~{fragmentos :: header}"></header>
+    <header th:replace="~{fragmentos :: header(${quantidade})}"></header>
     <main>   
         <!--Essa div está relacionada ao listamento dos livros na tela inicial-->
         <div class="container">
@@ -84,8 +84,11 @@
                                         <h6 class="card-subtitle text-muted mb-2" th:text="${autor.nome}"></h6>
                                     </div>
                                     <p class="card-text fs-5 fw-bold">Preço: R$ <span class="preco-livro" th:text="${livro.preco}"></span></p>
-                                    <div class="d-flex justify-content-center">
-                                        <a th:if="${livro.quantidadeEmEstoque} > 0" href="#" class="btn btn-success" >Adicionar ao carrinho</a>
+                                    <div class="d-flex justify-content-center" sec:authorize="!hasAuthority('ADMIN')">
+                                        <a th:if="${livro.quantidadeEmEstoque} > 0" href="#" 
+                                        th:href="@{/adicionar_carrinho/{id}(id=${livro.id})}" class="btn btn-success" >
+                                            Adicionar ao carrinho
+                                        </a>
                                         <button th:if="${livro.quantidadeEmEstoque} == 0" type="button" disabled class="btn btn-dark" >
                                             Fora do estoque
                                         </button>

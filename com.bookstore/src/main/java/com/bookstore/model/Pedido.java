@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -86,9 +87,20 @@ public class Pedido {
 	 */
 	public void adicionarItemPedido(ItemPedido itemPedido) {
 		
-		itensPedidos.add(itemPedido);
-		qntdItens += itemPedido.getQuantidade();
-		this.valorItensTotal = valorItensTotal.add(itemPedido.getValorTotalItemPedido());
+		Boolean condicao = true;
+		
+		for(ItemPedido item: itensPedidos) {
+			if(item.getLivro().getId() == itemPedido.getLivro().getId()) {
+				condicao = false;
+			}
+		}
+		
+		if(condicao) {
+			itensPedidos.add(itemPedido);
+			qntdItens += itemPedido.getQuantidade();
+			this.valorItensTotal = valorItensTotal.add(itemPedido.getValorTotalItemPedido());
+		}
+		
 	}
 	
 	/**

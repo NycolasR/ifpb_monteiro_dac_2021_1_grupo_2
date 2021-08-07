@@ -47,6 +47,9 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 	//Essa query faz uma busca pelo titulo
 	@Query(value = "select * from tb_livro where titulo like :texto order by titulo", nativeQuery = true)
 	public Page<Livro> buscarPorTitulo(@Param("texto") String texto, Pageable pageable);
+	
+	@Query(value = "select * from tb_livro where id in (:ids)", nativeQuery = true)
+	public List<Livro> listarPorIds(@Param("ids") List<Long> ids);
 
 	//Essa query realiza a remoção de todas as instâncias na tabela Livro_Autor
 	@Transactional
