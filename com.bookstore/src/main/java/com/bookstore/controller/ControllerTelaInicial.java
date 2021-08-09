@@ -1,6 +1,5 @@
 package com.bookstore.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,11 @@ import com.bookstore.facades.FacadeLivros;
 import com.bookstore.model.Livro;
 import com.bookstore.model.Usuario;
 
+/**
+ * 
+ * @author NPG
+ *
+ */
 @Controller
 public class ControllerTelaInicial {
 
