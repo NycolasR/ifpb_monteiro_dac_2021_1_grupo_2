@@ -22,6 +22,11 @@ import com.bookstore.model.Livro;
 import com.bookstore.model.Pedido;
 import com.bookstore.model.Usuario;
 
+/**
+ * 
+ * @author NPG
+ *
+ */
 @Controller
 public class ControllerTelaInicial {
 
