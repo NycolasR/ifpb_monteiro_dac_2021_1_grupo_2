@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="~{fragmentos :: head('Carrinho de compras')}"></head>
+<style>
+    .img-fit-contain{
+        width: 100%;
+        object-fit: contain;
+    }
+</style>
+<body>
+    <header th:replace="~{fragmentos_forms :: header('/voltar_inicio_carrinho','Carrinho de Compras','/voltar_inicio_carrinho')}"></header>
+    <main>
+        <div th:if="${pedido.itensPedidos.size()} == 0" class="container mt-4">
+            <div class="alert alert-light border border-success text-success" role="alert">
+                Infelizmente você não possui nenhum item no seu carrinho!
+            </div>
+        </div>
+
+        <div th:if="${excecao} != ''" class="container mt-4">
+            <div class="alert alert-light border border-success text-success alert-dismissible fade show" role="alert">
+                <span th:text="${excecao}"></span> 
+                <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+       
+        
+        <div th:if="${pedido.itensPedidos.size()} > 0" class="container">
+            <div class="m-3 pb-3 bg-success rounded" >
+                <h4 class="text-center pt-2 mb-4 mt-4 text-white">Seu Pedido</h4>
+                <div class="row mt-3">
+
+                    <div class="col text-center">
+                        <h5 class="ms-5 p-3 border border-white rounded text-white">Você contém 
+                            <span th:text="${pedido.qntdItens}"></span> livro(s) no seu carrinho!
+                        </h5>
+                    </div>
+
+                    <div class="col text-center">
+                        <h5 class="me-5 p-3 border border-white rounded text-white">Total a pagar: R$ 
+                            <span th:text="${pedido.valorItensTotal}"></span>
+                        </h5>
+                    </div>
+                    
+                </div>
+                <div class=" ms-3 me-3 mt-3 rounded">
+                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
+                        <div class="col" th:each="item : ${pedido.itensPedidos}">
+                            <div class="card border border-success rounded">
+                                <div class="card-body">
+                                    <img th:src="@{${item.livro.urlImagemCapa}}" alt="" class="card-img-top img-fit-contain" height="225">
+
+                                    <div class="text-center mt-3">
+                                        <a href="#" th:href="@{/mostrar_detalhes/{id}(id=${item.livro.id})}" class="text-success text-decoration-none">Detalhes</a>
+                                    </div>
+
+                                    <div class="mt-3 text-success text-center">Unidades: 
+                                        <span th:text="${item.quantidade}"></span>
+                                    </div>
+
+                                    <div class="text-center mt-3">
+                                        <form action="#" method="GET">
+                                            <button type="submit" class="btn btn-outline-success me-3" 
+                                            th:formaction="@{/adicionar_item/{id}(id=${item.livro.id})}">
+                                                +
+                                            </button>
+                                            <button type="submit" class="btn btn-outline-success"
+                                            th:formaction="@{/remover_item/{id}(id=${item.livro.id})}">
+                                                -
+                                            </button>
+                                        </form>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4 mb-5">
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalfinalizarPedido">
+                    Finalizar Pedido
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="modalfinalizarPedido">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body ">
+
+                    <form action="#" th:object="${finalizar_pedido}" th:action="@{/finalizarPedido}" method="POST">
+
+                        <div class="bg-success m1 pb-3 rounded col" >
+                            <h5 class="text-center text-white pt-2 mb-2">Endereços</h5>
+                            <div class=" ms-3 me-3 modal-dialog-scrollable rounded">
+                                <div class="card mb-1" th:each="endereco : ${enderecos}">
+                                    <div class="card-body">
+                                        <input type="radio" name="forma" class="ms-2 form-check-input btn-outline-success" 
+                                        th:value="${endereco.id}" th:field="*{localDeEntrega}" th:id="${endereco.id}">
+                                        <label th:for="${endereco.id}" class="form-check-label text-success row">
+                                            <h5 class="text-success">Rua: <span th:text="${endereco.rua}"></span></h5>
+                                            <h5 class="text-success">Número: <span th:text="${endereco.numero}"></span></h5>
+                                            <h5 class="text-success">Bairro: <span th:text="${endereco.bairro}"></span></h5>
+                                            <h5 class="text-success">Cidade: <span th:text="${endereco.cidade}"></span></h5>
+                                            <h5 class="text-success">CEP: <span th:text="${endereco.CEP}"></span></h5>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-outline-light me-3" data-bs-toggle="modal" data-bs-target="#modalAdicionarEndereco" data-bs-dismiss="modal">Novo</button>
+                            </div>
+                        </div>
+
+                        <div th:if="${formas_pagamento.size()} == 0" class="container mt-3">
+                            <div class="alert alert-light border border-success text-success" role="alert">
+                                Nenhuma forma de pagamento habilitada, por enquanto não é possível finalizar o pedido!
+                            </div>
+                        </div>
+
+                        <h5 th:if="${formas_pagamento.size()} > 0" class="text-start text-success mb-4 mt-4">Formas de pagamento</h5>
+                        <div th:if="${formas_pagamento.size()} > 0" class="row row-cols-2 row-cols-md-3 g-3">
+                            <div class="col" th:each="forma : ${formas_pagamento}">
+                                <div class="border border-success rounded mb-3">
+                                    <input type="radio" name="forma" class="ms-2 form-check-input btn-outline-success" th:value="${forma.ID}" th:field="*{formaPagamento}" th:id="${forma.ID}">
+                                    <label th:for="${forma.ID}" class="form-check-label text-success" th:text="${forma.nome}"></label>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-outline-success me-1" th:disabled="${formas_pagamento.size()} > 0 ? false : true">
+                                Finalizar Pedido
+                            </button>
+                            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </div>
+                       
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalAdicionarEndereco">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-outline-success" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <h5 class="card-title text-center text-success mb-3">Cadastre um novo endereço</h5>
+                    <form action="#" th:object="${endereco}" class="row g-3 pb-4 m-3 border border-success rounded needs-validation" method="POST">
+                        <div class="col-sm-12 col-md-4">
+                            <label 
+                                for="input_rua"
+                                class="form-label">
+                                Rua:
+                            </label>
+                
+                            <input
+                                type="text" 
+                                class="form-control border border-success" 
+                                id="input_rua" 
+                                th:field="*{rua}"
+                                th:errorclass="is-invalid"
+                                placeholder="Informe o nome da rua"
+                                required
+                            >
+        
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('rua')}"
+                                th:errors="*{rua}"
+                            >Erros rua
+                            </div>
+                        </div>
+        
+                        <div class="col-sm-12 col-md-4">
+                            <label 
+                                for="input_bairro" 
+                                class="form-label">
+                                Bairro:
+                            </label>
+                
+                            <input 
+                                type="text"
+                                class="form-control border border-success" 
+                                id="input_bairro" 
+                                th:field="*{bairro}"
+                                th:errorclass="is-invalid"
+                                placeholder="Informe o nome do bairro"
+                                required
+                            >
+        
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('bairro')}"
+                                th:errors="*{bairro}"
+                            >Erros bairro
+                            </div>
+                        </div>
+        
+                        <div class="col-sm-12 col-md-4">
+                            <label 
+                                for="input_CEP" 
+                                class="form-label">
+                                CEP:
+                            </label>
+                
+                            <input 
+                                type="number"
+                                class="form-control border border-success" 
+                                id="input_CEP" 
+                                th:field="*{CEP}"
+                                min="10000000"
+                                max="99999999"
+                                th:errorclass="is-invalid"
+                                placeholder="Insira somente números!"
+                                required
+                            >
+        
+                            <div 
+                                class="invalid-feedback" 
+                                th:if="${#fields.hasErrors('CEP')}"
+                                th:errors="*{CEP}"
+                            >Erros CEP
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12 col-md-4">
+                            <label 
+                                for="input_numero" 
+                                class="form-label">
+                                Número:
+                            </label>
+                
+                            <input 
+                                type="number"
+                                class="form-control border border-success" 
+                                id="input_numero" 
+                                th:field="*{numero}"
+                                th:errorclass="is-invalid"
+                                min="1"
+                                required
+                                placeholder="Insira somente números!"
+                            >
+        
+                            <div 
+                                class="invalid-feedback" 
+                                th:if="${#fields.hasErrors('numero')}"
+                                th:errors="*{numero}"
+                            >Erros numero
+                            </div>
+                        </div>
+        
+                        <div class="col-sm-12 col-md-4">
+                            <label 
+                                for="input_uf" 
+                                class="form-label">
+                                Estado:
+                            </label>
+                
+                            <select 
+                                class="form-control border border-success" 
+                                id="estado" 
+                                name="estado"
+                                th:field="*{UF}"
+                                th:errorclass="is-invalid"
+                                required
+                            >
+                                <option value="0">Selecione seu estado!</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+        
+                            <div 
+                                class="invalid-feedback" 
+                                th:if="${#fields.hasErrors('UF')}"
+                                th:errors="*{UF}"
+                            >Erros UF
+                            </div>
+                        </div>
+        
+                        <div class="col-sm-12 col-md-4">
+                            <label 
+                                for="input_cidade" 
+                                class="form-label">
+                                Cidade:
+                            </label>
+                
+                            <input 
+                                type="text"
+                                class="form-control border border-success" 
+                                id="input_cidade" 
+                                th:field="*{cidade}"
+                                th:errorclass="is-invalid"
+                                placeholder="Informe o nome da cidade"
+                                required
+                            >
+        
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('cidade')}"
+                                th:errors="*{cidade}"
+                            >Erros cidade
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label 
+                                for="input_complemento" 
+                                class="form-label">
+                                Complemento:
+                            </label>
+                            
+                            <textarea 
+                                class="form-control border border-success"
+                                id="input_complemento"
+                                th:field="*{complemento}"
+                                th:errorclass="is-invalid"
+                                placeholder="Informe alguns dados adicionais"
+                                required
+                            >
+                            </textarea>
+        
+                            <div
+                                class="invalid-feedback"
+                                th:if="${#fields.hasErrors('complemento')}"
+                                th:errors="*{complemento}"
+                            >Erros complemento
+                            </div>
+                        </div>
+            
+                        <br>
+                        <button type="submit" class="btn btn-outline-success mx-auto w-25" id="btnadicionar" 
+                        th:formaction="@{/adicionar_endereco}">
+                            Adicionar
+                        </button>
+                        <button type="button" class="btn btn-outline-success mx-auto w-25" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragmentosadm :: footer}"></footer>
+</body>
+</html>

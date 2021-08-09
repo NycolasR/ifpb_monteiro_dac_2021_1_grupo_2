@@ -99,6 +99,7 @@ public class FacadeLivros {
 			pagTemp = livroService.listarLivrosFiltrados(categorias, numeroPagina);
 
 		} else {
+			
 			pagTemp = livroService.listarLivros(campoOrdenacao, sortDirection, numeroPagina, inEstoque);
 		}
 
@@ -202,5 +203,10 @@ public class FacadeLivros {
 
 		Optional<Livro> optional = livroService.recuperarPeloId(id);
 		return optional.isPresent();
+	}
+	
+	public boolean exitemRegistros() {
+		
+		return livroService.existemRegistros();
 	}
 }

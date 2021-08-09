@@ -57,7 +57,7 @@ public class EnderecoService {
 	 * @param id ID do Endereco que deja-se excluir.
 	 */
 	public void deletarEndereco(Long id) {
-		enderecoRepository.deleteById(id);
+		enderecoRepository.deletarEndereco(id);
 	}
 	
 	/**

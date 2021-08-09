@@ -28,6 +28,12 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 	@Query("SELECT l FROM Livro l WHERE l.quantidadeEmEstoque > 0 ORDER BY preco")
 	public Page<Livro> livrosEmEstoque(Pageable pageable);
 	
+	//Essa query realiza a remoção de uma instância na tabela Livro
+	@Transactional
+	@Modifying
+	@Query(value = "delete from tb_livro where id = :id and (select count(*) from tb_pedido p join tb_item_pedido on p.id = pedido_fk where status_pedido = 'Não Finalizado' and livro_fk = :id) = 0", nativeQuery = true)
+	public void deletarLivro(@Param ("id") Long id);
+	
 	//Essa query realiza a remoção de uma instância na tabela Livro_Autor
 	@Transactional
 	@Modifying

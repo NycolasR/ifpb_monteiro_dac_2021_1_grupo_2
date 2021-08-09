@@ -3,7 +3,14 @@
 <head th:replace="~{fragmentos :: head('Administração')}"></head>
 <body>
     <header th:replace="~{fragmentosadm :: header('Administração')}"></header>
-    <main>    
+    <main> 
+        <div class="container mt-3">
+
+            <div class="row border border-success rounded p-4">
+                <h5 class="text-success mb-3">Quantidade de vendas realizadas: <span th:text="${quantidade_vendas}"></span></h5>
+            </div>
+
+        </div>  
     </main>
     <footer th:replace="~{fragmentosadm :: footer}"></footer>
 </body>

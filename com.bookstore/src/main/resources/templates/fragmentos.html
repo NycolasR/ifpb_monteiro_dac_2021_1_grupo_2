@@ -68,7 +68,7 @@
                     </form>
 
                     <span class="navbar-text ms-4" sec:authorize="!hasAuthority('ADMIN')">
-                        <a href="#" class="position-relative">
+                        <a href="#" th:href="@{/carrinho}" class="position-relative">
                             <img th:src="@{/images/carrinho.png}" alt="">
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-light text-success rounded-pill bg-danger"
                             th:text="${quantidade}"></span>

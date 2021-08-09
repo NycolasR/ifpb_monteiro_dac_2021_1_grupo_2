@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head th:replace="~{fragmentos :: head('Detalhes do livro')}"></head>
+<body>
+    <header th:replace="~{fragmentos_forms :: header('/carrinho','Carrinho de Compras','/carrinho')}"></header>
+    <main>
+        <div th:if="${excecao} != ''" class="container mt-4">
+            <div class="alert alert-light border border-success text-success" role="alert" th:text="${excecao}"></div>
+        </div>
+
+        <div th:if="${excecao} == ''" class="container mt-3">
+
+            <div class="row border border-success rounded p-4">
+
+                
+                <h5 class="text-success mb-3">Autores</h5>
+                <div th:each="autor : ${livro.autores}" class="mb-5">
+                    <h6 class="mb-2" th:text="${autor.nome}"></h6>
+                </div>
+
+                <h5 class="text-success mb-3">Descrição</h5>
+                <div class="mb-5">
+                    <h6 class="mb-2" th:text="${livro.descricao}"></h6>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</body>
+</html>

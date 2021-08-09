@@ -48,7 +48,7 @@ public class FacadePedido {
 
 	@Autowired
 	private RegistroVendasService registroVendasService;
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -71,18 +71,40 @@ public class FacadePedido {
 			for (Livro livro : livros) {
 
 				itemPedido = new ItemPedido(livro, 1);
-				pedido.adicionarItemPedido(itemPedido);
-				itemPedidoService.salvarItemPedido(itemPedido);
+				Boolean resultado = pedido.adicionarItemPedido(itemPedido);
+				if(resultado) {
+					itemPedidoService.salvarItemPedido(itemPedido);
+				}
 			}
 
 		}
 
-//		Usuario usuario = usuarioService.recuperarPeloId(idUsuario);
+		//		Usuario usuario = usuarioService.recuperarPeloId(idUsuario);
 
 		pedido.setUsuario(usuarioService.recuperarPeloId(idUsuario));
 		pedido.setMotivoCancelamento("Sem motivo");
 		pedidoService.salvarPedido(pedido);
 
+	}
+
+	/**
+	 * Método que recupera um Pedido não finalizado de um usuário
+	 * 
+	 * @param idUsuario id do usuário
+	 * @return retorna um novo pedido ou um pedido não finalizado
+	 */
+	public Pedido recuperarPedidoCarrinho(Long idUsuario) {
+
+		return pedidoService.recuperarPedidoNaoFinalizadoDoUsuario(idUsuario);
+	}
+	
+	/**
+	 * Método que cria e retorna um pedido nulo 
+	 * @return retorna um pedido nulo
+	 */
+	public Pedido recuperarPedidoNulo() {
+		
+		return new Pedido();
 	}
 
 	/**
@@ -115,40 +137,62 @@ public class FacadePedido {
 		throw new Exception("[ERRO] Pedido inexistente");
 	}
 
+
 	/**
 	 * Esse método atualiza um Pedido
-	 * 
-	 * @param idPedido   id do Pedido que se deseja atualizar
-	 * @param idLivro    id do livro que se deseja adicionar ao Pedido
-	 * @param quantidade quantidade correspondente ao livro que se deseja adiconar
-	 *                   ao pedido
-	 * @throws Exception lança exceção caso o Pedido e o livro não sejam encontrados
+	 * @param idUsuario id do Usuario que possui um pedido em aberto
+	 * @param idLivro id do livro que se deseja adicionar ao Pedido
+	 * @param quantidade quantidade correspondente ao livro que se deseja adiconar ao pedido
+	 * @throws Exception lança exceção caso o Pedido, o livro e o itemPedido não sejam encontrados
 	 */
-	public void atualizarPedido(Long idPedido, Long idLivro, Integer quantidade) throws Exception {
+	public void atualizarPedido(Long idUsuario, Long idLivro, Integer quantidade) throws Exception {
 
-		Pedido pedido = recuperarPedido(idPedido);
+		Pedido pedido = recuperarPedidoCarrinho(idUsuario);
 		Livro livro = facadeLivros.recuperarLivro(idLivro);
-		ItemPedido itemPedido;
+		ItemPedido itemPedido = pedido.recuperarItemPedido(idLivro);
+		Boolean condicaoRemover = false;
 
-		if (pedido.getItensPedidos().size() == 1 && quantidade == 0) {
+		if (quantidade == -1) {
 
-			removerPedido(idPedido);
+			itemPedido.setQuantidade(itemPedido.getQuantidade() - 1);
+			pedido.setValorItensTotal(pedido.getValorItensTotal().subtract(itemPedido.getLivro().getPreco()));
+			
+			if (itemPedido.getQuantidade() == 0) {
+				
+				System.out.println(pedido.getItensPedidos().size());
+				
+				pedido.removerItemPedido(itemPedido);
+				itemPedidoService.deletarPeloId(itemPedido.getID());
+				pedido.setQntdItens(pedido.getQntdItens() - 1);
 
-		} else if (quantidade == 0) {
+				System.out.println("Quantidade de itens pedidos ao pedido: "+pedido.getItensPedidos().size());
+				if (pedido.getItensPedidos().size() == 0) {
 
-			itemPedido = pedido.recuperarItemPedido(idLivro);
-			pedido.removerItemPedido(itemPedido.getID());
-
-			pedidoService.atualizarPedido(pedido);
-
+					removerPedido(pedido.getId());
+					condicaoRemover = true;
+					
+				}
+			}
+			
 		} else {
 
-			itemPedido = new ItemPedido(livro, quantidade);
-			itemPedidoService.salvarItemPedido(itemPedido);
-			pedido.adicionarItemPedido(itemPedido);
+			if (livro.getQuantidadeEmEstoque() < itemPedido.getQuantidade() + 1) {
 
+				
+				throw new Exception("Quantidade solicitada excede a quantidade em estoque");
+				
+			}else {
+				
+				itemPedido.setQuantidade(itemPedido.getQuantidade() + 1);
+				pedido.setValorItensTotal(pedido.getValorItensTotal().add(itemPedido.getLivro().getPreco()));
+			}
+			
+		}
+		
+		if(!condicaoRemover) {
 			pedidoService.atualizarPedido(pedido);
 		}
+		
 
 	}
 
@@ -167,37 +211,48 @@ public class FacadePedido {
 	 * @throws Exception lança exceção caso o Pedido e a FormaPagamento não sejam
 	 *                   encontrados.
 	 */
-	public void finalizarPedido(Long idPedido, Long localDeEntrega, Long idFormaPagamento) throws Exception {
+	public void finalizarPedido(Long idUsuario, Long localDeEntrega, Long idFormaPagamento) throws Exception {
 
-		Pedido pedido = recuperarPedido(idPedido);
-		FormaPagamento formaPagamento = facadeFormaPagamento.recuperarFormaPagamento(idFormaPagamento);
-		formaPagamento.realizarPagamento(pedido.getValorItensTotal());
+		Pedido pedido = recuperarPedidoCarrinho(idUsuario);
+		
+		if(pedido.getItensPedidos().size() > 0) {
+			
+			FormaPagamento formaPagamento = facadeFormaPagamento.recuperarFormaPagamento(idFormaPagamento);
+			formaPagamento.realizarPagamento(pedido.getValorItensTotal());
 
-		pedido.setFormaPagamento(formaPagamento);
-		pedido.setLocalDeEntrega(facadeEnderecos.recuperarEndereco(localDeEntrega));
-		pedido.setDataFechamento(LocalDate.now());
-		pedido.setStatusPedido("Finalizado");
+			pedido.setFormaPagamento(formaPagamento);
+			pedido.setLocalDeEntrega(facadeEnderecos.recuperarEndereco(localDeEntrega));
+			pedido.setDataFechamento(LocalDate.now());
+			pedido.setStatusPedido("Finalizado");
 
-		registrarVendas(pedido);
-		diminuirDoEstoque(pedido);
+			registrarVendas(pedido);
+			diminuirDoEstoque(pedido);
 
-		pedidoService.atualizarPedido(pedido);
+			pedidoService.atualizarPedido(pedido);
+		
+		}else {
+			
+			throw new Exception("Você não possui nenhum pedido no seu carrinho!");
+		}
+		
 
 	}
-	
+
 	/**
-	 * Método utilizado para recuperar a quantidade de itens pedidos de um pedido não finalizado
+	 * Método utilizado para recuperar a quantidade de itens pedidos de um pedido
+	 * não finalizado
+	 * 
 	 * @param id do usuario
 	 * @return quantidade de itens pedidos de um pedido
 	 */
 	public Integer recuperarQuantidadeDeItensPedidos(Long id) {
-		
+
 		Integer quantidade = pedidoService.recuperarQuantidadeItemPedidos(id);
-		
-		if(quantidade == null) {
+
+		if (quantidade == null) {
 			quantidade = 0;
 		}
-		
+
 		return quantidade;
 	}
 

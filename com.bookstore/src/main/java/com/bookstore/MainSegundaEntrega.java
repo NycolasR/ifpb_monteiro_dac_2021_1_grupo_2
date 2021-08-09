@@ -3,6 +3,7 @@ package com.bookstore;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.bookstore.facades.FacadeUsuarios;
 
@@ -23,7 +24,7 @@ public class MainSegundaEntrega implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		//Por padrão, já se mantém o cadastro do administrador do sistema antes de iniciar a aplicação
-//		facadeUsuarios.cadastrarUsuario("admin", "admin@admin.com", "admin123", true);
+		facadeUsuarios.cadastrarUsuario("admin", "admin@admin.com", new BCryptPasswordEncoder().encode("admin123") , true);
 		
 		System.out.println("Server is running at port 8080");
 	}

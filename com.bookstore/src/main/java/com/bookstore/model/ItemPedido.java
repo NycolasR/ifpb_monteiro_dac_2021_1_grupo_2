@@ -85,7 +85,7 @@ public class ItemPedido {
 	private void atualizarValorTotal() {
 		
 		//essa operação multiplica o valor do livro pela quantidade adicionada ao itemPedido.
-		this.valorTotalItemPedido = valorTotalItemPedido.multiply(new BigDecimal(quantidade)); 
+		this.valorTotalItemPedido = livro.getPreco().multiply(new BigDecimal(quantidade)); 
 	}
 
 	@Override
