@@ -57,6 +57,16 @@ public class LivroService {
 	}
 	
 	/**
+	 * Método que faz uma busca por vários livros através de uma lista de ids
+	 * @param ids lista de ids correspondente a livros 
+	 * @return retorna uma lista de livros
+	 */
+	public List<Livro> recuperarPorIds(List<Long> ids){
+		
+		return livroRepository.listarPorIds(ids);
+	}
+	
+	/**
 	 * Método usado para retornar registros de livros ordenados e paginados.
 	 * 5 registros por página.
 	 * @param campoOrdenacao String que especifica a partir de qual atributo de Livro
@@ -134,7 +144,7 @@ public class LivroService {
 		Optional<Livro> deletado = recuperarPeloId(id);
 		
 		if(deletado.isPresent()) { // Verifica se há um objeto no Optional
-			livroRepository.delete(deletado.get());
+			livroRepository.deletarLivro(id);
 			livroRepository.deletarLivroAutor(id);
 			livroRepository.deletarLivroCategoria(id);
 		}

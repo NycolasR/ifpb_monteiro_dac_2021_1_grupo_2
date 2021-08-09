@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -84,31 +85,39 @@ public class Pedido {
 	 * Método responsável por adicionar um itemPedido de cada vez ao pedido.
 	 * @param itemPedido que o usuário deseja adicionar.
 	 */
-	public void adicionarItemPedido(ItemPedido itemPedido) {
+	public Boolean adicionarItemPedido(ItemPedido itemPedido) {
 		
-		itensPedidos.add(itemPedido);
-		qntdItens += itemPedido.getQuantidade();
-		this.valorItensTotal = valorItensTotal.add(itemPedido.getValorTotalItemPedido());
+		Boolean condicao = true;
+		
+		for(ItemPedido item: itensPedidos) {
+			if(item.getLivro().getId() == itemPedido.getLivro().getId()) {
+				condicao = false;
+			}
+		}
+		
+		if(condicao) {
+			itensPedidos.add(itemPedido);
+			qntdItens += itemPedido.getQuantidade();
+			this.valorItensTotal = valorItensTotal.add(itemPedido.getValorTotalItemPedido());
+		}
+		return condicao;
+		
 	}
 	
 	/**
 	 * Esse método remove um itemPedido que já foi adicionado ao pedido.
 	 * @param ID é o "código" do itemPedido a ser removido.
 	 */
-	public void removerItemPedido(Long ID) {
+	public void removerItemPedido(ItemPedido itemPedido) {
 		
-		Iterator<ItemPedido> itensPedidosIterator = itensPedidos.iterator();
-		while(itensPedidosIterator.hasNext()) {
-			
-			ItemPedido itemPedido = itensPedidosIterator.next();
-			if(itemPedido.getID()== ID) {
-				
-				valorItensTotal = valorItensTotal.subtract(itemPedido.getValorTotalItemPedido()); //diminuir o valor do livro removido, do valor total
-				qntdItens -= itemPedido.getQuantidade();
-				itensPedidos.remove(itemPedido);
-				
-			}
-		}
+//		ItemPedido itemPedido = 
+		itensPedidos.remove(itemPedido);
+
+		valorItensTotal = valorItensTotal.subtract(itemPedido.getValorTotalItemPedido()); //diminuir o valor do livro removido, do valor total
+		qntdItens -= itemPedido.getQuantidade();
+		
+
+		itensPedidos.remove(itemPedido);
 	}
 	
 	/**
@@ -154,15 +163,34 @@ public class Pedido {
 	 * @return retorna um itemPedido contendo o livro correspondente
 	 * @throws Exception lança uma exceção caso não encontre um itemPedido contendo o livro correspondente
 	 */
-	public ItemPedido recuperarItemPedido(Long isbn) throws Exception{
+	public ItemPedido recuperarItemPedido(Long idLivro) throws Exception{
 		
 		for(ItemPedido itemPedido: itensPedidos) {
 			
-			if(itemPedido.getLivro().getIsbn().equals(isbn)) {
+			if(itemPedido.getLivro().getId() == idLivro) {
 				return itemPedido;
 			}
 		}
 		throw new Exception("[ERRO] Livro Inexistente");
+		
+	}
+	
+	/**
+	 * Método responsável por recuperar um ItemPedido específico 
+	 * @param id do livro
+	 * @return retorna um itemPedido contendo o livro correspondente
+	 * @throws Exception lança uma exceção caso não encontre um itemPedido contendo o livro correspondente
+	 */
+	public ItemPedido recuperarItemPedidoParaAdicionar(Long idLivro) throws Exception{
+		
+		for(ItemPedido itemPedido: itensPedidos) {
+			
+			if(itemPedido.getLivro().getId() == idLivro) {
+				return itemPedido;
+			}
+		}
+		
+		return new ItemPedido();
 		
 	}
 	

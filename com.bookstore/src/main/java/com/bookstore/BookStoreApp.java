@@ -5,18 +5,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 //@SpringBootApplication
-public class BookStoreApp implements CommandLineRunner {
+public class BookStoreApp {
 	
-	public static void main(String[] args) {
-		SpringApplication.run(BookStoreApp.class, args);
-		System.out.println("Server is running");
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+//	public static void main(String[] args) {
+//		SpringApplication.run(BookStoreApp.class, args);
+//		System.out.println("Server is running");
+//	}
+//
+//	@Override
+//	public void run(String... args) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	/*
 	private FacadePedido facadePedido;

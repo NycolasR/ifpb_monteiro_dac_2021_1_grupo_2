@@ -57,6 +57,15 @@ public class RegistroVendasService {
 	}
 	
 	/**
+	 * Método que retorna quantas vendas foram realizadas na livraria
+	 * @return quantidade de vendas realizadas
+	 */
+	public Long quantidadeDeVendas() {
+		
+		return registroVendasRepository.count();
+	}
+	
+	/**
 	 * Método usado para deletar um dado registro de vendas na tabela identificado
 	 * pelo seu ID
 	 * @param id ID do registro que se deseja deletar

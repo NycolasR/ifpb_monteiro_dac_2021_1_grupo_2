@@ -16,13 +16,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
 //@SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application  {
 
-	@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void run(String... args) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//	}
 	/*
 	private EditoraService editoraService;
 	private UsuarioService usuarioService;

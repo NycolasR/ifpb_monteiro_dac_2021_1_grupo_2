@@ -50,6 +50,30 @@ public class PedidoService {
 		return pedidoRepository.findAll();
 	}
 	
+	public Pedido recuperarPedidoNaoFinalizadoDoUsuario(Long id) {
+		
+		Optional<Pedido> pedido = pedidoRepository.recuperarPedidoNaoFinalizadoDoUsuario(id);
+		
+		if(pedido.isPresent()) {
+			
+			return pedido.get();
+		
+		}else {
+			
+			return new Pedido();
+		}
+	}
+	
+	/**
+	 * Método utilizado para recuperar a quantidade de itens pedidos de um pedido não finalizado
+	 * @param id do usuario
+	 * @return quantidade de itens pedidos de um pedido
+	 */
+	public Integer recuperarQuantidadeItemPedidos( Long id) {
+		
+		return pedidoRepository.recuperarQuantidadeIntenPedidosNaoFinalizadosDoUsuario(id);
+	}
+	
 	/**
 	 * Esse método deleta todos os registros do banco de dados relacionados 
 	 * ao Pedido
