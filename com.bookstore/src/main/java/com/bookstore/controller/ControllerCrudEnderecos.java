@@ -122,6 +122,7 @@ public class ControllerCrudEnderecos {
 	
 	/**
 	 * Método que é acionado quando a rota /endereco_form_remove/{id} é acionada.
+	 * Caso um pedido finalizado esteja usando o endereço, ele não poderá ser removido no BD
 	 * @param id ID do endereço que se deseja remover
 	 * @return String com redirect para o arquivo html que deve ser aberto no navegador.
 	 */
