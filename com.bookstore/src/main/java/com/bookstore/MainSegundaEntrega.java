@@ -24,6 +24,8 @@ public class MainSegundaEntrega implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		//Por padrão, já se mantém o cadastro do administrador do sistema antes de iniciar a aplicação
+		// Email: admin@admin.com
+		// Senha: admin123
 		facadeUsuarios.cadastrarUsuario("admin", "admin@admin.com", new BCryptPasswordEncoder().encode("admin123") , true);
 		
 		System.out.println("Server is running at port 8080");
