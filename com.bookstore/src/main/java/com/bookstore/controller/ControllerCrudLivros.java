@@ -48,6 +48,11 @@ public class ControllerCrudLivros {
 	private String excecao = "";
 	private Integer pagina = 1;
 
+	/**
+	 * Esse método faz a listagem dos métodos para serem mostrados na página html
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/livro")
 	public String recuperarLivros(Model model) {
 
@@ -73,6 +78,7 @@ public class ControllerCrudLivros {
 
 		try {
 
+			//caso seja -1 significa q foi atualizado o livro sem ser adicionado ao banco de dados
 			if (id == -1) {
 				
 				livro = livroListas;
@@ -124,6 +130,7 @@ public class ControllerCrudLivros {
 		return "livros/livrosform";
 	}
 
+	//Esse método atualiza a lista de autores do livro  sem salvar o livro no banco
 	@PostMapping("/livroformupdateautores/{id}")
 	public String atualizarListaAutores(@ModelAttribute Livro livro, @PathVariable("id") Long id) {
 		
@@ -143,6 +150,7 @@ public class ControllerCrudLivros {
 
 	}
 	
+	//esse método cria um autor no banco
 	@PostMapping("/livroformautoradd")
 	public String criarAutor(@ModelAttribute Autor autor) {
 		
@@ -155,6 +163,7 @@ public class ControllerCrudLivros {
 		return "redirect:/livroform/-1";
 	}
 	
+	//Esse método atualiza a lista de categorias do livro  sem salvar o livro no banco
 	@PostMapping("/livroformupdatecategorias/{id}")
 	public String atualizarListaCategorias(@ModelAttribute Livro livro, @PathVariable("id") Long id) {
 		
@@ -172,6 +181,7 @@ public class ControllerCrudLivros {
 		return "redirect:/livroform/-1";
 	}
 	
+	//esse método cria uma categoria nova no banco
 	@PostMapping("/livroformcategoriaadd")
 	public String criarCategoria(@ModelAttribute Categoria categoria) {
 		
@@ -184,6 +194,7 @@ public class ControllerCrudLivros {
 		return "redirect:/livroform/-1";
 	}
 	
+	//esse método deleta uma categoria do banco através do id
 	@PostMapping("/livroformcategoriaremove/{id}")
 	public String deletarCategoria(@PathVariable("id") Long id) {
 		
@@ -196,6 +207,7 @@ public class ControllerCrudLivros {
 		return "redirect:/livroform/-1";
 	}
 	
+	//esse método cria uma nova Editora no banco
 	@PostMapping("/livroformeditoraadd")
 	public String criarEditora(@ModelAttribute Editora editora) {
 		
@@ -208,6 +220,13 @@ public class ControllerCrudLivros {
 		return"redirect:/livroform/-1";
 	}
 	
+	/**
+	 * esse método cria um novo livro no banco, no entanto recomenda-se criar primeiramente, a editora, os autores e as categorias a serem adicionadas
+	 * ao livro, caso não existam, visando a não anulagem dos campos já preenchidos.
+	 * 
+	 * O preço, recomenda-se inseri-lo como valor real, ou seja, com ponto flutuante
+	 * 
+	 */
 	@PostMapping("/livroformadd")
 	public String criarLivro(@Valid @ModelAttribute Livro livro, BindingResult result, Model model) {
 				
@@ -244,6 +263,11 @@ public class ControllerCrudLivros {
 		return "redirect:/livro";
 	}
 	
+	/**
+	 * 
+	 * Esse método atualiza as informações de um livro presente no banco de dados
+	 * 
+	 */
 	@PostMapping("/livroformupdate")
 	public String atualizarLivro(@Valid @ModelAttribute Livro livro, BindingResult result, Model model) {
 		
@@ -264,6 +288,8 @@ public class ControllerCrudLivros {
 		try {
 			
 			facadeLivros.atualizarLivro(livro, idInformado);
+			
+			//depois de criar ou atualizar é necessário setar o livro aos autores e as categorias correspondentes
 			facadeAutor.salvarLivroAosAutores(autoresParaSalvar, facadeLivros.recuperarLivro(idInformado));
 			facadeCategoria.salvarLivroAsCategorias(categoriasParaSalvar, facadeLivros.recuperarLivro(idInformado));
 			
@@ -278,6 +304,10 @@ public class ControllerCrudLivros {
 		return "redirect:/livro";
 	}
 	
+	/**
+	 * 
+	 * Esse método faz a remoção de um livro do banco de dados caso ele não esteja presente em um Carrinho de compras
+	 */
 	@PostMapping("/livroformremove")
 	public String removerLivro(Model model) {
 		
