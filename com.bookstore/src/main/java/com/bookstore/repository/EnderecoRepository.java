@@ -20,6 +20,8 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
 	//Essa query realiza a remoção de uma instância na tabela endereco caso não exista nenhum pedido utilizando desse endereco
 	@Transactional
 	@Modifying
-	@Query(value = "delete from tb_endereco where id = :id and (select count(*) from tb_pedido where endereco_fk = :id and status_pedido not in ('Cancelado')) = 0", nativeQuery = true)
+	@Query(value = "delete from tb_endereco where id = :id and (select count(*) from tb_pedido where endereco_fk = :id) = 0", nativeQuery = true)
 	public void deletarEndereco(@Param ("id") Long id);
+	
+	
 }

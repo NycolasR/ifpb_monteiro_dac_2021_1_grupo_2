@@ -2,9 +2,17 @@ package com.bookstore.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import com.bookstore.model.Livro;
+import com.bookstore.model.Pedido;
 import com.bookstore.model.Usuario;
 
 /**
@@ -35,4 +43,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	 * @return O optional de usuário
 	 */
 	public Optional<Usuario> findByEmail(String email);
+	
+	
+	//Essa query faz uma listagem por pedidos finalizados ou cancelados do usuario
+	@Query(value = "select * from tb_pedido where status_pedido = 'Cancelado' or status_pedido = 'Finalizado' and usuario_id = :id", nativeQuery = true)
+	public List<Pedido> listarPedidosFinalizadosDoUsuario(@Param("id") Long id);
+	
+	
+	
+	
+	
 }
