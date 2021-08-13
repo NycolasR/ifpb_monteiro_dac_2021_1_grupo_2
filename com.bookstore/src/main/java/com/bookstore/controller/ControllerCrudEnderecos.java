@@ -85,7 +85,7 @@ public class ControllerCrudEnderecos {
 		}
 		
 		try {
-			usuario.addEndereco(endereco);
+//			usuario.addEndereco(endereco);
 			facadeEnderecos.criarEndereco(endereco);
 			usuarioService.atualizar(usuario);
 		} catch (Exception e) {

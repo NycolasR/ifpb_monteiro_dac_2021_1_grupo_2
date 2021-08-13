@@ -70,7 +70,7 @@ public class FacadeUsuarios {
 	 */
 	public void addEndereco(String emailUsuario , Endereco endereco) throws Exception {
 		Usuario userTemp = usuarioService.recuperarPeloEmail(emailUsuario);
-		userTemp.addEndereco(endereco);
+//		userTemp.addEndereco(endereco);
 		usuarioService.atualizar(userTemp);
 	}
 	

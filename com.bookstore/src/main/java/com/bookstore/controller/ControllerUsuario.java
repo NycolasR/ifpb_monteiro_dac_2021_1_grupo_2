@@ -52,11 +52,11 @@ public class ControllerUsuario {
 
 		try {
 			usuario = usuarioService.recuperarPeloId(usuario.getId());
-			enderecos = usuario.getEnderecos();
+//			enderecos = usuario.getEnderecos();
 			pedidos = usuario.getPedidos();
 			
 			model.addAttribute("usuario", usuario);
-			model.addAttribute("enderecos", enderecos);
+//			model.addAttribute("enderecos", enderecos);
 			model.addAttribute("pedidos", pedidos);
 			
 		} catch (Exception e) {

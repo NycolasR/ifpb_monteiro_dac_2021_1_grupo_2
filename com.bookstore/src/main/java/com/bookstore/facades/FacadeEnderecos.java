@@ -70,7 +70,7 @@ public class FacadeEnderecos {
 	 * @return retorna o endereco encontrado no banco
 	 * @throws Exception lança excessão caso o id não corresponda a nenhum id de algum endereco
 	 */
-	public Endereco recuperarEndereco(Long id) throws Exception{
+	public Endereco recuperarEndereco(Long id) throws Exception {
 		
 		Optional<Endereco> endereco = enderecoService.recuperarPeloId(id);
 		
