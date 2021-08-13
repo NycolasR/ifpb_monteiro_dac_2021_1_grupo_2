@@ -22,4 +22,6 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
 	@Modifying
 	@Query(value = "delete from tb_endereco where id = :id and (select count(*) from tb_pedido where endereco_fk = :id) = 0", nativeQuery = true)
 	public void deletarEndereco(@Param ("id") Long id);
+	
+	
 }

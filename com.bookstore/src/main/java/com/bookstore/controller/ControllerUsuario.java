@@ -49,11 +49,13 @@ public class ControllerUsuario {
 	
 		List<Endereco> enderecos;
 		Set<Pedido> pedidos;
-
+		
 		try {
 			usuario = usuarioService.recuperarPeloId(usuario.getId());
 //			enderecos = usuario.getEnderecos();
 			pedidos = usuario.getPedidos();
+			
+			
 			
 			model.addAttribute("usuario", usuario);
 //			model.addAttribute("enderecos", enderecos);
