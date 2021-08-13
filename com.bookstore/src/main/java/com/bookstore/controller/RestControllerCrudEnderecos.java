@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,7 @@ public class RestControllerCrudEnderecos {
 	@GetMapping("/listar")
 	@ResponseStatus(code = HttpStatus.OK, reason = "Endereços encontrados na base de dados")
 	public List<Endereco> listar() {
+		System.out.println("Oi");
 		if(!enderecoService.existemRegistros())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		
@@ -56,7 +58,7 @@ public class RestControllerCrudEnderecos {
 	@PostMapping("/adicionar")
 	@ResponseStatus(code = HttpStatus.CREATED, reason = "Endereço criado com sucesso")
 	public void criarEndereco(
-			@Valid @ModelAttribute Endereco endereco, 
+			@Valid @RequestBody Endereco endereco, 
 			BindingResult result) {
 		
 		if(result.hasErrors()) {
@@ -70,17 +72,20 @@ public class RestControllerCrudEnderecos {
 	@PutMapping("/atualizar/{id}")
 	@ResponseStatus(code = HttpStatus.OK, reason = "Endereço atualizado com sucesso")
 	public void atualizarEndereco(
-			@Valid @ModelAttribute Endereco endereco, 
+			@Valid @RequestBody Endereco endereco, 
 			BindingResult result, 
 			@PathVariable("id") Long id) {
 		
 		if(result.hasErrors()) {
+			System.err.println("tetete");
+			System.out.println(endereco);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, result.toString());
 		}
 		
 		try {
 			enderecoService.atualizarEndereco(endereco);
 		} catch (Exception e) {
+			System.err.println("tatata");
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 	}
@@ -90,8 +95,10 @@ public class RestControllerCrudEnderecos {
 	@ResponseStatus(code = HttpStatus.OK, reason = "Endereço removido com sucesso")
 	public void deletarEndereco(@PathVariable("id") Long id) {
 		
-		if(enderecoService.isEnderecoPresente(id))
+		if(enderecoService.isEnderecoPresente(id)) {
 			enderecoService.deletarEndereco(id);
+			return;
+		}
 		
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}
