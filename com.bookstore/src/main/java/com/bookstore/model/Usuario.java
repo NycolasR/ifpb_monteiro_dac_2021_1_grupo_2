@@ -66,9 +66,9 @@ public class Usuario implements UserDetails {
 	   inverseJoinColumns = @JoinColumn(name = "FK_PERFIL"))
 	private List<Perfil> perfis = new ArrayList<Perfil>();
 	
-//	@OneToMany(cascade = CascadeType.MERGE)
-//	@JoinColumn(name = "USUARIO_FK")
-//	private List<Endereco> enderecos = new ArrayList<Endereco>();
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "USUARIO_FK")
+	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "usuario")
 	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
@@ -125,17 +125,17 @@ public class Usuario implements UserDetails {
 		this.perfis.add(perfil);
 	}
 
-//	public List<Endereco> getEnderecos() {
-//		return enderecos;
-//	}
-//
-//	public void setEnderecos(List<Endereco> enderecos) {
-//		this.enderecos = enderecos;
-//	}
-//	
-//	public void addEndereco(Endereco endereco) {
-//		enderecos.add(endereco);
-//	}
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+	
+	public void addEndereco(Endereco endereco) {
+		enderecos.add(endereco);
+	}
 	
 	public Set<Pedido> getPedidos() {
 		return pedidos;

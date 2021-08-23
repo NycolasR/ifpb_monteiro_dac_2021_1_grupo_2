@@ -44,7 +44,7 @@ public class ControllerCarrinho {
 		model.addAttribute("pedido", facadePedido.recuperarPedidoCarrinho(usuario.getId()));
 		model.addAttribute("finalizar_pedido", facadePedido.recuperarPedidoNulo());
 		model.addAttribute("formas_pagamento", facadeFormaPagamento.recuperarFormasDePagamento());
-//		model.addAttribute("enderecos", usuario.getEnderecos());
+		model.addAttribute("enderecos", usuario.getEnderecos());
 		model.addAttribute("endereco", facadeEnderecos.recuperarEnderecoNulo());
 		model.addAttribute("excecao", excecao);
 		
@@ -98,7 +98,7 @@ public class ControllerCarrinho {
 		}
 		
 		try {
-//			usuario.addEndereco(endereco);
+			usuario.addEndereco(endereco);
 			facadeEnderecos.criarEndereco(endereco);
 			usuarioService.atualizar(usuario);
 			excecao = "";
